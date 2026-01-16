@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.I.T project - Battle cursor</title>
+    <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpg' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %}" alt="M.I.T Logo">
+            </div>
+            <div class="header-text">
+                <p class="project-label">Project name:</p>
+                <h1>Battle cursor</h1>
+            </div>
+        </header>
+        <main>
+            <div class="left-section">
+                <div class="welcome-card">
+                    <h2>Welcome!</h2>
+                    <div class="doc-subtitle">Цель проекта</div>
+                    <p class="doc-text">Онлайн игра в которой реализован геймплей видимость курсоров игроков.</p>
+                    <div class="doc-subtitle">Правила</div>
+                    <ul>
+                        <li>Игроки по очереди пишут то что все будут рисовать</li>
+                        <li>Игроки начинают рисовать и бороться за 1 место</li>
+                        <li>Игроки будут мешать друг друга разными дебафами за валюту</li>
+                        <li>В конце раунда все смотрят рисунки и дают оценку от 0 до 10 (оценкой засчитываеться очки)</li>
+                        <li>В следующем раунде всё повторяется (сколько игроков столько и раундов)</li>
+                        <li>В конце игры победитель удвоит свои очки, также все набранные очки игроками пересконвертируются в валюту</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right-section">
+                <div class="forms-wrapper">
+                    <div class="auth-card">
+                        <h2>Вход</h2>
+                        <form action="/users/auth" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="login" placeholder="Логин" required>
+                            <!-- <input type="text" name="login" placeholder="Почта" required> -->
+                            <input type="password" name="password" placeholder="Пароль" required>
+                            <input type="submit" value="login">
+                        </form>
+                    </div>
+                    <div class="auth-card">
+                        <h2>Регистрация</h2>
+                        <form action="/users/register" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="login" placeholder="Логин" required>
+                            <input type="password" name="password" placeholder="Пароль" required>
+                            <!-- <input type="email" name="email" placeholder="Почта" required> -->
+                            <input type="submit" value="Register">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>M.I.T - Mentorship. Innovation. Teamwork</p>
+            <div class="year">
+                <span>© 2025</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

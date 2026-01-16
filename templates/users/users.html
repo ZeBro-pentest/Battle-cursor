@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.I.T project - Battle cursor</title>
+    <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpg' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/users.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %}" alt="M.I.T Logo">
+            </div>
+            <div class="header-text">
+                <p class="project-label">Project name:</p>
+                <h1>Battle cursor</h1>
+            </div>
+            <a href="/logout" class="logout-btn">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d=""></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </a>
+        </header>
+        <main>
+            <div class="left-column">
+                <section class="profile-section">
+                    <h2 class="section-title-center">Ваш профиль</h2>
+                    <div class="profile-card">
+                        <div class="profile-item">
+                            <span class="profile-text">Никнейм: {{ user.login }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Баланс:</span>
+                            <span class="profile-value">{{ user.balance }} 💰</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Рейтинг:</span>
+                            <span class="profile-value">0 🎮</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Побед:</span>
+                            <span class="profile-value">0 🏆</span>
+                        </div>
+                    </div>
+                </section>
+                <section class="games-section">
+                    <h2 class="section-title-center">Ваша игра</h2>
+                    <div class="games-list">
+                        {% for game in games %}
+                        {% if user.id == game.owner.id %}
+                        <div class="lobby-item">
+                            <div class="lobby-info">
+                                <div class="lobby-number">Номер: {{ game.number }}</div>
+                                <div class="lobby-players">Участников: ...</div>
+                                <div class="lobby-remaining">Осталось: ...</div>
+                            </div>
+                            <!-- <button class="btn-play {% if lobby.is_full %}btn-full{% endif %}">
+                                {% if lobby.is_full %}FULL{% else %}PLAY{% endif %}
+                            </button> -->
+                            <a class="btn-del" href="/games/delete/{{ game.id }}">DEL</a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+            <div class="center-column">
+                <div class="notifications-header">
+                    <h3>Уведомления🔔</h3>
+                    <!-- <div class="scrollbar"></div> -->
+                </div>
+                <!-- <h1 class="welcome-title">Добро пожаловать в меню!</h1> -->
+                <div class="tabs">
+                    <button class="tab-btn">Чат</button>
+                    <button class="tab-btn">Магазин</button>
+                    <button class="tab-btn">Холст</button>
+                </div>
+                <div class="content-box">
+                    <div class="notifications-list">
+                        <div class="notification-item">
+                            <div class="notification-date">25.12.2025:</div>
+                            <div class="notification-text">
+                                Новый курсор <span class="highlight-blue">Лазерный</span> уже в магазине!!!
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-date">24.12.2025:</div>
+                            <div class="notification-text">
+                                Новый холст <span class="highlight-pink">Космический</span> уже в магазине!!!
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-date">23.12.2025:</div>
+                            <div class="notification-text">
+                                Новый дебаф <span class="highlight-green">Купи слона</span> уже в магазине!!!
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-date">20.12.2025:</div>
+                            <div class="notification-text">
+                                Приветствуем вас '<span>{{ user.login }}</span>'!🎉
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-column">
+                <h2 class="section-title-center">Лобби</h2>
+                <div class="lobbies-list">
+                    {% for game in games %}
+                    <div class="lobby-item">
+                        <div class="lobby-info">
+                            <div class="lobby-number">Номер: {{ game.number }}</div>
+                            <div class="lobby-players">Участников: ...</div>
+                            <div class="lobby-remaining">Осталось: ...</div>
+                        </div>
+                        <!-- <button class="btn-play {% if lobby.is_full %}btn-full{% endif %}">
+                            {% if lobby.is_full %}FULL{% else %}PLAY{% endif %}
+                        </button> -->
+                        <a class="btn-play" href="/games/join/{{ game.id }}">PLAY</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <h2 class="section-title-center">Создать игру</h2>
+                <section class="create-game-section">
+                    <form action="/games/create" method="POST" class="create-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>КОЛ-ВО УЧАСТНИКОВ:</label>
+                            <input type="number" name="max_players" min="2" max="12" value="12">
+                        </div>
+                        <button type="submit" class="btn-create">CREATE</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+        <footer>
+            <p>M.I.T - Mentorship. Innovation. Teamwork</p>
+            <div class="year">
+                <span>© 2025</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

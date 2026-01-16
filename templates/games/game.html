@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle Cursor</title>
+    <style>
+        .canvas{
+            border: 1px solid black;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .pixel{
+            background-color: white;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0);
+            
+        }
+        .pixel:hover{
+            background-color: black;
+        }
+        .player-canvas{
+            display: inline-block;
+            margin: 10px 10px;
+
+            border: 1px solid silver;
+            border-radius: 5px;
+
+            width: 160px;
+            height: 160px;
+        }
+        .player-mouse{
+            width: 8px;
+            display: block;
+        }
+    </style>
+</head>
+<body id="body">
+    <div class="container">
+        <div class="players"></div>
+        <div class="window" id="window">
+            <div class="previews"></div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <input type="button" id="btn1" value="Transparent">
+            <input type="button" id="btn2" value="Solid">
+            <input type="range" min="2" max="100" id="lineWidth">
+            <input type="button" id="change-color" value="Green color">
+            <select id="debaf-select" name="debaf">
+                <option value="" selected disabled>Дебафы</option>
+            </select>
+            <select id="user-select" name="users">
+                <option value="" selected disabled>Игроки</option>
+                <option value="random">Рандом</option>
+            </select>
+
+            <canvas id="canvas" width="500" height="500" class="canvas">
+            <div class="abilities"></div>
+        </div>
+    </div>
+    <script>
+        let gameId = "{{ session.game_id }}";
+        let userId = "{{ session.user_id }}";
+        let mouseLink = "{% static 'images/cursor.png' %}";
+    </script>
+    <script src="{% static 'js/game.js' %}"></script>
+</body>
+</html>

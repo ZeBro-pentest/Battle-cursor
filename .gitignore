@@ -1,0 +1,7 @@
+# Кэш Python и тестов
+**/__pycache__/
+**/.pytest_cache/
+*.py[cod]
+
+# База данных
+*.sqlite3
