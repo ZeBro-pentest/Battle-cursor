@@ -1,0 +1,8 @@
+/* App-specific styles - add game-related styles here as needed */
+
+main {
+  min-height: calc(100vh - 120px); /* Высота минус header (около 70px) и footer (около 50px, но теперь фиксированный) */
+  padding: 0;
+  background-color: transparent;
+  margin-bottom: 60px; /* Отступ для footer */
+}
