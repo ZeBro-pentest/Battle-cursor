@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import './Home.css'
+import { useEffect } from "react";
+import "./Home.css";
 
 export function Home() {
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
+    document.documentElement.style.scrollBehavior = "smooth";
     return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = "auto";
     };
   }, []);
 
@@ -16,7 +16,9 @@ export function Home() {
         <div className="hero-overlay"></div>
         <div className="container hero-content">
           <div className="badge">New Season: Cyber Red</div>
-          <h1 className="hero-title">Battle <span className="text-red">Cursor</span></h1>
+          <h1 className="hero-title">
+            Battle <span className="text-red">Cursor</span>
+          </h1>
           <p className="hero-subtitle">
             Арена, где выживают только самые быстрые. <br />
             Докажи свое превосходство в мире цифровых сражений.
@@ -57,17 +59,26 @@ export function Home() {
             <div className="feature-card">
               <div className="feature-icon">⚡</div>
               <h3>Низкая задержка</h3>
-              <p>Наша сетевая архитектура оптимизирована для мгновенного отклика каждого движения вашего курсора.</p>
+              <p>
+                Наша сетевая архитектура оптимизирована для мгновенного отклика
+                каждого движения вашего курсора.
+              </p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">🏆</div>
               <h3>Рейтинговые бои</h3>
-              <p>Сражайтесь с равными по силе противниками и поднимайтесь в глобальной лиге мастеров.</p>
+              <p>
+                Сражайтесь с равными по силе противниками и поднимайтесь в
+                глобальной лиге мастеров.
+              </p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">🎨</div>
               <h3>Визуальный стиль</h3>
-              <p>Настройте свой след, ауру и внешний вид курсора, чтобы выделяться на поле боя.</p>
+              <p>
+                Настройте свой след, ауру и внешний вид курсора, чтобы
+                выделяться на поле боя.
+              </p>
             </div>
           </div>
         </div>
@@ -102,7 +113,8 @@ export function Home() {
         <div className="container">
           <div className="quote-box">
             <p className="quote-text">
-              "Battle Cursor — это не просто игра, это проверка твоих рефлексов на пределе возможностей."
+              "Battle Cursor — это не просто игра, это проверка твоих рефлексов
+              на пределе возможностей."
             </p>
             <span className="quote-author">— ProGamer_X, Топ-1 сезона</span>
           </div>
@@ -113,8 +125,12 @@ export function Home() {
       <section className="cta-section">
         <div className="container">
           <h2 className="cta-title">Готовы бросить вызов?</h2>
-          <p className="cta-desc">Присоединяйтесь к сообществу Battle Cursor сегодня.</p>
-          <button className="cta-button primary large">Присоединиться бесплатно</button>
+          <p className="cta-desc">
+            Присоединяйтесь к сообществу Battle Cursor сегодня.
+          </p>
+          <button className="cta-button primary large">
+            Присоединиться бесплатно
+          </button>
         </div>
       </section>
     </div>

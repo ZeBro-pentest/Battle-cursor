@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/react-router-dom": "^5.3.3",
-    "axios": "^1.16.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "react-router-dom": "^7.15.0"
+    "@reduxjs/toolkit": "^2.x.x",
+    "react-redux": "^9.x.x",
+    "react-hook-form": "^7.x.x",
+    "zod": "^3.x.x",
+    "@hookform/resolvers": "^3.x.x"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

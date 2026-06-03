@@ -1,101 +1,81 @@
-# Battle-sursor
+# Battle-cursor
 
-Фуллстак веб-приложение онлайн игры
+Онлайн веб-игра где игроки рисуют по заданию ИИ, мешают друг другу дебаффами и соревнуются за лучший результат.
 
-Цель - создать игру где у каждого игрока есть свой холст и курсор мыши
-у всех задача одна и та же, нарисовать один и тот же (рандомный) предмет,
-во время битвы игроки могут мешать друг другу дебафами за игровой баланс
-в конце раунда все холсты отправляються ИИ который дает оценку от 1 до 5
-в конце всех раундов (сколько игроков столько и раундов) идет подсчет
-где обьявляеться победитель и получает приз
+Цель — нарисовать случайный предмет лучше остальных. В конце каждого раунда ИИ оценивает рисунки, победитель получает монеты.
 
-Игра очень интересна тем что можно видеть других игроков и их холсты (но без рисунка)
+> Игра только для десктопов, мобильный формат не поддерживается.
 
-Также курсоры и холсты можжно покупать в магазине
-- курсор имеет определенные дебафы в комплект
-- холст имеет определенную защиту от дебафов
+---
 
-Надеюсь данный проект действительно кого-то за интересует;)
+## Механика
 
-> Сюжет еще в разработке, до сих пор, игра только для десктопов и не поддерживает мобильный формат
+- До 8 игроков рисуют одновременно на своих холстах
+- Все видят курсоры и холсты друг друга (без рисунка)
+- За монеты можно применять дебаффы — мешать соперникам
+- Курсор содержит набор дебаффов, холст — защиту от них
+- Курсоры и холсты покупаются в магазине
+- Количество раундов = количество игроков
+- В конце всех раундов объявляется победитель
 
-## Структура проекта
-
-```
-📦Battle-cursor
-┣ 📂backend
-┃ ┣ ⚙️config         # settings не настроен пока-что
-┃ ┣ 📂templates      # в разработке
-┃ ┣ 📂users          # в разработке
-┃ ┣ 📂game           # в разработке
-┃ ┣ 📂market         # в разработке
-┃ ┣ 🔧.gitignore
-┃ ┣ 🔧requirements.txt
-┃ ┗ 📜manage.py
-┣ 📂frontend
-┃ ┣ 📂public
-┃ ┃ ┣ 📜favicon.svg
-┃ ┃ ┗ 📜icons.svg
-┃ ┣ 📂src
-┃ ┃ ┣ 📂assets
-┃ ┃ ┣ 📂api
-┃ ┃ ┃ ┗📂user
-┃ ┃ ┣ 📂components
-┃ ┃ ┃ ┣ 📂Footer
-┃ ┃ ┃ ┣ 📂Header
-┃ ┃ ┃ ┣ 📂Loader
-┃ ┃ ┃ ┗ 📂modals
-┃ ┃ ┣ 📂
-┃ ┃ ┣ 📂pages
-┃ ┃ ┃ ┣ 📂Home
-┃ ┃ ┃ ┗ 📂NotFound
-┃ ┃ ┣ 📂store
-┃ ┃ ┣ 📜App.css
-┃ ┃ ┣ 📜App.tsx
-┃ ┃ ┣ 📜index.css
-┃ ┃ ┗ 📜main.tsx
-┃ ┣ 📜.gitignore
-┃ ┣ 📜eslint.config.js
-┃ ┣ 📜index.html
-┃ ┣ 📜package-lock.json
-┃ ┣ 📜package.json
-┃ ┣ 📜tsconfig.app.json
-┃ ┣ 📜tsconfig.json
-┃ ┣ 📜tsconfig.node.json
-┃ ┗ 📜vite.config.ts
-┣ 📂tests
-┃ ┣ 🔧.gitignore
-┃ ┗ 🔧requirements.txt
-┣ 📑Battle-cursor.drawio
-┗ 📑README.md
-```
+---
 
 ## Стек технологий
 
 | Часть | Технологии |
 | :--- | :--- |
-| Backend | Django, DRF, JWT, Channels, Redis, Celery, Flower |
-| Frontend | React, TypeScript, Redux Toolkit, React Router, Axios, React Hook Form, Zod, Vite |
-| БД | SQLite → PostgreSQL |
-| WebSocket | Django Channels + Redis |
+| Backend | Django, DRF, SimpleJWT, Channels, Daphne |
+| Очереди | Celery, Celery Beat, Flower |
+| Кэш / Брокер | Redis |
+| Frontend | React 19, TypeScript, Redux Toolkit, React Router v7, Axios, React Hook Form, Zod, Vite |
+| БД | SQLite |
+| WebSocket | Django Channels + Redis, нативный WebSocket (фронт) |
+| Хранилище | Cloudinary (курсоры, холсты) |
+| ИИ | Gemini 2.5 Flash (грейдинг рисунков) |
+| Почта | Mailtrap (верификация, приветствие) |
 | CORS | django-cors-headers |
-| Hosting | GoogleCloud |
 
-#### Префиксы
+---
 
-| Префикс | Когда использовать |
-| :--- | :--- |
-| `feat:` | Новая функциональность |
-| `fix:` | Исправление бага |
-| `refactor:` | Рефакторинг (процесс изменения внутренней структуры) без изменения поведения |
-| `wip:` | Незавершённая работа (как срочный коммит) |
-| `docs:` | Изменения только в документации |
-| `style:` | Форматирование, пробелы — без изменения логики |
-| `test:` | Добавление или исправление тестов |
-| `perf:` | Улучшение производительности |
-| `chore:` | Зависимости, конфиги, инструменты |
-| `build:` | Сборочная система, скрипты |
-| `revert:` | Откат предыдущего коммита |
+## Структура проекта
+
+```
+📦 Battle-cursor
+├── 📂 backend
+│   ├── ⚙️ config/           # настройки Django
+│   ├── 📂 templates/
+│   │   └── 📂 emails/       # шаблоны писем
+│   │       ├── verification.html
+│   │       └── welcome.html
+│   ├── 📂 users/            # User, Cursor, Canvas, EmailVerification
+│   ├── 📂 game/             # Game, Round, Score
+│   ├── 📂 market/           # Inventory, Purchase
+│   ├── 📂 ai/               # грейдинг через Gemini (Celery задачи)
+│   ├── 📂 servers/          # WebSocket consumers (Django Channels)
+│   ├── 🔧 .env
+│   ├── 🔧 .gitignore
+│   ├── 🔧 requirements.txt
+│   └── 📜 manage.py
+├── 📂 frontend
+│   ├── 📂 public/
+│   ├── 📂 src/
+│   │   ├── 📂 assets/
+│   │   ├── 📂 components/   # Header, Footer, Loader, modals
+│   │   ├── 📂 hooks/
+│   │   ├── 📂 pages/        # Home, NotFound и др.
+│   │   ├── 📂 services/     # axios, api
+│   │   ├── 📂 store/        # Redux Toolkit
+│   │   └── 📂 types/
+│   ├── 📜 package.json
+│   └── 📜 vite.config.ts
+├── 📂 Diagrams/             # визуальная документация
+│   ├── 📑 Diagrams.drawio
+│   └── 📑 README.md
+├── 📂 tests/
+└── 📑 README.md
+```
+
+---
 
 ## Запуск проекта
 
@@ -117,48 +97,88 @@ npm run dev
 redis-server
 ```
 
-**Celery**
+**Celery worker**
 ```bash
 celery -A config worker --loglevel=info --pool=solo
 ```
 
+**Celery beat**
+```bash
+celery -A config beat --loglevel=info
+```
+
+**Flower** (мониторинг задач)
 ```bash
 celery -A config flower
 ```
 
-> Для мониторинга, открыть в браузере: http://localhost:5555
+> Flower доступен по адресу: http://localhost:5555
 
-**Tests**
-```bash
-cd "название приложения"
-pytest tests.py -s
-```
+> Все сервисы запускаются в отдельных терминалах
 
-> Запуск происходит в отдельных терминалах
+---
 
 ## Переменные окружения
 
-### Создание файла .env
+Создайте файл `.env` в директории `backend/`:
 
-В проекте мы пользуемся дебагером и некоторыми личными данными, которые не должны быть в репозитории
-
-Создайте файл с названием ".env" в директории "backend"
-
-### Шаблон файла
-
-Файл должен иметь базовый шаблон с переменным окружением
-
-```
+```env
+# Django
+SECRET_KEY=ваш-секретный-ключ
 DEBUG=True
-EMAIL_HOST_USER=ВАША_ПОЧТА
-EMAIL_HOST_PASSWORD=ТОКЕН_ПОЧТЫ
-DEFAULT_FROM_EMAIL=ВАША_ПОЧТА
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Database
+DATABASE_URL=sqlite:///db.sqlite3
+
+# Redis
+REDIS_URL=redis://localhost:6379/0
+
+# Celery
+CELERY_BROKER_URL=redis://localhost:6379/0
+CELERY_RESULT_BACKEND=redis://localhost:6379/1
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=ваш-cloud-name
+CLOUDINARY_API_KEY=ваш-api-key
+CLOUDINARY_API_SECRET=ваш-api-secret
+
+# Mailtrap
+EMAIL_HOST=sandbox.smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_HOST_USER=ваш-mailtrap-user
+EMAIL_HOST_PASSWORD=ваш-mailtrap-password
+
+# Gemini
+GEMINI_API_KEY=ваш-gemini-api-key
 ```
 
-> записать данные нужно без пробела после "="
+> Значения записываются без пробелов вокруг `=`
 
-```
+---
+
+## Git префиксы
+
+| Префикс | Когда использовать |
+| :--- | :--- |
+| `feat:` | Новая функциональность |
+| `fix:` | Исправление бага |
+| `refactor:` | Рефакторинг без изменения поведения |
+| `wip:` | Незавершённая работа (срочный коммит) |
+| `docs:` | Изменения только в документации |
+| `style:` | Форматирование, пробелы — без изменения логики |
+| `test:` | Добавление или исправление тестов |
+| `perf:` | Улучшение производительности |
+| `chore:` | Зависимости, конфиги, инструменты |
+| `build:` | Сборочная система, скрипты |
+| `revert:` | Откат предыдущего коммита |
+
+---
+
+## Клонирование
+
+```bash
 git clone https://github.com/ZeBro-pentest/Battle-cursor.git
 ```
 
-> Последнее обновление README 02.05.2026
+> Последнее обновление README: 03.06.2026
