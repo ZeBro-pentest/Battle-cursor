@@ -42,16 +42,16 @@
 ```
 📦 Battle-cursor
 ├── 📂 backend
-│   ├── ⚙️ config/           # настройки Django
+│   ├── ⚙️ config/
 │   ├── 📂 templates/
-│   │   └── 📂 emails/       # шаблоны писем
+│   │   └── 📂 emails/
 │   │       ├── verification.html
 │   │       └── welcome.html
-│   ├── 📂 users/            # User, Cursor, Canvas, EmailVerification
-│   ├── 📂 game/             # Game, Round, Score
-│   ├── 📂 market/           # Inventory, Purchase
-│   ├── 📂 ai/               # грейдинг через Gemini (Celery задачи)
-│   ├── 📂 servers/          # WebSocket consumers (Django Channels)
+│   ├── 📂 users/
+│   ├── 📂 game/
+│   ├── 📂 market/
+│   ├── 📂 ai/
+│   ├── 📂 servers/
 │   ├── 🔧 .env
 │   ├── 🔧 .gitignore
 │   ├── 🔧 requirements.txt
@@ -60,15 +60,15 @@
 │   ├── 📂 public/
 │   ├── 📂 src/
 │   │   ├── 📂 assets/
-│   │   ├── 📂 components/   # Header, Footer, Loader, modals
+│   │   ├── 📂 components/
 │   │   ├── 📂 hooks/
-│   │   ├── 📂 pages/        # Home, NotFound и др.
-│   │   ├── 📂 services/     # axios, api
-│   │   ├── 📂 store/        # Redux Toolkit
+│   │   ├── 📂 pages/
+│   │   ├── 📂 services/
+│   │   ├── 📂 store/
 │   │   └── 📂 types/
 │   ├── 📜 package.json
 │   └── 📜 vite.config.ts
-├── 📂 Diagrams/             # визуальная документация
+├── 📂 Diagrams/
 │   ├── 📑 Diagrams.drawio
 │   └── 📑 README.md
 ├── 📂 tests/
