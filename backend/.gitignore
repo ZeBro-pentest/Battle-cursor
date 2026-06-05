@@ -15,6 +15,7 @@ env/
 *.pot
 *.sqlite3
 db.sqlite3
+dump.*
 media/
 staticfiles/
 static/

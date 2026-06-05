@@ -3,6 +3,8 @@ import uuid
 from django.conf import settings
 from django.db import models
 
+from .validators import max_players_validator, prompt_validator
+
 
 def generate_game_number():
     import random
@@ -22,7 +24,9 @@ class Game(models.Model):
     players = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="joined_games", blank=True
     )
-    max_players = models.PositiveIntegerField(default=8)
+    max_players = models.PositiveIntegerField(
+        default=8, validators=max_players_validator
+    )
     started = models.BooleanField(default=False)
     done = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,7 +42,7 @@ class Round(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="rounds")
     number = models.PositiveIntegerField()
-    prompt = models.CharField(max_length=255)
+    prompt = models.CharField(max_length=100, validators=[prompt_validator])
     started_at = models.DateTimeField(null=True, blank=True)
     ended_at = models.DateTimeField(null=True, blank=True)
     is_finished = models.BooleanField(default=False)
@@ -58,8 +62,8 @@ class Score(models.Model):
     )
     round = models.ForeignKey(Round, on_delete=models.CASCADE, related_name="scores")
     value = models.PositiveIntegerField(default=0)
-    comment = models.TextField(blank=True)
-    coins_earned = models.PositiveIntegerField(default=0)
+    comment = models.TextField(max_length=100)
+    coins_earned = models.FloatField(default=0)
 
     class Meta:
         db_table = "scores"

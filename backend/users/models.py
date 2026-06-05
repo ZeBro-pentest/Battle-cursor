@@ -5,13 +5,20 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from .validators import (
+    username_max_length,
+    username_min_length,
+    username_validator,
+    validate_debuffs_list,
+)
+
 
 class Cursor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     image = CloudinaryField("cursor_image")
     price = models.PositiveIntegerField(default=0)
-    debuffs = models.JSONField(default=list)
+    debuffs = models.JSONField(default=list, validators=[validate_debuffs_list])
 
     class Meta:
         db_table = "cursors"
@@ -25,7 +32,7 @@ class Canvas(models.Model):
     name = models.CharField(max_length=100)
     image = CloudinaryField("canvas_image")
     price = models.PositiveIntegerField(default=0)
-    protections = models.JSONField(default=list)
+    protections = models.JSONField(default=list, validators=[validate_debuffs_list])
 
     class Meta:
         db_table = "canvases"
@@ -40,12 +47,17 @@ class User(AbstractUser):
     is_verified = models.BooleanField(default=False)
     rating = models.PositiveIntegerField(default=0)
     coins = models.PositiveIntegerField(default=0)
-    wins = models.PositiveIntegerField(default=0)
     cursor = models.ForeignKey(
         Cursor, on_delete=models.SET_NULL, null=True, blank=True, related_name="users"
     )
     canvas = models.ForeignKey(
         Canvas, on_delete=models.SET_NULL, null=True, blank=True, related_name="users"
+    )
+
+    username = models.CharField(
+        max_length=24,
+        unique=True,
+        validators=[username_validator, username_min_length, username_max_length],
     )
 
     USERNAME_FIELD = "username"
