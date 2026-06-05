@@ -376,12 +376,12 @@
     </mxGraphModel>
   </diagram>
   <diagram id="ZgqkEuoHTQOiwEtYs5Z3" name="ERD">
-    <mxGraphModel dx="2595" dy="1055" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2241" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="naIAgZBTmjXSEk_Bm9ID-2" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;swimlaneLine=1;rounded=0;" value="User" vertex="1">
-          <mxGeometry height="270" width="140" x="-70" y="50" as="geometry">
+          <mxGeometry height="240" width="140" x="-70" y="50" as="geometry">
             <mxRectangle height="30" width="70" x="344" y="40" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -400,14 +400,11 @@
         <mxCell id="9EgAwvreNpHxJjZxYTlR-2" parent="naIAgZBTmjXSEk_Bm9ID-2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;swimlaneLine=1;rounded=0;" value="coins - int" vertex="1">
           <mxGeometry height="30" width="140" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="vUqTO0189gxhUAw3Mc7I-2" parent="naIAgZBTmjXSEk_Bm9ID-2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;swimlaneLine=1;rounded=0;" value="wins - int" vertex="1">
+        <mxCell id="u9JIuBwFcMXZqaxF7i-4-1" parent="naIAgZBTmjXSEk_Bm9ID-2" style="text;whiteSpace=wrap;html=1;" value="cursor_id - uuid, FK" vertex="1">
           <mxGeometry height="30" width="140" y="180" as="geometry" />
         </mxCell>
-        <mxCell id="u9JIuBwFcMXZqaxF7i-4-1" parent="naIAgZBTmjXSEk_Bm9ID-2" style="text;whiteSpace=wrap;html=1;" value="cursor_id - uuid, FK" vertex="1">
-          <mxGeometry height="30" width="140" y="210" as="geometry" />
-        </mxCell>
         <mxCell id="vUqTO0189gxhUAw3Mc7I-3" parent="naIAgZBTmjXSEk_Bm9ID-2" style="text;whiteSpace=wrap;html=1;" value="canvas_id - uuid, FK" vertex="1">
-          <mxGeometry height="30" width="140" y="240" as="geometry" />
+          <mxGeometry height="30" width="140" y="210" as="geometry" />
         </mxCell>
         <mxCell id="vUqTO0189gxhUAw3Mc7I-4" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(238, 238, 238); font-family: &amp;quot;Anthropic Sans&amp;quot;, sans-serif; font-size: 13px; text-align: start; white-space: nowrap;&quot;&gt;Game&lt;/span&gt;" vertex="1">
           <mxGeometry height="240" width="140" x="-590" y="350" as="geometry" />
@@ -556,7 +553,7 @@
         <mxCell id="vUqTO0189gxhUAw3Mc7I-39" parent="vUqTO0189gxhUAw3Mc7I-36" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="comment - text" vertex="1">
           <mxGeometry height="30" width="140" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="vUqTO0189gxhUAw3Mc7I-65" parent="vUqTO0189gxhUAw3Mc7I-36" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="coins_earned - int" vertex="1">
+        <mxCell id="vUqTO0189gxhUAw3Mc7I-65" parent="vUqTO0189gxhUAw3Mc7I-36" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="coins_earned - float" vertex="1">
           <mxGeometry height="30" width="140" y="180" as="geometry" />
         </mxCell>
         <mxCell id="vUqTO0189gxhUAw3Mc7I-52" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Canvas" vertex="1">
@@ -676,12 +673,15 @@
             <mxPoint y="-1" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="vUqTO0189gxhUAw3Mc7I-88" edge="1" parent="1" source="vUqTO0189gxhUAw3Mc7I-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vUqTO0189gxhUAw3Mc7I-13">
+        <mxCell id="vUqTO0189gxhUAw3Mc7I-88" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="140" y="275" />
-              <mxPoint x="140" y="395" />
+              <mxPoint x="140" y="250" />
+              <mxPoint x="140" y="390" />
+              <mxPoint x="174" y="390" />
             </Array>
+            <mxPoint x="70" y="250" as="sourcePoint" />
+            <mxPoint x="173.5" y="370" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="vUqTO0189gxhUAw3Mc7I-89" connectable="0" parent="vUqTO0189gxhUAw3Mc7I-88" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgb(238, 238, 238); font-family: &amp;quot;Anthropic Sans&amp;quot;, sans-serif;&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;equips&lt;/font&gt;&lt;/span&gt;" vertex="1">
@@ -728,7 +728,8 @@
         <mxCell id="u9JIuBwFcMXZqaxF7i-4-2" edge="1" parent="1" source="vUqTO0189gxhUAw3Mc7I-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vUqTO0189gxhUAw3Mc7I-53">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="360" y="305" />
+              <mxPoint x="70" y="280" />
+              <mxPoint x="360" y="280" />
               <mxPoint x="360" y="395" />
             </Array>
           </mxGeometry>
@@ -737,7 +738,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="xxgknNRuAGwnDyfji4U6" name="Sequence">
-    <mxGraphModel dx="1664" dy="2162" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2020" dy="2375" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1218,10 +1219,364 @@
     </mxGraphModel>
   </diagram>
   <diagram id="PaHDTbNoLo_FjMsN_PGd" name="Flowchart">
-    <mxGraphModel dx="1414" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2491" dy="993" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-6" edge="1" parent="1" source="O85Ubu93BydzBbmppuk8-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O85Ubu93BydzBbmppuk8-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A49D00;" value="Заработок монет" vertex="1">
+          <mxGeometry height="60" width="120" x="180" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-3" edge="1" parent="1" source="O85Ubu93BydzBbmppuk8-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="62M70fx36dKhCrZWJmee-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O85Ubu93BydzBbmppuk8-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A49D00;" value="&lt;span style=&quot;font-family: &amp;quot;Anthropic Sans&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 14px; text-align: start; white-space: nowrap;&quot;&gt;Трата монет (дебафф)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="170" x="480" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="O85Ubu93BydzBbmppuk8-9" edge="1" parent="1" source="O85Ubu93BydzBbmppuk8-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="O85Ubu93BydzBbmppuk8-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O85Ubu93BydzBbmppuk8-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Gemini выставляет оценку от 0.1 до 5.0" vertex="1">
+          <mxGeometry height="60" width="160" x="160" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-2" edge="1" parent="1" source="O85Ubu93BydzBbmppuk8-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="O85Ubu93BydzBbmppuk8-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Подсчёт очков:&lt;br&gt;оценка × 10 = очки&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="160" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-9" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Обновить баланс в Redis&lt;br&gt;coins += coins_earned&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="160" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-7" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="O85Ubu93BydzBbmppuk8-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-family: &amp;quot;Anthropic Sans&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 14px; text-align: start; white-space: nowrap;&quot;&gt;Раунд завершён&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="160" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-10" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-12" connectable="0" parent="iC0jNEMaxr_icFIYgXgQ-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="ДА" vertex="1">
+          <mxGeometry relative="1" x="0.2167" y="-4" as="geometry">
+            <mxPoint x="13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-11" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="760" />
+              <mxPoint x="360" y="760" />
+              <mxPoint x="360" y="580" />
+            </Array>
+            <mxPoint x="360" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-13" connectable="0" parent="iC0jNEMaxr_icFIYgXgQ-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="0.06" as="geometry">
+            <mxPoint x="-30" y="74" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-14" connectable="0" parent="iC0jNEMaxr_icFIYgXgQ-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="следующий раунд" vertex="1">
+          <mxGeometry relative="1" x="0.2398" y="2" as="geometry">
+            <mxPoint x="12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Все раунды завершились?" vertex="1">
+          <mxGeometry height="60" width="120" x="180" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-17" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="118.5" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Синхронизация с БД&lt;br&gt;user.coins = Redis.coins&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="137" x="50" y="797" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-20" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.47;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="iC0jNEMaxr_icFIYgXgQ-29">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="118.66666666666674" y="1010" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-21" connectable="0" parent="iC0jNEMaxr_icFIYgXgQ-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="ДА" vertex="1">
+          <mxGeometry relative="1" x="-0.1579" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-22" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-23" connectable="0" parent="iC0jNEMaxr_icFIYgXgQ-22" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="-0.186" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Игрок вылетел?&lt;br&gt;WS disconnect до конца&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="157.25" x="39.88" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Удалить данные из Redis&lt;br&gt;&quot;монеты не начисляются&quot;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="161.5" x="42.75" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-36" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="O85Ubu93BydzBbmppuk8-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-37" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="O85Ubu93BydzBbmppuk8-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-35" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="coin_logic" vertex="1">
+          <mxGeometry height="60" width="120" x="330" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-40" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="game_cycle" vertex="1">
+          <mxGeometry height="60" width="120" x="-390" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c9C_tNm7wX7FS1XbIIkt-2" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Создаеться сервер" vertex="1">
+          <mxGeometry height="60" width="120" x="-390" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c9C_tNm7wX7FS1XbIIkt-1" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Ждем 30 секунд&lt;br&gt;или сразу начинаем" vertex="1">
+          <mxGeometry height="60" width="120" x="-390" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-50" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-41">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-330" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-51" connectable="0" parent="iC0jNEMaxr_icFIYgXgQ-50" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="ДА" vertex="1">
+          <mxGeometry relative="1" x="-0.0286" y="2" as="geometry">
+            <mxPoint x="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c9C_tNm7wX7FS1XbIIkt-3" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-210" y="270.3478260869566" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c9C_tNm7wX7FS1XbIIkt-4" connectable="0" parent="c9C_tNm7wX7FS1XbIIkt-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="-0.2463" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-43" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Кто то зашел?&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;players.count() &amp;gt; 1&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="-385" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="1Fqb9MOEOINA7JhpwLlX-1" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="SUcJuuv5urYHPq3VVwlR-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-52" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Игра начинается game.started = True&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="-390" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-55" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SUcJuuv5urYHPq3VVwlR-4" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="SUcJuuv5urYHPq3VVwlR-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Битва 1 минута&lt;br&gt;рисование + дебаффы" vertex="1">
+          <mxGeometry height="60" width="130" x="-395" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-59" edge="1" parent="1" source="iC0jNEMaxr_icFIYgXgQ-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Итоговые подсчеты:&lt;br&gt;&lt;br&gt;1 место: +50% + 1 rating&lt;br&gt;2 место: +20%&lt;br&gt;3 место: +10%" vertex="1">
+          <mxGeometry height="90" width="150" x="-405" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="iC0jNEMaxr_icFIYgXgQ-58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="В главное меню" vertex="1">
+          <mxGeometry height="60" width="120" x="-390" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-9" edge="1" parent="1" source="XCBOqVBsgiefRTu5q-5A-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="XCBOqVBsgiefRTu5q-5A-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-11" edge="1" parent="1" source="XCBOqVBsgiefRTu5q-5A-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-53">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-470" y="767" />
+              <mxPoint x="-470" y="615" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-12" connectable="0" parent="XCBOqVBsgiefRTu5q-5A-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="-0.6885" y="-2" as="geometry">
+            <mxPoint x="19" y="2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Все раунды завершились?&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;round.number == players.count()&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="-420" y="737" as="geometry" />
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-7" edge="1" parent="1" source="XCBOqVBsgiefRTu5q-5A-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-210" y="864.8965517241379" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-8" connectable="0" parent="XCBOqVBsgiefRTu5q-5A-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="-0.0086" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-25" edge="1" parent="1" source="XCBOqVBsgiefRTu5q-5A-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="62M70fx36dKhCrZWJmee-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Игроков в сети больше чем 2 игрока и дольше 5 секунд??" vertex="1">
+          <mxGeometry height="30" width="125" x="-392.5" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="XCBOqVBsgiefRTu5q-5A-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Итоговые подсчеты:&lt;br&gt;&lt;br&gt;1 место: +10%&lt;br&gt;2 место: +0%" vertex="1">
+          <mxGeometry height="90" width="120" x="-190" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="c9C_tNm7wX7FS1XbIIkt-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Ждем пока кто-то не войдет..." vertex="1">
+          <mxGeometry height="60" width="120" x="-190" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c9C_tNm7wX7FS1XbIIkt-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;Anthropic Sans&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 14px; text-align: start; white-space: nowrap;&quot;&gt;Сохранить Score в БД&lt;/span&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="260" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-4" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="62M70fx36dKhCrZWJmee-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-family: &amp;quot;Anthropic Sans&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 14px; text-align: start; white-space: nowrap;&quot;&gt;Игрок выбирает противника&lt;br&gt;затем дебафф&lt;br&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="195" x="467.5" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-11" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="62M70fx36dKhCrZWJmee-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-13" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="350" />
+              <mxPoint x="670" y="350" />
+            </Array>
+            <mxPoint x="750" y="1100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-16" connectable="0" parent="62M70fx36dKhCrZWJmee-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="-0.0166" as="geometry">
+            <mxPoint x="-60" y="-321" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Хватает монет?&lt;br&gt;Redis.coins ≥ debuff.price&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="475" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-8" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="62M70fx36dKhCrZWJmee-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="440" />
+              <mxPoint x="440" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-10" connectable="0" parent="62M70fx36dKhCrZWJmee-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="0.2011" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-17" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="62M70fx36dKhCrZWJmee-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Есть иммунитет у холста?&lt;br&gt;debuff.id in canvas.protections&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="475" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-19" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="62M70fx36dKhCrZWJmee-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Уменьшить длительность ÷ 2 duration = duration / 2&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="475" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-22" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="565.3333333333335" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Списать монеты в Redis&lt;br&gt;Redis.coins -= debuff.price&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="170" x="480" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="ДА" vertex="1">
+          <mxGeometry height="30" width="60" x="560" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Иди в баню" vertex="1">
+          <mxGeometry height="60" width="120" x="690" y="1109" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-18" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="ДА" vertex="1">
+          <mxGeometry height="30" width="60" x="560" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Применить дебаф" vertex="1">
+          <mxGeometry height="60" width="120" x="505" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-26" edge="1" parent="1" source="62M70fx36dKhCrZWJmee-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-24" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Игроков в сети больше чем 5&lt;br&gt;и дольше 5 секунд??" vertex="1">
+          <mxGeometry height="30" width="125" x="-392.5" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-27" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-267.5" y="964.8034482758621" as="sourcePoint" />
+            <mxPoint x="-210.5" y="964.7" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-28" connectable="0" parent="62M70fx36dKhCrZWJmee-27" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="НЕТ" vertex="1">
+          <mxGeometry relative="1" x="-0.0086" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62M70fx36dKhCrZWJmee-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Итоговые подсчеты:&lt;br&gt;&lt;br&gt;1 место: +30% + 1 rating&lt;br&gt;2 место: +20%&lt;br&gt;3 место: +10%" vertex="1">
+          <mxGeometry height="90" width="140" x="-190" y="930" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-7" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Правила игры" vertex="1">
+          <mxGeometry height="310" width="320" x="-780" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-8" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Игрок не может применить дебаф другому игроку если у того игрока уже применен дебаф" vertex="1">
+          <mxGeometry height="40" width="320" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-9" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Перезарядка дебафа 15 секунд" vertex="1">
+          <mxGeometry height="30" width="320" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-11" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;text-align: center;&quot;&gt;В первом раунде, у всех игроков на балансе 15 монет&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="320" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-12" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Выбрать игрока = нажимать на цифры + Enter&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="320" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-13" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Выбрать дебаф = нажимать на стрелочки&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ Enter&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="320" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-14" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;&quot;&gt;Итоговые подсчеты меняються с кол-игроков в сети в течении 5 секунд&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="320" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-10" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;text-align: center;&quot;&gt;ИИ делает задание и сам же его проверяет&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="320" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="SUcJuuv5urYHPq3VVwlR-1" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;&quot;&gt;Рейтинг +1 в том случае если занял 1 место и кол-игроков &amp;gt; 5&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="320" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="WmRDvUIf1oervVT_CnF_-15" parent="WmRDvUIf1oervVT_CnF_-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;text-align: center;&quot;&gt;Пинг сервера зависит от хоста владельца&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="320" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="1Fqb9MOEOINA7JhpwLlX-2" edge="1" parent="1" source="SUcJuuv5urYHPq3VVwlR-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="iC0jNEMaxr_icFIYgXgQ-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SUcJuuv5urYHPq3VVwlR-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;p data-pm-slice=&quot;0 0 []&quot;&gt;Gemini генерирует prompt&lt;br&gt;Round.prompt сохраняется&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="157.5" x="-255" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="SUcJuuv5urYHPq3VVwlR-5" edge="1" parent="1" source="SUcJuuv5urYHPq3VVwlR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="XCBOqVBsgiefRTu5q-5A-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SUcJuuv5urYHPq3VVwlR-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-family: &amp;quot;Anthropic Sans&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 14px; text-align: start; white-space: nowrap;&quot;&gt;Таймер истёк&lt;br&gt;&amp;nbsp;грейдинг&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="-385" y="660" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
