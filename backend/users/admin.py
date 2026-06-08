@@ -12,17 +12,17 @@ class CustomUserAdmin(UserAdmin):
         "is_verified",
         "rating",
         "coins",
-        "wins",
         "is_active",
     )
     list_filter = ("is_verified", "is_active", "is_staff")
     search_fields = ("username", "email")
     readonly_fields = ("id", "email")
-    fieldsets = UserAdmin.fieldsets + (
-        (
-            "Battle-cursor",
-            {"fields": ("is_verified", "rating", "coins", "wins", "cursor", "canvas")},
-        ),
+    fieldsets = (
+        (None, {"fields": ("id", "username", "password")}),
+        ("Personal info", {"fields": ("email",)}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
+        ("Battle-cursor Info", {"fields": ("is_verified", "rating", "coins", "cursor", "canvas")}),
     )
 
 

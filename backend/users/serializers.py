@@ -32,6 +32,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         write_only=True, min_length=8, validators=[validate_password_strength]
     )
     password_confirm = serializers.CharField(write_only=True)
+    email = serializers.EmailField()
 
     class Meta:
         model = User
@@ -50,15 +51,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                 {"password_confirm": "Пароли не совпадают."}
             )
         return data
-
-    def create(self, validated_data):
-        validated_data.pop("password_confirm")
-        user = User.objects.create_user(
-            username=validated_data["username"],
-            email=validated_data["email"],
-            password=validated_data["password"],
-        )
-        return user
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

@@ -46,7 +46,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, editable=False)
     is_verified = models.BooleanField(default=False)
     rating = models.PositiveIntegerField(default=0)
-    coins = models.PositiveIntegerField(default=0)
+    coins = models.PositiveIntegerField(default=10)
     cursor = models.ForeignKey(
         Cursor, on_delete=models.SET_NULL, null=True, blank=True, related_name="users"
     )
@@ -60,11 +60,16 @@ class User(AbstractUser):
         validators=[username_validator, username_min_length, username_max_length],
     )
 
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email"]
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     class Meta:
         db_table = "users"
+
+    def save(self, *args, **kwargs):
+        if self.is_superuser:
+            self.is_verified = True
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username

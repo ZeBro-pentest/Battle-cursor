@@ -1,0 +1,9 @@
+# игнорирование результатов Allure и кеша
+allure-results/
+# позже реализую папку со всем кешом
+.cache/
+postman/data/*.json
+node_modules/
+.venv/
+allure-results/
+allure-report/

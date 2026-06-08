@@ -1,0 +1,317 @@
+{
+  "info": {
+    "_postman_id": "ccddc4b2-3c13-4439-b06c-faa8f4678fbc",
+    "name": "Battle-cursor",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46178603"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.request.addHeader({key: 'allureEpic', value: 'API'});",
+              "pm.request.addHeader({key: 'allureFeature', value: 'Auth & Verification'});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "item": [
+        {
+          "name": "POST Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    if (data.id) {",
+                  "        pm.environment.set(\"user_id\", data.id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"{{username}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"password_confirm\": \"{{password_confirm}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "register", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Test Verification Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    if (data.token) {",
+                  "        pm.environment.set(\"VERIFICATION_TOKEN\", data.token);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/test-token/?email={{email}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "test-token", ""],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{email}}"
+                }
+              ]
+            },
+            "description": "Только для DEBUG=True. Достает токен из базы по email для автотестов."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Verify Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/verify-email/?token={{VERIFICATION_TOKEN}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "verify-email", ""],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "{{VERIFICATION_TOKEN}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set(\"ACCESS_TOKEN\", data.access);",
+                  "    pm.environment.set(\"REFRESH_TOKEN\", data.refresh);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET My Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh\": \"{{REFRESH_TOKEN}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/logout/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "logout", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Token Refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh\": \"{{REFRESH_TOKEN}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login/refresh/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login", "refresh", ""]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Тесты пока еще совсем актульны, с картинками сделал только заглушки"
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "GET Profile by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/{{user_id}}/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "{{user_id}}", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Update Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cursor\": null,\n    \"canvas\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/update/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "update", ""]
+            },
+            "description": "Тест не очень показательный т.к картинок еще нет"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shop",
+      "item": [
+        {
+          "name": "GET Cursors List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/cursors/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["cursors", ""]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Если список пуст, значит тупо нет курсоров и холстов  \n  \nТесты еще не актулены, зато запланированы"
+    }
+  ]
+}

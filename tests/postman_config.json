@@ -1,0 +1,12 @@
+{
+  "collection": "postman/collections/Battle-cursor.postman_collection.json",
+  "environment": "postman/environments/Battle-cursor Dev.postman_environment.json",
+  "iterationData": "postman/data/test_user.json",
+  "reporters": ["cli", "allure"],
+  "reporter": {
+    "allure": {
+      "export": "allure-results"
+    }
+  },
+  "bail": true
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтвердите email — Battle Cursor</title>
+    <style>
+        @media screen and (max-width: 620px) {
+            .container {
+                width: 90% !important;
+            }
+            .header-text {
+                font-size: 24px !important;
+            }
+            .content-box {
+                padding: 30px 20px !important;
+            }
+            .button {
+                width: 100% !important;
+                padding: 18px 10px !important;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: #0b0b0b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #0b0b0b;">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background-color: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="padding: 40px 40px 20px 40px; border-bottom: 1px solid rgba(255, 6, 6, 0.1);">
+                            <h1 class="header-text" style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -1px; text-transform: uppercase;">
+                                BATTLE <span style="color: #FF0606;">CURSOR</span>
+                            </h1>
+                        </td>
+                    </tr>
+                    <!-- Content -->
+                    <tr>
+                        <td align="center" class="content-box" style="padding: 40px;">
+                            <h2 style="margin: 0 0 20px 0; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #ffffff;">ПОДТВЕРЖДЕНИЕ ПОЧТЫ</h2>
+                            <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.7);">
+                                Привет, <strong style="color: #ffffff;">{{ username }}</strong>!<br>
+                                Добро пожаловать в мир цифровых сражений. Чтобы активировать свой профиль и вступить в бой, необходимо подтвердить адрес электронной почты.
+                            </p>
+                            <!-- Button -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td align="center" bgcolor="#FF0606" style="border-radius: 8px;">
+                                                    <a href="{{ verify_url }}" target="_blank" class="button" style="display: inline-block; padding: 18px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;">ПОДТВЕРДИТЬ ПОЧТУ</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="padding: 30px 40px; background-color: #080808; border-top: 1px solid #1a1a1a;">
+                            <p style="margin: 0; font-size: 12px; line-height: 1.4; color: rgba(255, 255, 255, 0.4);">
+                                Если вы не регистрировались на Battle Cursor, просто проигнорируйте это письмо.<br>
+                                &copy; 2026 Battle Cursor. Все права защищены.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
