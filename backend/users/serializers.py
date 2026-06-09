@@ -10,7 +10,7 @@ class CursorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cursor
-        fields = ["id", "name", "image_url", "price", "debuffs"]
+        fields = ["id", "name", "image_url", "price", "debuffs", "rarity"]
 
     def get_image_url(self, obj):
         return obj.image.url if obj.image else None
@@ -21,7 +21,7 @@ class CanvasSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Canvas
-        fields = ["id", "name", "image_url", "price", "protections"]
+        fields = ["id", "name", "image_url", "price", "protections", "rarity"]
 
     def get_image_url(self, obj):
         return obj.image.url if obj.image else None

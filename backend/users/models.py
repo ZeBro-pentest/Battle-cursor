@@ -13,12 +13,24 @@ from .validators import (
 )
 
 
+class RarityChoices(models.TextChoices):
+    COMMON = "common", "Common"
+    RARE = "rare", "Rare"
+    EPIC = "epic", "Epic"
+    LEGENDARY = "legendary", "Legendary"
+
+
 class Cursor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     image = CloudinaryField("cursor_image")
     price = models.PositiveIntegerField(default=0)
     debuffs = models.JSONField(default=list, validators=[validate_debuffs_list])
+    rarity = models.CharField(
+        max_length=10,
+        choices=RarityChoices.choices,
+        default=RarityChoices.COMMON,
+    )
 
     class Meta:
         db_table = "cursors"
@@ -33,6 +45,11 @@ class Canvas(models.Model):
     image = CloudinaryField("canvas_image")
     price = models.PositiveIntegerField(default=0)
     protections = models.JSONField(default=list, validators=[validate_debuffs_list])
+    rarity = models.CharField(
+        max_length=10,
+        choices=RarityChoices.choices,
+        default=RarityChoices.COMMON,
+    )
 
     class Meta:
         db_table = "canvases"

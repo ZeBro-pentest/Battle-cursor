@@ -4,7 +4,8 @@
   "description": "API Tests for Battle Cursor",
   "main": "index.js",
   "scripts": {
-    "test": "rimraf allure-results && curl -s http://127.0.0.1:8000/api/auth/login/ > /dev/null || (echo 'ОШИБКА: Бекенд не запущен!!!' && exit 1) && newman run postman/collections/Battle-cursor.postman_collection.json -e postman/environments/Battle-cursor\\ Dev.postman_environment.json -d postman/data/test_user.json -r cli,allure",
+    "test": "npm run test:run; npm run report:generate && npm run report:open",
+    "test:run": "rimraf allure-results && curl -s http://127.0.0.1:8000/api/auth/login/ > /dev/null || (echo 'ОШИБКА: Бекенд не запущен!!!' && exit 1) && newman run postman/collections/Battle-cursor.postman_collection.json -e postman/environments/Battle-cursor\\ Dev.postman_environment.json -d postman/data/test_user.json -r cli,allure",
     "report:generate": "allure generate allure-results --clean -o allure-report",
     "report:open": "allure open allure-report"
   },
