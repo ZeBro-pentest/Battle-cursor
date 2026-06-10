@@ -14,10 +14,11 @@ from .validators import (
 
 
 class RarityChoices(models.TextChoices):
-    COMMON = "common", "Common"
-    RARE = "rare", "Rare"
-    EPIC = "epic", "Epic"
-    LEGENDARY = "legendary", "Legendary"
+    COMMON = "common", "Common"  # 3 слота, цена: 0-50
+    RARE = "rare", "Rare"  # 5 слотов, цена: 51-150
+    EPIC = "epic", "Epic"  # 7 слотов, цена: 151-300
+    MYTHIC = "mythic", "Mythic"  # 9 слотов, цена: 301-500
+    LEGENDARY = "legendary", "Legendary"  # 11 слотов, цена: 501+
 
 
 class Cursor(models.Model):
