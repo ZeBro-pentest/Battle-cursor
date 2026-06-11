@@ -42,9 +42,9 @@
 ```
 📦 Battle-cursor
 ├── 📂 backend
-│   ├── ⚙️ config/           # настройки Django
+│   ├── ⚙️ config/
 │   ├── 📂 templates/
-│   │   └── 📂 emails/       # шаблоны писем
+│   │   └── 📂 emails/
 │   │       ├── verification.html
 │   │       └── welcome.html
 │   ├── 📂 users/            # User, Cursor, Canvas, EmailVerification
@@ -60,9 +60,9 @@
 │   ├── 📂 public/
 │   ├── 📂 src/
 │   │   ├── 📂 assets/
-│   │   ├── 📂 components/   # Header, Footer, Loader, modals
+│   │   ├── 📂 components/
 │   │   ├── 📂 hooks/
-│   │   ├── 📂 pages/        # Home, NotFound и др.
+│   │   ├── 📂 pages/
 │   │   ├── 📂 services/     # axios, api
 │   │   ├── 📂 store/        # Redux Toolkit
 │   │   └── 📂 types/
@@ -75,9 +75,27 @@
 │   ├── 📂postman/           # Postman коллекция
 │   ├── 📑 README.md
 │   ├── 🔧 .gitignore
-│   └── 📂 requirements.txt
+│   └── 🔧 requirements.txt
 └── 📑 README.md
 ```
+
+---
+
+## Git префиксы
+
+| Префикс | Когда использовать |
+| :--- | :--- |
+| `feat:` | Новая функциональность |
+| `fix:` | Исправление бага |
+| `refactor:` | Рефакторинг без изменения поведения |
+| `wip:` | Незавершённая работа |
+| `docs:` | Изменения только в документации |
+| `style:` | Форматирование, пробелы — без изменения логики |
+| `test:` | Добавление или исправление тестов |
+| `perf:` | Улучшение производительности |
+| `chore:` | Зависимости, конфиги, инструменты |
+| `build:` | Сборочная система, скрипты |
+| `revert:` | Откат предыдущего коммита |
 
 ---
 
@@ -153,39 +171,17 @@ EMAIL_PORT=2525
 EMAIL_HOST_USER=ваш-mailtrap-user
 EMAIL_HOST_PASSWORD=ваш-mailtrap-password
 
-# Groq
+# Groq (из console.groq.com)
 GROQ_API_KEY=ваш-groq-api-key
-
-> из console.groq.com
 
 # Frontend
 FRONTEND_URL=http://localhost:5173
 
-# Email
-DEFAULT_FROM_EMAIL=ваш-email@example.com
+# Gmail
+DEFAULT_FROM_EMAIL=ваш-email@gmail.com
 ```
 
 > Значения записываются без пробелов вокруг `=`
-
----
-
-## Git префиксы
-
-| Префикс | Когда использовать |
-| :--- | :--- |
-| `feat:` | Новая функциональность |
-| `fix:` | Исправление бага |
-| `refactor:` | Рефакторинг без изменения поведения |
-| `wip:` | Незавершённая работа |
-| `docs:` | Изменения только в документации |
-| `style:` | Форматирование, пробелы — без изменения логики |
-| `test:` | Добавление или исправление тестов |
-| `perf:` | Улучшение производительности |
-| `chore:` | Зависимости, конфиги, инструменты |
-| `build:` | Сборочная система, скрипты |
-| `revert:` | Откат предыдущего коммита |
-
----
 
 ## Клонирование
 
@@ -193,4 +189,4 @@ DEFAULT_FROM_EMAIL=ваш-email@example.com
 git clone https://github.com/ZeBro-pentest/Battle-cursor.git
 ```
 
-> Последнее обновление README: 08.06.2026
+> Последнее обновление README: 10.06.2026
