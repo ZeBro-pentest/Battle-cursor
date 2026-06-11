@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
@@ -20,21 +21,53 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("id", "username", "password")}),
         ("Personal info", {"fields": ("email",)}),
-        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+        (
+            "Permissions",
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                )
+            },
+        ),
         ("Important dates", {"fields": ("last_login", "date_joined")}),
-        ("Battle-cursor Info", {"fields": ("is_verified", "rating", "coins", "cursor", "canvas")}),
+        (
+            "Battle-cursor Info",
+            {"fields": ("is_verified", "rating", "coins", "cursor", "canvas")},
+        ),
     )
+
+
+class CursorAdminForm(forms.ModelForm):
+    image = forms.CharField(help_text="Cloudinary Public ID, например: Stylus_cursor")
+
+    class Meta:
+        model = Cursor
+        fields = "__all__"
+
+
+class CanvasAdminForm(forms.ModelForm):
+    image = forms.CharField(help_text="Cloudinary Public ID, например: Stylus_canvas")
+
+    class Meta:
+        model = Canvas
+        fields = "__all__"
 
 
 @admin.register(Cursor)
 class CursorAdmin(admin.ModelAdmin):
-    list_display = ("name", "price")
+    form = CursorAdminForm
+    list_display = ("name", "price", "rarity", "id")
     search_fields = ("name",)
 
 
 @admin.register(Canvas)
 class CanvasAdmin(admin.ModelAdmin):
-    list_display = ("name", "price")
+    form = CanvasAdminForm
+    list_display = ("name", "price", "rarity", "id")
     search_fields = ("name",)
 
 

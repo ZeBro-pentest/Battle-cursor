@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.core.exceptions import ValidationError
 from users.models import Canvas, Cursor
 
@@ -11,25 +12,28 @@ class PurchaseService:
         """
         Покупает курсор или холст.
         Проверяет монеты, дубликат, списывает монеты, добавляет в инвентарь.
+        Использует transaction.atomic для защиты от частичных обновлений.
         """
         item = PurchaseService._get_item(item_type, item_id)
 
         validate_enough_coins(user, item.price)
         validate_not_already_owned(user, item_type, item_id)
 
-        user.coins -= item.price
-        user.save(update_fields=["coins"])
+        with transaction.atomic():
+            # 🔒 Атомарная операция: списание денег, создание чека и выдача предмета
+            user.coins -= item.price
+            user.save(update_fields=["coins"])
 
-        purchase = Purchase.objects.create(
-            user=user,
-            item_type=item_type,
-            item_id=item_id,
-            price_paid=item.price,
-        )
+            purchase = Purchase.objects.create(
+                user=user,
+                item_type=item_type,
+                item_id=item_id,
+                price_paid=item.price,
+            )
 
-        InventoryService.add_item(user.inventory, item_type, item)
+            InventoryService.add_item(user.inventory, item_type, item)
 
-        return purchase
+            return purchase
 
     @staticmethod
     def _get_item(item_type: str, item_id):

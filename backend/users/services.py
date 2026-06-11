@@ -13,10 +13,17 @@ class UserService:
         """
         Создаёт пользователя, инвентарь и отправляет письмо верификации.
         """
+        from django.conf import settings
+
+        coins = validated_data.get("coins", 10)
+        if not settings.DEBUG:
+            coins = 10
+
         user = User.objects.create_user(
             username=validated_data["username"],
             email=validated_data["email"],
             password=validated_data["password"],
+            coins=coins,
         )
         Inventory.objects.create(user=user)
         EmailService.send_verification(user)

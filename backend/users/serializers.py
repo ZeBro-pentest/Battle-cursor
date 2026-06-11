@@ -33,10 +33,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     )
     password_confirm = serializers.CharField(write_only=True)
     email = serializers.EmailField()
+    coins = serializers.IntegerField(required=False)
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "password_confirm"]
+        fields = ["username", "email", "password", "password_confirm", "coins"]
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():

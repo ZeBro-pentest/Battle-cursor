@@ -16,7 +16,7 @@ from .serializers import (
 from .services import InventoryService, PurchaseService
 
 MARKET_CACHE_KEY = "market:shop_items"
-MARKET_CACHE_TTL = 60 * 5  # 5 минут
+MARKET_CACHE_TTL = 60 * 60 * 24  # увеличил до 24 часов т.к. у меня есть сигналы
 
 
 class MarketListView(APIView):
@@ -48,6 +48,9 @@ class BuyView(APIView):
                 item_type=serializer.validated_data["item_type"],
                 item_id=serializer.validated_data["item_id"],
             )
+            # Инвалидируем кэш инвентаря и истории покупок пользователя после покупки
+            cache.delete(f"inventory:{request.user.id}")
+            cache.delete(f"purchases:{request.user.id}")
         except ValidationError as e:
             message = e.messages[0] if e.messages else str(e)
             return Response({"detail": message}, status=status.HTTP_400_BAD_REQUEST)
@@ -61,13 +64,33 @@ class InventoryView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        cache_key = f"inventory:{request.user.id}"
+        cached_inventory = cache.get(cache_key)
+
+        if cached_inventory:
+            return Response(cached_inventory)
+
         inventory = InventoryService.get_inventory(request.user)
-        return Response(InventorySerializer(inventory).data)
+        data = InventorySerializer(inventory).data
+
+        # Кэшируем на 1 час
+        cache.set(cache_key, data, 60 * 60)
+        return Response(data)
 
 
 class PurchaseHistoryView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        cache_key = f"purchases:{request.user.id}"
+        cached_purchases = cache.get(cache_key)
+
+        if cached_purchases:
+            return Response(cached_purchases)
+
         purchases = Purchase.objects.filter(user=request.user)
-        return Response(PurchaseSerializer(purchases, many=True).data)
+        data = PurchaseSerializer(purchases, many=True).data
+
+        # Кэшируем на 1 час
+        cache.set(cache_key, data, 60 * 60)
+        return Response(data)

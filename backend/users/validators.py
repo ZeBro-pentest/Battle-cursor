@@ -49,8 +49,6 @@ def validate_debuffs_list(value: list) -> None:
     """
     if not isinstance(value, list):
         raise ValidationError("Дебаффы должны быть списком.")
-    if len(value) > 5:
-        raise ValidationError("Максимум 5 дебаффов.")
     invalid = [d for d in value if d not in VALID_DEBUFF_IDS]
     if invalid:
         raise ValidationError(

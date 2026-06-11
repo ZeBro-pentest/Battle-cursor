@@ -2,8 +2,6 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import (
-    CanvasListView,
-    CursorListView,
     GetVerificationTokenView,
     LoginView,
     LogoutView,
@@ -25,9 +23,6 @@ urlpatterns = [
     path("profile/", ProfileView.as_view(), name="profile"),
     path("profile/update/", ProfileUpdateView.as_view(), name="profile_update"),
     path("profile/<uuid:user_id>/", ProfileDetailView.as_view(), name="profile_detail"),
-    # Shop items
-    path("cursors/", CursorListView.as_view(), name="cursor_list"),
-    path("canvases/", CanvasListView.as_view(), name="canvas_list"),
     # Tests endpoints for postman and debugging
     path("auth/test-token/", GetVerificationTokenView.as_view(), name="get_test_token"),
 ]

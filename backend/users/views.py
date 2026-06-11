@@ -7,10 +7,8 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView as BaseTokenObtainPairView,
 )
 
-from .models import Canvas, Cursor, EmailVerification, User
+from .models import EmailVerification, User
 from .serializers import (
-    CanvasSerializer,
-    CursorSerializer,
     UserProfileSerializer,
     UserRegisterSerializer,
     UserUpdateSerializer,
@@ -141,24 +139,6 @@ class ProfileUpdateView(APIView):
         serializer.is_valid(raise_exception=True)
         user = UserService.update_profile(request.user, serializer.validated_data)
         return Response(UserProfileSerializer(user).data)
-
-
-class CursorListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        cursors = Cursor.objects.all()
-        serializer = CursorSerializer(cursors, many=True)
-        return Response(serializer.data)
-
-
-class CanvasListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        canvases = Canvas.objects.all()
-        serializer = CanvasSerializer(canvases, many=True)
-        return Response(serializer.data)
 
 
 # for tests

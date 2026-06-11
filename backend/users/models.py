@@ -15,6 +15,7 @@ from .validators import (
 
 class RarityChoices(models.TextChoices):
     # подробнее в Diagrams/market
+    NULL = "null", "Null"
     COMMON = "common", "Common"
     RARE = "rare", "Rare"
     EPIC = "epic", "Epic"
@@ -31,7 +32,7 @@ class Cursor(models.Model):
     rarity = models.CharField(
         max_length=10,
         choices=RarityChoices.choices,
-        default=RarityChoices.COMMON,
+        default=RarityChoices.NULL,
     )
 
     class Meta:
@@ -50,7 +51,7 @@ class Canvas(models.Model):
     rarity = models.CharField(
         max_length=10,
         choices=RarityChoices.choices,
-        default=RarityChoices.COMMON,
+        default=RarityChoices.NULL,
     )
 
     class Meta:
