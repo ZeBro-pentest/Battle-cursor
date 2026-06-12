@@ -68,7 +68,7 @@
 │   │   └── 📂 types/
 │   ├── 📜 package.json
 │   └── 📜 vite.config.ts
-├── 📂 Diagrams/             # визуальная документация
+├── 📂 Diagrams/
 │   ├── 📑 Diagrams.drawio
 │   └── 📑 README.md
 ├── 📂 tests/
