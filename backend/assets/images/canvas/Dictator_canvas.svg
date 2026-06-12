@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Внешний темный контур (как у корпуса курсора) -->
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#2a2e37" stroke-width="6" rx="8" />
+
+  <!-- Внутренняя акцентная бирюзовая линия (как неон) -->
+  <rect x="34" y="34" width="444" height="444" fill="none" stroke="#5effe0" stroke-width="2" opacity="0.8" rx="4" />
+
+  <!-- Декоративный пунктир по бокам для динамики (скрытый) -->
+  <rect x="34" y="34" width="444" height="444" fill="none" stroke="#2a2e37" stroke-width="1" stroke-dasharray="20 10" opacity="0.2" rx="4" />
+
+  <!-- УГЛОВЫЕ ЭЛЕМЕНТЫ: Стилизация двойного контура и прорези -->
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Двойной уголок и индикатор -->
+  <g transform="translate(16, 16)">
+    <!-- Внешний угол корпуса -->
+    <path d="M 0 50 L 0 0 L 50 0" fill="none" stroke="#2a2e37" stroke-width="8" stroke-linecap="round" />
+    <!-- Внутренний неон -->
+    <path d="M 12 40 L 12 12 L 40 12" fill="none" stroke="#5effe0" stroke-width="3" stroke-linecap="round" />
+    <!-- Каплевидный индикатор (как прорезь на курсоре) -->
+    <path d="M 16 16 L 36 36 L 40 32 Z" fill="#5effe0" stroke="#2a2e37" stroke-width="2" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Двойной уголок -->
+  <g transform="translate(496, 496) rotate(180)">
+    <path d="M 0 50 L 0 0 L 50 0" fill="none" stroke="#2a2e37" stroke-width="8" stroke-linecap="round" />
+    <path d="M 12 40 L 12 12 L 40 12" fill="none" stroke="#5effe0" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Акцентный бирюзовый элемент -->
+  <g transform="translate(496, 16) rotate(90)">
+    <path d="M 0 50 L 0 0 L 50 0" fill="none" stroke="#2a2e37" stroke-width="8" stroke-linecap="round" />
+    <circle cx="12" cy="12" r="6" fill="#5effe0" stroke="#2a2e37" stroke-width="2" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Акцентный бирюзовый элемент -->
+  <g transform="translate(16, 496) rotate(-90)">
+    <path d="M 0 50 L 0 0 L 50 0" fill="none" stroke="#2a2e37" stroke-width="8" stroke-linecap="round" />
+    <circle cx="12" cy="12" r="6" fill="#5effe0" stroke="#2a2e37" stroke-width="2" />
+  </g>
+</svg>

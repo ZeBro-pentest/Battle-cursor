@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Внешний строгий черный контур с острыми углами (как у стрелки) -->
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#000000" stroke-width="10" stroke-linejoin="miter" />
+
+  <!-- Внутренняя тонкая рамка-отступ -->
+  <rect x="38" y="38" width="436" height="436" fill="none" stroke="#000000" stroke-width="2" opacity="0.3" />
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Пунктирный круг прицела, заходящий на рамку (как на image_3c01e6.png) -->
+  <g transform="translate(36, 36)">
+    <!-- Жирный пунктирный круг -->
+    <circle cx="0" cy="0" r="26" fill="none" stroke="#000000" stroke-width="8" stroke-dasharray="10 8" />
+    <!-- Острый кончик стрелы, врезающийся в центр круга -->
+    <polygon points="0,0 12,24 24,12" fill="#ffffff" stroke="#000000" stroke-width="4" stroke-linejoin="miter" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Такой же пунктирный прицел для диагонального баланса -->
+  <g transform="translate(476, 476)">
+    <circle cx="0" cy="0" r="26" fill="none" stroke="#000000" stroke-width="8" stroke-dasharray="10 8" />
+    <polygon points="0,0 -12,-24 -24,-12" fill="#ffffff" stroke="#000000" stroke-width="4" stroke-linejoin="miter" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Угловой маркер фиксации (как в видоискателях камер) -->
+  <g transform="translate(476, 36)">
+    <path d="M -24 0 L 0 0 L 0 24" fill="none" stroke="#000000" stroke-width="6" />
+    <circle cx="-6" cy="6" r="3" fill="#000000" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Угловой маркер фиксации -->
+  <g transform="translate(36, 476)">
+    <path d="M 24 0 L 0 0 L 0 -24" fill="none" stroke="#000000" stroke-width="6" />
+    <circle cx="6" cy="-6" r="3" fill="#000000" />
+  </g>
+</svg>

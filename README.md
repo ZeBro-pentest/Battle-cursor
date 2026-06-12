@@ -189,4 +189,10 @@ DEFAULT_FROM_EMAIL=ваш-email@gmail.com
 git clone https://github.com/ZeBro-pentest/Battle-cursor.git
 ```
 
-> Последнее обновление README: 10.06.2026
+> Запуск команды `python backend/manage.py init_game_data` инициализирует данные для игры
+
+```bash
+python backend/manage.py init_game_data
+```
+
+> Последнее обновление README: 12.06.2026

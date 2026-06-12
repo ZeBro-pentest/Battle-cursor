@@ -41,32 +41,14 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
-class CursorAdminForm(forms.ModelForm):
-    image = forms.CharField(help_text="Cloudinary Public ID, например: Stylus_cursor")
-
-    class Meta:
-        model = Cursor
-        fields = "__all__"
-
-
-class CanvasAdminForm(forms.ModelForm):
-    image = forms.CharField(help_text="Cloudinary Public ID, например: Stylus_canvas")
-
-    class Meta:
-        model = Canvas
-        fields = "__all__"
-
-
 @admin.register(Cursor)
 class CursorAdmin(admin.ModelAdmin):
-    form = CursorAdminForm
     list_display = ("name", "price", "rarity", "id")
     search_fields = ("name",)
 
 
 @admin.register(Canvas)
 class CanvasAdmin(admin.ModelAdmin):
-    form = CanvasAdminForm
     list_display = ("name", "price", "rarity", "id")
     search_fields = ("name",)
 

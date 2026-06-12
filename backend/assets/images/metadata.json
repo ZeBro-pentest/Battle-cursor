@@ -1,0 +1,769 @@
+{
+  "cursors": [
+    {
+      "name": "Standard Cursor",
+      "image": "standard_cursor.png",
+      "price": 0,
+      "rarity": "null",
+      "debuffs": []
+    },
+    {
+      "name": "Stylus",
+      "image": "Stylus_cursor.png",
+      "price": 20,
+      "rarity": "common",
+      "debuffs": [
+        "chill",
+        "blur",
+        "fog"
+      ]
+    },
+    {
+      "name": "Blot",
+      "image": "Blot_cursor.png",
+      "price": 30,
+      "rarity": "common",
+      "debuffs": [
+        "smudge",
+        "weight",
+        "static"
+      ]
+    },
+    {
+      "name": "Spark",
+      "image": "Spark_cursor.png",
+      "price": 25,
+      "rarity": "common",
+      "debuffs": [
+        "carousel",
+        "flash",
+        "eraser"
+      ]
+    },
+    {
+      "name": "Arrow",
+      "image": "Arrow_cursor.png",
+      "price": 35,
+      "rarity": "common",
+      "debuffs": [
+        "anonim",
+        "mirror",
+        "advertising"
+      ]
+    },
+    {
+      "name": "Quill",
+      "image": "Quill_cursor.png",
+      "price": 15,
+      "rarity": "common",
+      "debuffs": [
+        "palette",
+        "captcha",
+        "darkness"
+      ]
+    },
+    {
+      "name": "Pencil",
+      "image": "Pencil_cursor.png",
+      "price": 100,
+      "rarity": "rare",
+      "debuffs": [
+        "chill",
+        "smudge",
+        "carousel",
+        "collapse",
+        "vandal"
+      ]
+    },
+    {
+      "name": "Vector",
+      "image": "Vector_cursor.png",
+      "price": 120,
+      "rarity": "rare",
+      "debuffs": [
+        "anonim",
+        "palette",
+        "blur",
+        "shake",
+        "zoom"
+      ]
+    },
+    {
+      "name": "Stroke",
+      "image": "Stroke_cursor.png",
+      "price": 110,
+      "rarity": "rare",
+      "debuffs": [
+        "weight",
+        "flash",
+        "mirror",
+        "quickly",
+        "popup"
+      ]
+    },
+    {
+      "name": "Virus",
+      "image": "Virus_cursor.png",
+      "price": 90,
+      "rarity": "rare",
+      "debuffs": [
+        "captcha",
+        "tar",
+        "static",
+        "timer",
+        "palette_swap"
+      ]
+    },
+    {
+      "name": "Trap",
+      "image": "Trap_cursor.png",
+      "price": 95,
+      "rarity": "rare",
+      "debuffs": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "blocking",
+        "freeze"
+      ]
+    },
+    {
+      "name": "Warper",
+      "image": "Warper_cursor.png",
+      "price": 220,
+      "rarity": "epic",
+      "debuffs": [
+        "chill",
+        "smudge",
+        "carousel",
+        "shake",
+        "timer",
+        "riddle",
+        "puzzle"
+      ]
+    },
+    {
+      "name": "Dictator",
+      "image": "Dictator_cursor.png",
+      "price": 250,
+      "rarity": "epic",
+      "debuffs": [
+        "anonim",
+        "palette",
+        "blur",
+        "quickly",
+        "blocking",
+        "quiz",
+        "code"
+      ]
+    },
+    {
+      "name": "Wraith",
+      "image": "Wraith_cursor.png",
+      "price": 270,
+      "rarity": "epic",
+      "debuffs": [
+        "weight",
+        "flash",
+        "mirror",
+        "palette_swap",
+        "collapse",
+        "maze",
+        "agreement"
+      ]
+    },
+    {
+      "name": "Hybrid",
+      "image": "Hybrid_cursor.png",
+      "price": 240,
+      "rarity": "epic",
+      "debuffs": [
+        "captcha",
+        "tar",
+        "static",
+        "freeze",
+        "zoom",
+        "survey",
+        "password"
+      ]
+    },
+    {
+      "name": "Breach",
+      "image": "Breach_cursor.png",
+      "price": 260,
+      "rarity": "epic",
+      "debuffs": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "vandal",
+        "popup",
+        "scan",
+        "verify"
+      ]
+    },
+    {
+      "name": "Parasite",
+      "image": "Parasite_cursor.png",
+      "price": 400,
+      "rarity": "mythic",
+      "debuffs": [
+        "chill",
+        "smudge",
+        "carousel",
+        "shake",
+        "timer",
+        "quiz",
+        "password",
+        "siren",
+        "hiss"
+      ]
+    },
+    {
+      "name": "Chaos",
+      "image": "Chaos_cursor.png",
+      "price": 450,
+      "rarity": "mythic",
+      "debuffs": [
+        "anonim",
+        "palette",
+        "blur",
+        "quickly",
+        "blocking",
+        "maze",
+        "verify",
+        "echo",
+        "pyhindu"
+      ]
+    },
+    {
+      "name": "Phantom",
+      "image": "Phantom_cursor.png",
+      "price": 420,
+      "rarity": "mythic",
+      "debuffs": [
+        "weight",
+        "flash",
+        "mirror",
+        "palette_swap",
+        "collapse",
+        "code",
+        "puzzle",
+        "ringtone",
+        "whisper"
+      ]
+    },
+    {
+      "name": "Tornado",
+      "image": "Tornado_cursor.png",
+      "price": 480,
+      "rarity": "mythic",
+      "debuffs": [
+        "captcha",
+        "tar",
+        "static",
+        "freeze",
+        "zoom",
+        "survey",
+        "riddle",
+        "glitch",
+        "storm"
+      ]
+    },
+    {
+      "name": "Mutant",
+      "image": "Mutant_cursor.png",
+      "price": 500,
+      "rarity": "mythic",
+      "debuffs": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "vandal",
+        "popup",
+        "scan",
+        "agreement",
+        "zombie",
+        "bombs"
+      ]
+    },
+    {
+      "name": "Judge",
+      "image": "Judge_cursor.png",
+      "price": 700,
+      "rarity": "legendary",
+      "debuffs": [
+        "chill",
+        "smudge",
+        "carousel",
+        "shake",
+        "timer",
+        "quiz",
+        "password",
+        "echo",
+        "glitch",
+        "questions",
+        "exam"
+      ]
+    },
+    {
+      "name": "Eraser",
+      "image": "Eraser_cursor.png",
+      "price": 800,
+      "rarity": "legendary",
+      "debuffs": [
+        "anonim",
+        "palette",
+        "blur",
+        "quickly",
+        "blocking",
+        "maze",
+        "verify",
+        "ringtone",
+        "bombs",
+        "weighting",
+        "weapons"
+      ]
+    },
+    {
+      "name": "Absolute",
+      "image": "Absolute_cursor.png",
+      "price": 750,
+      "rarity": "legendary",
+      "debuffs": [
+        "weight",
+        "flash",
+        "mirror",
+        "palette_swap",
+        "collapse",
+        "code",
+        "puzzle",
+        "storm",
+        "siren",
+        "rickroll",
+        "disco"
+      ]
+    },
+    {
+      "name": "Overlord",
+      "image": "Overlord_cursor.png",
+      "price": 900,
+      "rarity": "legendary",
+      "debuffs": [
+        "captcha",
+        "tar",
+        "static",
+        "freeze",
+        "zoom",
+        "survey",
+        "riddle",
+        "whisper",
+        "zombie",
+        "transparency",
+        "brightness"
+      ]
+    },
+    {
+      "name": "Collapse",
+      "image": "Collapse_cursor.png",
+      "price": 850,
+      "rarity": "legendary",
+      "debuffs": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "vandal",
+        "popup",
+        "scan",
+        "agreement",
+        "hiss",
+        "pyhindu",
+        "roulette",
+        "dvd"
+      ]
+    }
+  ],
+  "canvases": [
+    {
+      "name": "Basic Canvas",
+      "image": "basic_canvas.svg",
+      "price": 0,
+      "rarity": "null",
+      "protections": []
+    },
+    {
+      "name": "Stylus",
+      "image": "Stylus_canvas.svg",
+      "price": 20,
+      "rarity": "common",
+      "protections": [
+        "chill",
+        "smudge",
+        "carousel"
+      ]
+    },
+    {
+      "name": "Blot",
+      "image": "Blot_canvas.svg",
+      "price": 30,
+      "rarity": "common",
+      "protections": [
+        "anonim",
+        "palette",
+        "blur"
+      ]
+    },
+    {
+      "name": "Spark",
+      "image": "Spark_canvas.svg",
+      "price": 25,
+      "rarity": "common",
+      "protections": [
+        "weight",
+        "flash",
+        "mirror"
+      ]
+    },
+    {
+      "name": "Arrow",
+      "image": "Arrow_canvas.svg",
+      "price": 35,
+      "rarity": "common",
+      "protections": [
+        "captcha",
+        "tar",
+        "static"
+      ]
+    },
+    {
+      "name": "Quill",
+      "image": "Quill_canvas.svg",
+      "price": 15,
+      "rarity": "common",
+      "protections": [
+        "eraser",
+        "advertising",
+        "darkness"
+      ]
+    },
+    {
+      "name": "Pencil",
+      "image": "Pencil_canvas.svg",
+      "price": 100,
+      "rarity": "rare",
+      "protections": [
+        "chill",
+        "smudge",
+        "carousel",
+        "shake",
+        "timer"
+      ]
+    },
+    {
+      "name": "Vector",
+      "image": "Vector_canvas.svg",
+      "price": 110,
+      "rarity": "rare",
+      "protections": [
+        "anonim",
+        "palette",
+        "blur",
+        "quickly",
+        "blocking"
+      ]
+    },
+    {
+      "name": "Stroke",
+      "image": "Stroke_canvas.svg",
+      "price": 90,
+      "rarity": "rare",
+      "protections": [
+        "weight",
+        "flash",
+        "mirror",
+        "palette_swap",
+        "collapse"
+      ]
+    },
+    {
+      "name": "Virus",
+      "image": "Virus_canvas.svg",
+      "price": 120,
+      "rarity": "rare",
+      "protections": [
+        "captcha",
+        "tar",
+        "static",
+        "freeze",
+        "zoom"
+      ]
+    },
+    {
+      "name": "Trap",
+      "image": "Trap_canvas.svg",
+      "price": 95,
+      "rarity": "rare",
+      "protections": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "vandal",
+        "popup"
+      ]
+    },
+    {
+      "name": "Warper",
+      "image": "Warper_canvas.svg",
+      "price": 230,
+      "rarity": "epic",
+      "protections": [
+        "chill",
+        "smudge",
+        "carousel",
+        "shake",
+        "timer",
+        "quiz",
+        "password"
+      ]
+    },
+    {
+      "name": "Dictator",
+      "image": "Dictator_canvas.svg",
+      "price": 260,
+      "rarity": "epic",
+      "protections": [
+        "anonim",
+        "palette",
+        "blur",
+        "quickly",
+        "blocking",
+        "maze",
+        "verify"
+      ]
+    },
+    {
+      "name": "Wraith",
+      "image": "Wraith_canvas.svg",
+      "price": 240,
+      "rarity": "epic",
+      "protections": [
+        "weight",
+        "flash",
+        "mirror",
+        "palette_swap",
+        "collapse",
+        "code",
+        "puzzle"
+      ]
+    },
+    {
+      "name": "Hybrid",
+      "image": "Hybrid_canvas.svg",
+      "price": 280,
+      "rarity": "epic",
+      "protections": [
+        "captcha",
+        "tar",
+        "static",
+        "freeze",
+        "zoom",
+        "survey",
+        "riddle"
+      ]
+    },
+    {
+      "name": "Breach",
+      "image": "Breach_canvas.svg",
+      "price": 250,
+      "rarity": "epic",
+      "protections": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "vandal",
+        "popup",
+        "scan",
+        "agreement"
+      ]
+    },
+    {
+      "name": "Parasite",
+      "image": "Parasite_canvas.svg",
+      "price": 430,
+      "rarity": "mythic",
+      "protections": [
+        "chill",
+        "smudge",
+        "carousel",
+        "shake",
+        "timer",
+        "quiz",
+        "password",
+        "echo",
+        "glitch"
+      ]
+    },
+    {
+      "name": "Chaos",
+      "image": "Chaos_canvas.svg",
+      "price": 460,
+      "rarity": "mythic",
+      "protections": [
+        "anonim",
+        "palette",
+        "blur",
+        "quickly",
+        "blocking",
+        "maze",
+        "verify",
+        "ringtone",
+        "bombs"
+      ]
+    },
+    {
+      "name": "Phantom",
+      "image": "Phantom_canvas.svg",
+      "price": 410,
+      "rarity": "mythic",
+      "protections": [
+        "weight",
+        "flash",
+        "mirror",
+        "palette_swap",
+        "collapse",
+        "code",
+        "puzzle",
+        "storm",
+        "siren"
+      ]
+    },
+    {
+      "name": "Tornado",
+      "image": "Tornado_canvas.svg",
+      "price": 490,
+      "rarity": "mythic",
+      "protections": [
+        "captcha",
+        "tar",
+        "static",
+        "freeze",
+        "zoom",
+        "survey",
+        "riddle",
+        "whisper",
+        "zombie"
+      ]
+    },
+    {
+      "name": "Mutant",
+      "image": "Mutant_canvas.svg",
+      "price": 470,
+      "rarity": "mythic",
+      "protections": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "vandal",
+        "popup",
+        "scan",
+        "agreement",
+        "hiss",
+        "pyhindu"
+      ]
+    },
+    {
+      "name": "Judge",
+      "image": "Judge_canvas.svg",
+      "price": 720,
+      "rarity": "legendary",
+      "protections": [
+        "chill",
+        "smudge",
+        "carousel",
+        "shake",
+        "timer",
+        "quiz",
+        "password",
+        "echo",
+        "glitch",
+        "weighting",
+        "disco"
+      ]
+    },
+    {
+      "name": "Eraser",
+      "image": "Eraser_canvas.svg",
+      "price": 800,
+      "rarity": "legendary",
+      "protections": [
+        "anonim",
+        "palette",
+        "blur",
+        "quickly",
+        "blocking",
+        "maze",
+        "verify",
+        "ringtone",
+        "bombs",
+        "rickroll",
+        "brightness"
+      ]
+    },
+    {
+      "name": "Absolute",
+      "image": "Absolute_canvas.svg",
+      "price": 780,
+      "rarity": "legendary",
+      "protections": [
+        "weight",
+        "flash",
+        "mirror",
+        "palette_swap",
+        "code",
+        "puzzle",
+        "storm",
+        "siren",
+        "transparency",
+        "roulette"
+      ]
+    },
+    {
+      "name": "Overlord",
+      "image": "Overlord_canvas.svg",
+      "price": 900,
+      "rarity": "legendary",
+      "protections": [
+        "captcha",
+        "tar",
+        "static",
+        "freeze",
+        "zoom",
+        "survey",
+        "riddle",
+        "whisper",
+        "zombie",
+        "dvd",
+        "questions"
+      ]
+    },
+    {
+      "name": "Collapse",
+      "image": "Collapse_canvas.svg",
+      "price": 850,
+      "rarity": "legendary",
+      "protections": [
+        "eraser",
+        "advertising",
+        "darkness",
+        "vandal",
+        "popup",
+        "scan",
+        "agreement",
+        "hiss",
+        "pyhindu",
+        "exam",
+        "weapons"
+      ]
+    }
+  ]
+}

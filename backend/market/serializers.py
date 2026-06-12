@@ -2,6 +2,7 @@ from rest_framework import serializers
 from users.serializers import CanvasSerializer, CursorSerializer
 
 from .models import Inventory, Purchase
+from .validators import validate_item_exists
 
 
 class InventorySerializer(serializers.ModelSerializer):
@@ -26,7 +27,5 @@ class PurchaseCreateSerializer(serializers.Serializer):
     item_id = serializers.UUIDField()
 
     def validate(self, data):
-        from .validators import validate_item_exists
-
         validate_item_exists(data["item_type"], data["item_id"])
         return data

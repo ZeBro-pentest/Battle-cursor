@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Металлический градиент для основы рамки, как на теле курсора -->
+    <linearGradient id="meta-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4e4d53" />
+      <stop offset="30%" stop-color="#737278" />
+      <stop offset="70%" stop-color="#5b5a60" />
+      <stop offset="100%" stop-color="#353439" />
+    </linearGradient>
+
+    <!-- Градиент для светлого внутреннего канта -->
+    <linearGradient id="silver-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d6d6da" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. ВНЕШНИЙ ЧЕРНЫЙ КОНТУР (Строгий, массивный, гранёный) -->
+  <rect x="16" y="16" width="480" height="480" fill="none" stroke="#000000" stroke-width="12" stroke-linejoin="miter" />
+
+  <!-- 2. МЕТАЛЛИЧЕСКОЕ ТЕЛО РАМКИ (Заливка градиентом) -->
+  <rect x="22" y="22" width="468" height="468" fill="none" stroke="url(#meta-grad)" stroke-width="14" stroke-linejoin="miter" />
+
+  <!-- 3. СЕРЕБРИСТЫЙ ВНУТРЕННИЙ КАНТ (Повторяет светлую подложку с image_3bfa46.png) -->
+  <rect x="28" y="28" width="456" height="456" fill="none" stroke="url(#silver-grad)" stroke-width="3" stroke-linejoin="miter" />
+
+  <!-- 4. ТОНКАЯ ТЕМНАЯ ИНДИКАЦИЯ (Внутреннее эхо) -->
+  <rect x="38" y="38" width="436" height="436" fill="none" stroke="#252427" stroke-width="2" opacity="0.4" />
+
+
+  <!-- УГЛОВЫЕ ТЕХНОЛОГИЧЕСКИЕ МОДУЛИ -->
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Яркие глянцевые блики (как на левом крыле курсора) -->
+  <g transform="translate(32, 32)">
+    <!-- Длинный косой блик -->
+    <line x1="10" y1="2" x2="110" y2="2" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+    <!-- Два квадратных пиксельных блика рядом -->
+    <rect x="120" y="0" width="5" height="4" fill="#ffffff" />
+    <rect x="132" y="0" width="5" height="4" fill="#ffffff" />
+    <!-- Внутренний угловой срез брони -->
+    <polygon points="0,40 40,0 20,0 0,20" fill="#ffffff" opacity="0.3" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Зеркальный металлический скос и швы -->
+  <g transform="translate(480, 480) rotate(180)">
+    <line x1="10" y1="2" x2="70" y2="2" stroke="#ffffff" stroke-width="3" opacity="0.7" />
+    <!-- Фирменный пунктир шва, как на хвосте курсора -->
+    <line x1="14" y1="14" x2="84" y2="14" stroke="#000000" stroke-width="4" stroke-dasharray="6 6" stroke-linecap="square" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Заклёпки и линия шва -->
+  <g transform="translate(480, 32) rotate(90)">
+    <line x1="14" y1="14" x2="84" y2="14" stroke="#000000" stroke-width="4" stroke-dasharray="6 6" stroke-linecap="square" />
+    <circle cx="30" cy="2" r="3" fill="#000000" />
+    <circle cx="60" cy="2" r="3" fill="#000000" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Защитная пластина -->
+  <g transform="translate(32, 480) rotate(-90)">
+    <line x1="10" y1="2" x2="110" y2="2" stroke="#ffffff" stroke-width="3" opacity="0.5" />
+    <polygon points="12,-4 24,-16 44,-16 32,-4" fill="#000000" />
+  </g>
+</svg>
