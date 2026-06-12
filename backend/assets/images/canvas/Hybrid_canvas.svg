@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Основная тонкая рамка с прерывистым контуром (повторяет левую грань с image_3beefb.png) -->
+  <rect x="32" y="32" width="448" height="448" fill="none" stroke="#000000" stroke-width="6" stroke-dasharray="40 15 110 15 40" stroke-linejoin="miter" stroke-linecap="square" />
+
+  <!-- Внутренний золотистый маркер-эхо -->
+  <rect x="44" y="44" width="424" height="424" fill="none" stroke="#ffcc00" stroke-width="2" opacity="0.3" />
+
+  <!-- УГЛОВЫЕ ЭЛЕМЕНТЫ: Острые асимметричные стрелы-бумеранги -->
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Главный бумеранг -->
+  <g transform="translate(24, 24)">
+    <!-- Левая темная половина (Тёмно-желтый/оранжевый) -->
+    <polygon points="0,0 60,15 15,15 15,60" fill="#f3b300" stroke="#000000" stroke-width="6" stroke-linejoin="miter" />
+    <!-- Правая/внутренняя светлая половина (Яркий лимонный) -->
+    <polygon points="60,15 15,15 45,45" fill="#ffe135" stroke="#000000" stroke-width="4" stroke-linejoin="miter" />
+    <!-- Трафаретный штрих (декоративная точка контура) -->
+    <line x1="0" y1="25" x2="0" y2="40" stroke="#000000" stroke-width="6" stroke-linecap="square" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Развернутый бумеранг -->
+  <g transform="translate(488, 24) scale(-1, 1)">
+    <polygon points="0,0 60,15 15,15 15,60" fill="#f3b300" stroke="#000000" stroke-width="6" stroke-linejoin="miter" />
+    <polygon points="60,15 15,15 45,45" fill="#ffe135" stroke="#000000" stroke-width="4" stroke-linejoin="miter" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Зеркальный бумеранг -->
+  <g transform="translate(24, 488) scale(1, -1)">
+    <polygon points="0,0 60,15 15,15 15,60" fill="#f3b300" stroke="#000000" stroke-width="6" stroke-linejoin="miter" />
+    <polygon points="60,15 15,15 45,45" fill="#ffe135" stroke="#000000" stroke-width="4" stroke-linejoin="miter" />
+    <line x1="0" y1="25" x2="0" y2="40" stroke="#000000" stroke-width="6" stroke-linecap="square" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Завершающий бумеранг -->
+  <g transform="translate(488, 488) scale(-1, -1)">
+    <polygon points="0,0 60,15 15,15 15,60" fill="#f3b300" stroke="#000000" stroke-width="6" stroke-linejoin="miter" />
+    <polygon points="60,15 15,15 45,45" fill="#ffe135" stroke="#000000" stroke-width="4" stroke-linejoin="miter" />
+  </g>
+
+  <!-- Острые стреловидные насечки по центру рамки для усиления темы векторов -->
+  <polygon points="256,22 250,38 262,38" fill="#000000" />
+  <polygon points="256,490 250,474 262,474" fill="#000000" />
+  <polygon points="22,256 38,250 38,262" fill="#000000" />
+  <polygon points="490,256 474,250 474,262" fill="#000000" />
+</svg>

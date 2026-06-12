@@ -31,8 +31,8 @@
 | БД | SQLite |
 | WebSocket | Django Channels + Redis, нативный WebSocket (фронт) |
 | Хранилище | Cloudinary (курсоры, холсты) |
-| ИИ | Gemini 2.5 Flash (грейдинг рисунков) |
-| Почта | Mailtrap (верификация, приветствие) |
+| ИИ | Groq (грейдинг рисунков) |
+| Почта | Gmail (Mailtrap для тестов) |
 | CORS | django-cors-headers |
 
 ---
@@ -47,11 +47,11 @@
 │   │   └── 📂 emails/
 │   │       ├── verification.html
 │   │       └── welcome.html
-│   ├── 📂 users/
-│   ├── 📂 game/
-│   ├── 📂 market/
-│   ├── 📂 ai/
-│   ├── 📂 servers/
+│   ├── 📂 users/            # User, Cursor, Canvas, EmailVerification
+│   ├── 📂 game/             # Game, Round, Score
+│   ├── 📂 market/           # Inventory, Purchase
+│   ├── 📂 ai/               # грейдинг через Groq (Celery задачи)
+│   ├── 📂 servers/          # WebSocket consumers (Django Channels)
 │   ├── 🔧 .env
 │   ├── 🔧 .gitignore
 │   ├── 🔧 requirements.txt
@@ -63,8 +63,8 @@
 │   │   ├── 📂 components/
 │   │   ├── 📂 hooks/
 │   │   ├── 📂 pages/
-│   │   ├── 📂 services/
-│   │   ├── 📂 store/
+│   │   ├── 📂 services/     # axios, api
+│   │   ├── 📂 store/        # Redux Toolkit
 │   │   └── 📂 types/
 │   ├── 📜 package.json
 │   └── 📜 vite.config.ts
@@ -72,8 +72,30 @@
 │   ├── 📑 Diagrams.drawio
 │   └── 📑 README.md
 ├── 📂 tests/
+│   ├── 📂postman/           # Postman коллекция
+│   ├── 📑 README.md
+│   ├── 🔧 .gitignore
+│   └── 🔧 requirements.txt
 └── 📑 README.md
 ```
+
+---
+
+## Git префиксы
+
+| Префикс | Когда использовать |
+| :--- | :--- |
+| `feat:` | Новая функциональность |
+| `fix:` | Исправление бага |
+| `refactor:` | Рефакторинг без изменения поведения |
+| `wip:` | Незавершённая работа |
+| `docs:` | Изменения только в документации |
+| `style:` | Форматирование, пробелы — без изменения логики |
+| `test:` | Добавление или исправление тестов |
+| `perf:` | Улучшение производительности |
+| `chore:` | Зависимости, конфиги, инструменты |
+| `build:` | Сборочная система, скрипты |
+| `revert:` | Откат предыдущего коммита |
 
 ---
 
@@ -149,31 +171,17 @@ EMAIL_PORT=2525
 EMAIL_HOST_USER=ваш-mailtrap-user
 EMAIL_HOST_PASSWORD=ваш-mailtrap-password
 
-# Gemini
-GEMINI_API_KEY=ваш-gemini-api-key
+# Groq (из console.groq.com)
+GROQ_API_KEY=ваш-groq-api-key
+
+# Frontend
+FRONTEND_URL=http://localhost:5173
+
+# Gmail
+DEFAULT_FROM_EMAIL=ваш-email@gmail.com
 ```
 
 > Значения записываются без пробелов вокруг `=`
-
----
-
-## Git префиксы
-
-| Префикс | Когда использовать |
-| :--- | :--- |
-| `feat:` | Новая функциональность |
-| `fix:` | Исправление бага |
-| `refactor:` | Рефакторинг без изменения поведения |
-| `wip:` | Незавершённая работа |
-| `docs:` | Изменения только в документации |
-| `style:` | Форматирование, пробелы — без изменения логики |
-| `test:` | Добавление или исправление тестов |
-| `perf:` | Улучшение производительности |
-| `chore:` | Зависимости, конфиги, инструменты |
-| `build:` | Сборочная система, скрипты |
-| `revert:` | Откат предыдущего коммита |
-
----
 
 ## Клонирование
 
@@ -181,4 +189,10 @@ GEMINI_API_KEY=ваш-gemini-api-key
 git clone https://github.com/ZeBro-pentest/Battle-cursor.git
 ```
 
-> Последнее обновление README: 03.06.2026
+> Запуск команды `python backend/manage.py init_game_data` инициализирует данные для игры
+
+```bash
+python backend/manage.py init_game_data
+```
+
+> Последнее обновление README: 12.06.2026

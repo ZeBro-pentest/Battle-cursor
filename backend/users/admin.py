@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
@@ -12,29 +13,43 @@ class CustomUserAdmin(UserAdmin):
         "is_verified",
         "rating",
         "coins",
-        "wins",
         "is_active",
     )
     list_filter = ("is_verified", "is_active", "is_staff")
     search_fields = ("username", "email")
     readonly_fields = ("id", "email")
-    fieldsets = UserAdmin.fieldsets + (
+    fieldsets = (
+        (None, {"fields": ("id", "username", "password")}),
+        ("Personal info", {"fields": ("email",)}),
         (
-            "Battle-cursor",
-            {"fields": ("is_verified", "rating", "coins", "wins", "cursor", "canvas")},
+            "Permissions",
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                )
+            },
+        ),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
+        (
+            "Battle-cursor Info",
+            {"fields": ("is_verified", "rating", "coins", "cursor", "canvas")},
         ),
     )
 
 
 @admin.register(Cursor)
 class CursorAdmin(admin.ModelAdmin):
-    list_display = ("name", "price")
+    list_display = ("name", "price", "rarity", "id")
     search_fields = ("name",)
 
 
 @admin.register(Canvas)
 class CanvasAdmin(admin.ModelAdmin):
-    list_display = ("name", "price")
+    list_display = ("name", "price", "rarity", "id")
     search_fields = ("name",)
 
 

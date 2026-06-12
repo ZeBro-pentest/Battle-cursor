@@ -10,7 +10,7 @@ class CursorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cursor
-        fields = ["id", "name", "image_url", "price", "debuffs"]
+        fields = ["id", "name", "image_url", "price", "debuffs", "rarity"]
 
     def get_image_url(self, obj):
         return obj.image.url if obj.image else None
@@ -21,7 +21,7 @@ class CanvasSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Canvas
-        fields = ["id", "name", "image_url", "price", "protections"]
+        fields = ["id", "name", "image_url", "price", "protections", "rarity"]
 
     def get_image_url(self, obj):
         return obj.image.url if obj.image else None
@@ -32,10 +32,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         write_only=True, min_length=8, validators=[validate_password_strength]
     )
     password_confirm = serializers.CharField(write_only=True)
+    email = serializers.EmailField()
+    coins = serializers.IntegerField(required=False)
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "password_confirm"]
+        fields = ["username", "email", "password", "password_confirm", "coins"]
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
@@ -50,15 +52,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                 {"password_confirm": "Пароли не совпадают."}
             )
         return data
-
-    def create(self, validated_data):
-        validated_data.pop("password_confirm")
-        user = User.objects.create_user(
-            username=validated_data["username"],
-            email=validated_data["email"],
-            password=validated_data["password"],
-        )
-        return user
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

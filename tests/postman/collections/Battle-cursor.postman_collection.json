@@ -1,0 +1,618 @@
+{
+  "info": {
+    "_postman_id": "ccddc4b2-3c13-4439-b06c-faa8f4678fbc",
+    "name": "Battle-cursor",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46178603"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.request.addHeader({key: 'allureEpic', value: 'API'});",
+              "pm.request.addHeader({key: 'allureFeature', value: 'Auth & Verification'});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "item": [
+        {
+          "name": "POST Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    if (data.id) {",
+                  "        pm.environment.set(\"user_id\", data.id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"{{username}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"password_confirm\": \"{{password_confirm}}\",\n    \"coins\": {{coins}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "register", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Test Verification Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    if (data.token) {",
+                  "        pm.environment.set(\"VERIFICATION_TOKEN\", data.token);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/test-token/?email={{email}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "test-token", ""],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{email}}"
+                }
+              ]
+            },
+            "description": "Только для DEBUG=True. Достает токен из базы по email для автотестов."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Verify Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/verify-email/?token={{VERIFICATION_TOKEN}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "verify-email", ""],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "{{VERIFICATION_TOKEN}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set(\"ACCESS_TOKEN\", data.access);",
+                  "    pm.environment.set(\"REFRESH_TOKEN\", data.refresh);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh\": \"{{REFRESH_TOKEN}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/logout/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "logout", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Token Refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh\": \"{{REFRESH_TOKEN}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login/refresh/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login", "refresh", ""]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Тесты авторизации"
+    },
+    {
+      "name": "Market",
+      "item": [
+        {
+          "name": "GET Market List",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set(\"market_cursors\", JSON.stringify(data.cursors || []));",
+                  "    pm.environment.set(\"market_canvases\", JSON.stringify(data.canvases || []));",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/market/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["market", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Inventory Before",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "{",
+                  "    const inventory = pm.response.json();",
+                  "    const ownedCursorIds = (inventory.cursors || []).map(c => c.id);",
+                  "    const ownedCanvasIds = (inventory.canvases || []).map(c => c.id);",
+                  "",
+                  "    const marketCursors = JSON.parse(pm.environment.get(\"market_cursors\") || \"[]\");",
+                  "    const marketCanvases = JSON.parse(pm.environment.get(\"market_canvases\") || \"[]\");",
+                  "",
+                  "    const availableCursor = marketCursors.find(c => !ownedCursorIds.includes(c.id));",
+                  "    const availableCanvas = marketCanvases.find(c => !ownedCanvasIds.includes(c.id));",
+                  "",
+                  "    if (availableCursor) {",
+                  "        pm.environment.set(\"test_cursor_id\", availableCursor.id);",
+                  "    } else {",
+                  "        pm.environment.set(\"test_cursor_id\", null);",
+                  "    }",
+                  "",
+                  "    if (availableCanvas) {",
+                  "        pm.environment.set(\"test_canvas_id\", availableCanvas.id);",
+                  "    } else {",
+                  "        pm.environment.set(\"test_canvas_id\", null);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/market/inventory/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["market", "inventory", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Buy Cursor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.environment.get(\"test_cursor_id\")) {",
+                  "    pm.test(\"Status code is 201\", function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "} else {",
+                  "    pm.test(\"No available cursors to buy\", function () {",
+                  "        pm.expect(true).to.be.true;",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"item_type\": \"cursor\",\n    \"item_id\": \"{{test_cursor_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/market/buy/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["market", "buy", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Buy Canvas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.environment.get(\"test_canvas_id\")) {",
+                  "    pm.test(\"Status code is 201\", function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "} else {",
+                  "    pm.test(\"No available canvases to buy\", function () {",
+                  "        pm.expect(true).to.be.true;",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"item_type\": \"canvas\",\n    \"item_id\": \"{{test_canvas_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/market/buy/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["market", "buy", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Inventory After",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "{",
+                  "    const inventory = pm.response.json();",
+                  "    const cursors = inventory.cursors || [];",
+                  "    const canvases = inventory.canvases || [];",
+                  "",
+                  "    if (cursors.length > 0) {",
+                  "        pm.environment.set(\"equipped_cursor_id\", cursors[0].id);",
+                  "    }",
+                  "    if (canvases.length > 0) {",
+                  "        pm.environment.set(\"equipped_canvas_id\", canvases[0].id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/market/inventory/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["market", "inventory", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Purchase History",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/market/purchases/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["market", "purchases", ""]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Тесты для магазина"
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "GET My Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Profile by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/07139267-449f-45aa-ab11-f8cb3071323c/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "07139267-449f-45aa-ab11-f8cb3071323c", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Update Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "{",
+                  "    const data = pm.response.json();",
+                  "    if (pm.environment.get(\"equipped_cursor_id\")) {",
+                  "        pm.test(\"Cursor was updated\", function () {",
+                  "            pm.expect(data.cursor.id).to.eql(pm.environment.get(\"equipped_cursor_id\"));",
+                  "        });",
+                  "    }",
+                  "    if (pm.environment.get(\"equipped_canvas_id\")) {",
+                  "        pm.test(\"Canvas was updated\", function () {",
+                  "            pm.expect(data.canvas.id).to.eql(pm.environment.get(\"equipped_canvas_id\"));",
+                  "        });",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ACCESS_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cursor\": \"{{equipped_cursor_id}}\",\n    \"canvas\": \"{{equipped_canvas_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/update/",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "update", ""]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Тесты управления профилем"
+    }
+  ]
+}

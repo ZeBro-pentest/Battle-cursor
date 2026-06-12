@@ -3,7 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 
-from .validators import max_players_validator, prompt_validator
+from .validators import max_players_validator, validate_prompt
 
 
 def generate_game_number():
@@ -42,7 +42,7 @@ class Round(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="rounds")
     number = models.PositiveIntegerField()
-    prompt = models.CharField(max_length=100, validators=[prompt_validator])
+    prompt = models.CharField(max_length=100, validators=[validate_prompt])
     started_at = models.DateTimeField(null=True, blank=True)
     ended_at = models.DateTimeField(null=True, blank=True)
     is_finished = models.BooleanField(default=False)

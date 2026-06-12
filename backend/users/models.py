@@ -13,12 +13,27 @@ from .validators import (
 )
 
 
+class RarityChoices(models.TextChoices):
+    # подробнее в Diagrams/market
+    NULL = "null", "Null"
+    COMMON = "common", "Common"
+    RARE = "rare", "Rare"
+    EPIC = "epic", "Epic"
+    MYTHIC = "mythic", "Mythic"
+    LEGENDARY = "legendary", "Legendary"
+
+
 class Cursor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     image = CloudinaryField("cursor_image")
     price = models.PositiveIntegerField(default=0)
     debuffs = models.JSONField(default=list, validators=[validate_debuffs_list])
+    rarity = models.CharField(
+        max_length=10,
+        choices=RarityChoices.choices,
+        default=RarityChoices.NULL,
+    )
 
     class Meta:
         db_table = "cursors"
@@ -33,6 +48,11 @@ class Canvas(models.Model):
     image = CloudinaryField("canvas_image")
     price = models.PositiveIntegerField(default=0)
     protections = models.JSONField(default=list, validators=[validate_debuffs_list])
+    rarity = models.CharField(
+        max_length=10,
+        choices=RarityChoices.choices,
+        default=RarityChoices.NULL,
+    )
 
     class Meta:
         db_table = "canvases"
@@ -46,7 +66,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, editable=False)
     is_verified = models.BooleanField(default=False)
     rating = models.PositiveIntegerField(default=0)
-    coins = models.PositiveIntegerField(default=0)
+    coins = models.PositiveIntegerField(default=10)
     cursor = models.ForeignKey(
         Cursor, on_delete=models.SET_NULL, null=True, blank=True, related_name="users"
     )
@@ -60,11 +80,16 @@ class User(AbstractUser):
         validators=[username_validator, username_min_length, username_max_length],
     )
 
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email"]
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     class Meta:
         db_table = "users"
+
+    def save(self, *args, **kwargs):
+        if self.is_superuser:
+            self.is_verified = True
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username

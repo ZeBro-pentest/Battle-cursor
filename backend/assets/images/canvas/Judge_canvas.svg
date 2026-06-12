@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- ВНУТРЕННЕЕ ТЕЛО РАМКИ: Деревянный корабельный кант -->
+  <rect x="36" y="36" width="440" height="440" fill="none" stroke="#000000" stroke-width="12" stroke-linejoin="round" />
+  <rect x="42" y="42" width="428" height="428" fill="none" stroke="#78594e" stroke-width="6" />
+
+  <!-- Внутренний металлический обод (Изумрудный трек) -->
+  <rect x="52" y="52" width="408" height="408" fill="none" stroke="#006b66" stroke-width="4" />
+
+  <!-- ЦЕНТРАЛЬНЫЕ ЭЛЕМЕНТЫ СТОРОН: Имитация рукояток штурвала -->
+  <!-- Верх -->
+  <g transform="translate(256, 36)">
+    <rect x="-8" y="-16" width="16" height="20" fill="#78594e" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    <circle cx="0" cy="-20" r="6" fill="#006b66" stroke="#000000" stroke-width="4" />
+  </g>
+  <!-- Ниж -->
+  <g transform="translate(256, 476)">
+    <rect x="-8" y="-4" width="16" height="20" fill="#78594e" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    <circle cx="0" cy="20" r="6" fill="#006b66" stroke="#000000" stroke-width="4" />
+  </g>
+  <!-- Лево -->
+  <g transform="translate(36, 256)">
+    <rect x="-16" y="-8" width="20" height="16" fill="#78594e" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    <circle cx="-20" cy="0" r="6" fill="#006b66" stroke="#000000" stroke-width="4" />
+  </g>
+  <!-- Право -->
+  <g transform="translate(476, 256)">
+    <rect x="-4" y="-8" width="20" height="16" fill="#78594e" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    <circle cx="20" cy="0" r="6" fill="#006b66" stroke="#000000" stroke-width="4" />
+  </g>
+
+
+  <!-- УГЛОВЫЕ МОДУЛИ: Стилизованная Роза Ветров со смещением в угол -->
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ -->
+  <g transform="translate(42, 42)">
+    <!-- Фоновый темный круг (Основа штурвала) -->
+    <circle cx="0" cy="0" r="28" fill="#78594e" stroke="#000000" stroke-width="5" />
+    <circle cx="0" cy="0" r="16" fill="none" stroke="#000000" stroke-width="4" />
+
+    <!-- Главный угловой луч (Направлен внутрь холста под 45°) -->
+    <g transform="rotate(45)">
+      <!-- Светлая сторона луча -->
+      <polygon points="0,0 0,-60 14,-14" fill="#008a83" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+      <!-- Темная сторона луча -->
+      <polygon points="0,0 0,-60 -14,-14" fill="#004d49" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    </g>
+
+    <!-- Боковые малые лучи компаса -->
+    <g transform="rotate(0)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+    <g transform="rotate(90)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+
+    <!-- Центральная заклепка -->
+    <circle cx="0" cy="0" r="6" fill="#78594e" stroke="#000000" stroke-width="4" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ -->
+  <g transform="translate(470, 42)">
+    <circle cx="0" cy="0" r="28" fill="#78594e" stroke="#000000" stroke-width="5" />
+    <circle cx="0" cy="0" r="16" fill="none" stroke="#000000" stroke-width="4" />
+    <g transform="rotate(-45)">
+      <polygon points="0,0 0,-60 14,-14" fill="#008a83" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+      <polygon points="0,0 0,-60 -14,-14" fill="#004d49" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    </g>
+    <g transform="rotate(0)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+    <g transform="rotate(-90)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+    <circle cx="0" cy="0" r="6" fill="#78594e" stroke="#000000" stroke-width="4" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ -->
+  <g transform="translate(42, 470)">
+    <circle cx="0" cy="0" r="28" fill="#78594e" stroke="#000000" stroke-width="5" />
+    <circle cx="0" cy="0" r="16" fill="none" stroke="#000000" stroke-width="4" />
+    <g transform="rotate(135)">
+      <polygon points="0,0 0,-60 14,-14" fill="#008a83" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+      <polygon points="0,0 0,-60 -14,-14" fill="#004d49" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    </g>
+    <g transform="rotate(180)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+    <g transform="rotate(90)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+    <circle cx="0" cy="0" r="6" fill="#78594e" stroke="#000000" stroke-width="4" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ -->
+  <g transform="translate(470, 470)">
+    <circle cx="0" cy="0" r="28" fill="#78594e" stroke="#000000" stroke-width="5" />
+    <circle cx="0" cy="0" r="16" fill="none" stroke="#000000" stroke-width="4" />
+    <g transform="rotate(-135)">
+      <polygon points="0,0 0,-60 14,-14" fill="#008a83" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+      <polygon points="0,0 0,-60 -14,-14" fill="#004d49" stroke="#000000" stroke-width="4" stroke-linejoin="round" />
+    </g>
+    <g transform="rotate(180)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+    <g transform="rotate(-90)">
+      <polygon points="0,0 0,-40 10,-10" fill="#008a83" stroke="#000000" stroke-width="3" />
+      <polygon points="0,0 0,-40 -10,-10" fill="#004d49" stroke="#000000" stroke-width="3" />
+    </g>
+    <circle cx="0" cy="0" r="6" fill="#78594e" stroke="#000000" stroke-width="4" />
+  </g>
+</svg>
