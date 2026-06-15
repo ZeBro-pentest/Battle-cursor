@@ -32,6 +32,8 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(","
 
 AUTH_USER_MODEL = "users.User"
 
+REDIS_URL = "redis://127.0.0.1:6379"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -173,6 +175,32 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 # Groq
 GROQ_API_KEY = config("GROQ_API_KEY")
 
+# JWT
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+# Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                {
+                    "host": "127.0.0.1",
+                    "port": 6379,
+                    "socket_keepalive": True,
+                }
+            ],
+            "symmetric_encryption_keys": None,
+            "prefix": "battle_cursor",
+        },
+    },
+}
+
 # ==================== LOGGING CONFIGURATION ====================
 # 🔒 Логирование в консоль (dev) и в файл (prod)
 
@@ -237,6 +265,21 @@ LOGGING = {
         "chatting": {
             "handlers": ["console"],
             "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "daphne.server": {
+            "handlers": ["console"],
+            "level": "CRITICAL",
+            "propagate": False,
+        },
+        "daphne.http_protocol": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "daphne.ws_protocol": {
+            "handlers": ["console"],
+            "level": "WARNING",
             "propagate": False,
         },
     },

@@ -43,6 +43,11 @@
 📦 Battle-cursor
 ├── 📂 backend
 │   ├── ⚙️ config/
+│   ├── 📂 assets/          # Cloudinary
+│   │   └── 📂 images/
+│   │       ├── 📂 canvas
+│   │       ├── 📂 cursors
+│   │       └── metadata.json
 │   ├── 📂 templates/
 │   │   └── 📂 emails/
 │   │       ├── verification.html
@@ -72,8 +77,11 @@
 │   ├── 📑 Diagrams.drawio
 │   └── 📑 README.md
 ├── 📂 tests/
-│   ├── 📂postman/           # Postman коллекция
+│   ├── 📂 backend
+│   ├── 📂 frontend
+│   ├── 📂 postman/           # Postman коллекция
 │   ├── 📑 README.md
+│   ├── 📜 package.json
 │   ├── 🔧 .gitignore
 │   └── 🔧 requirements.txt
 └── 📑 README.md
@@ -104,7 +112,7 @@
 **Backend**
 ```bash
 cd backend
-python manage.py runserver
+make run
 ```
 
 **Frontend**
