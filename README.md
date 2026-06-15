@@ -203,4 +203,4 @@ git clone https://github.com/ZeBro-pentest/Battle-cursor.git
 python backend/manage.py init_game_data
 ```
 
-> Последнее обновление README: 12.06.2026
+> Последнее обновление README: 15.06.2026
