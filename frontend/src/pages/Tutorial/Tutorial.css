@@ -1,0 +1,152 @@
+.tutorial-page {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.tutorial-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  padding: 120px 20px 80px;
+}
+
+.tutorial-step {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.tutorial-step.reverse {
+  flex-direction: row-reverse;
+}
+
+.step-image-container {
+  flex: 1;
+  position: relative;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 6, 6, 0.2);
+  border-radius: 16px;
+  overflow: visible;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Декоративные уголки для рамки */
+.step-image-container::before,
+.step-image-container::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent);
+  z-index: 2;
+}
+
+.step-image-container::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.step-image-container::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.step-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tutorial-step:hover .step-image {
+  transform: scale(1.03);
+  border-color: rgba(255, 6, 6, 0.5);
+  box-shadow: 0 0 40px rgba(255, 6, 6, 0.2);
+}
+
+.step-number-badge {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  background-color: var(--accent);
+  color: white;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: 400;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(255, 6, 6, 0.4);
+  font-family: var(--sans);
+  z-index: 5;
+}
+
+.tutorial-step.reverse .step-number-badge {
+  left: auto;
+  right: -20px;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-title {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.step-divider {
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent);
+  margin-bottom: 25px;
+}
+
+.step-description {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #bbbbbb;
+}
+
+.tutorial-footer {
+  text-align: center;
+  padding: 60px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tutorial-footer h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 968px) {
+  .tutorial-step, .tutorial-step.reverse {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+  
+  .step-divider {
+    margin: 0 auto 25px;
+  }
+
+  .tutorial-title {
+    font-size: 2.5rem;
+  }
+}

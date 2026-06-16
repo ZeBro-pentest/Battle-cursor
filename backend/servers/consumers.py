@@ -43,15 +43,25 @@ class GameConsumer(AsyncWebsocketConsumer):
             and hasattr(self, "user")
             and self.user.is_authenticated
         ):
-            await self.channel_layer.group_send(
-                self.room_group,
-                {
-                    "type": "player_left",
-                    "user_id": str(self.user.id),
-                    "username": self.user.username,
-                },
-            )
+            server = await self.get_server()
+            if server and server.status == server.StatusChoices.WAITING:
+                await self.leave_server()
+                server = await self.get_server()
+
+            if server:  # комната ещё существует
+                await self.channel_layer.group_send(
+                    self.room_group,
+                    {
+                        "type": "player_left",
+                        "user_id": str(self.user.id),
+                        "username": self.user.username,
+                    },
+                )
             await self.channel_layer.group_discard(self.room_group, self.channel_name)
+
+    @database_sync_to_async
+    def leave_server(self):
+        ServerService.leave_server(self.room_code, self.user)
 
     async def receive(self, text_data):
         try:

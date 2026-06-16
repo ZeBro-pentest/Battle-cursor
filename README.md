@@ -43,11 +43,11 @@
 📦 Battle-cursor
 ├── 📂 backend
 │   ├── ⚙️ config/
-│   ├── 📂 assets/          # Cloudinary
+│   ├── 📂 assets/            # Cloudinary
 │   │   └── 📂 images/
 │   │       ├── 📂 canvas
 │   │       ├── 📂 cursors
-│   │       └── metadata.json
+│   │       └── metadata.json # данные cursors/canvas
 │   ├── 📂 templates/
 │   │   └── 📂 emails/
 │   │       ├── verification.html
@@ -63,6 +63,9 @@
 │   └── 📜 manage.py
 ├── 📂 frontend
 │   ├── 📂 public/
+│   │   └── 📂 images/
+│   │       ├── 📂 canvas
+│   │       └── 📂 cursors
 │   ├── 📂 src/
 │   │   ├── 📂 assets/
 │   │   ├── 📂 components/

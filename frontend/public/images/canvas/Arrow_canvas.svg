@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Основной черный контур со слегка скругленными углами -->
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" rx="16" />
+
+  <!-- Внутренняя тонкая направляющая линия -->
+  <rect x="38" y="38" width="436" height="436" fill="none" stroke="#000000" stroke-width="2" rx="10" opacity="0.3" />
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Треугольный наконечник стрелы (смотрит в центр) -->
+  <g transform="translate(44, 44) rotate(-45)">
+    <polygon points="0,-16 -14,12 14,12" fill="#ffffff" stroke="#000000" stroke-width="6" stroke-linejoin="round" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Такой же наконечник для баланса по главной диагонали -->
+  <g transform="translate(468, 468) rotate(135)">
+    <polygon points="0,-16 -14,12 14,12" fill="#ffffff" stroke="#000000" stroke-width="6" stroke-linejoin="round" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Оперение стрелы (как на хвосте в image_3c7644.png) -->
+  <g transform="translate(468, 44) rotate(45)">
+    <path d="M -15 -10 L 0 5 L 15 -10 L 15 10 L 0 25 L -15 10 Z" fill="#ffffff" stroke="#000000" stroke-width="6" stroke-linejoin="round" />
+    <line x1="0" y1="5" x2="0" y2="25" stroke="#000000" stroke-width="4" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Оперение стрелы -->
+  <g transform="translate(44, 468) rotate(-135)">
+    <path d="M -15 -10 L 0 5 L 15 -10 L 15 10 L 0 25 L -15 10 Z" fill="#ffffff" stroke="#000000" stroke-width="6" stroke-linejoin="round" />
+    <line x1="0" y1="5" x2="0" y2="25" stroke="#000000" stroke-width="4" />
+  </g>
+
+  <!-- Декоративные засечки по центру сторон (имитация древка стрелы) -->
+  <circle cx="256" cy="24" r="5" fill="#000000" />
+  <circle cx="256" cy="488" r="5" fill="#000000" />
+  <circle cx="24" cy="256" r="5" fill="#000000" />
+  <circle cx="488" cy="256" r="5" fill="#000000" />
+</svg>

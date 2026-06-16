@@ -3,6 +3,7 @@ from servers.repository import ServerRepository
 from servers.validators import (
     validate_game_not_started,
     validate_room_not_full,
+    validate_single_server,
     validate_single_session,
 )
 
@@ -10,9 +11,8 @@ from servers.validators import (
 class ServerService:
     @staticmethod
     def create_server(host, max_players=8):
-        server = ServerRepository.create_server(host=host, max_players=max_players)
-        ServerRepository.add_player(server, host)
-        return server
+        validate_single_server(host)
+        return ServerRepository.create_server(host=host, max_players=max_players)
 
     @staticmethod
     def get_server(room_code):

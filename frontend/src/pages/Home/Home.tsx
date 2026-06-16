@@ -1,18 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 export function Home() {
+  const heroRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      heroRef.current.style.setProperty("--mouse-x", `${x}px`);
+      heroRef.current.style.setProperty("--mouse-y", `${y}px`);
+    };
+
+    const hero = heroRef.current;
+    if (hero) {
+      hero.addEventListener("mousemove", handleMouseMove);
+    }
+
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
+      if (hero) {
+        hero.removeEventListener("mousemove", handleMouseMove);
+      }
     };
   }, []);
 
   return (
     <div className="home-page">
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero" ref={heroRef}>
+        <div className="hero-grid"></div>
+        <div className="hero-glow"></div>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
           <div className="badge">New Season: Cyber Red</div>
@@ -25,7 +48,9 @@ export function Home() {
           </p>
           <div className="hero-actions">
             <button className="cta-button primary">Играть сейчас</button>
-            <button className="cta-button secondary">Обучение</button>
+            <Link to="/tutorial" className="cta-button secondary">
+              Обучение
+            </Link>
           </div>
         </div>
       </section>
@@ -110,6 +135,38 @@ export function Home() {
 
       {/* Testimonials (Professional Quote) */}
       <section className="quote-section">
+        <div className="quote-bg-decor">
+          {(() => {
+            const cursorNames = [
+              "Absolute", "Arrow", "Blot", "Breach", "Chaos", 
+              "Collapse", "Dictator", "Eraser", "Hybrid", "Judge",
+              "Mutant", "Overlord", "Parasite", "Pencil", "Phantom",
+              "Quill", "Spark", "Stroke", "Stylus", "Tornado",
+              "Trap", "Vector", "Virus", "Warper", "Wraith"
+            ];
+            
+            const renderSquares = (isDup = false) => 
+              cursorNames.map((name, i) => {
+                const path = `/images/cursors/${name}_cursor.png`;
+                const canvasPath = `/images/canvas/${name}_canvas.svg`;
+                
+                return (
+                  <div key={isDup ? `dup-${i}` : i} className="decor-square">
+                    <img src={canvasPath} alt={`${name} canvas`} className="decor-canvas" />
+                    <img src={path} alt={name} className="decor-img" />
+                  </div>
+                );
+              });
+
+            return (
+              <>
+                {renderSquares()}
+                {/* Дублируем для бесшовной анимации */}
+                {renderSquares(true)}
+              </>
+            );
+          })()}
+        </div>
         <div className="container">
           <div className="quote-box">
             <p className="quote-text">

@@ -33,6 +33,13 @@ class Server(models.Model):
         validators=[validate_max_players],
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    game = models.OneToOneField(
+        "game.Game",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="server",
+    )
 
     def save(self, *args, **kwargs):
         if not self.room_code:

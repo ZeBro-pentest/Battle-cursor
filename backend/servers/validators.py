@@ -28,3 +28,13 @@ def validate_single_session(user):
         status__in=[Server.StatusChoices.WAITING, Server.StatusChoices.IN_PROGRESS],
     ).exists():
         raise ValidationError("Вы уже находитесь в другой комнате.")
+
+
+def validate_single_server(user):
+    from servers.models import Server
+
+    if Server.objects.filter(
+        host=user,
+        status__in=[Server.StatusChoices.WAITING, Server.StatusChoices.IN_PROGRESS],
+    ).exists():
+        raise ValidationError("Вы уже создали комнату.")

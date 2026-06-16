@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Основная габаритная рамка (Тонкий технический контур) -->
+  <rect x="40" y="40" width="432" height="432" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="miter" />
+  
+  <!-- Внутренний вспомогательный визир -->
+  <rect x="52" y="52" width="408" height="408" fill="none" stroke="#cc3311" stroke-width="2" opacity="0.4" />
+
+  <!-- ЦЕНТРАЛЬНЫЕ МАРКЕРЫ (Перекрестие прицела по бокам, как на image_3b8e61.png) -->
+  <!-- Верх -->
+  <g transform="translate(256, 40)">
+    <line x1="0" y1="-15" x2="0" y2="15" stroke="#000000" stroke-width="8" />
+    <line x1="0" y1="-15" x2="0" y2="15" stroke="#cc3311" stroke-width="4" />
+  </g>
+  <!-- Ниж -->
+  <g transform="translate(256, 472)">
+    <line x1="0" y1="-15" x2="0" y2="15" stroke="#000000" stroke-width="8" />
+    <line x1="0" y1="-15" x2="0" y2="15" stroke="#cc3311" stroke-width="4" />
+  </g>
+  <!-- Лево -->
+  <g transform="translate(40, 256)">
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="#000000" stroke-width="8" />
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="#cc3311" stroke-width="4" />
+  </g>
+  <!-- Право -->
+  <g transform="translate(472, 256)">
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="#000000" stroke-width="8" />
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="#cc3311" stroke-width="4" />
+  </g>
+
+
+  <!-- УГЛОВЫЕ МОДУЛИ: Центростремительные стрелы-указатели -->
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Стрелка, бьющая в центр холста -->
+  <g transform="translate(40, 40)">
+    <!-- Хвостовая часть (Темно-красный прямоугольник под углом 45°) -->
+    <rect x="-10" y="-30" width="20" height="45" transform="rotate(-45)" fill="#cc3311" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+    <!-- Наконечник (Ярко-алый/оранжевый треугольник, направленный внутрь) -->
+    <polygon points="12,12 42,18 18,42" fill="#e64a2e" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ -->
+  <g transform="translate(472, 40)">
+    <rect x="-10" y="-30" width="20" height="45" transform="rotate(45)" fill="#cc3311" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+    <polygon points="-12,12 -42,18 -18,42" fill="#e64a2e" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ -->
+  <g transform="translate(40, 472)">
+    <rect x="-10" y="-15" width="20" height="45" transform="rotate(45)" fill="#cc3311" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+    <polygon points="12,-12 42,-18 18,-42" fill="#e64a2e" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ -->
+  <g transform="translate(472, 472)">
+    <rect x="-10" y="-15" width="20" height="45" transform="rotate(-45)" fill="#cc3311" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+    <polygon points="-12,-12 -42,-18 -18,-42" fill="#e64a2e" stroke="#000000" stroke-width="5" stroke-linejoin="miter" />
+  </g>
+</svg>
