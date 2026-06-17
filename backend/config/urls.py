@@ -25,4 +25,5 @@ urlpatterns = [
     path("api/", include("users.urls")),
     path("api/market/", include("market.urls")),
     path("api/servers/", include("servers.urls")),
+    path("api/game/", include("game.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

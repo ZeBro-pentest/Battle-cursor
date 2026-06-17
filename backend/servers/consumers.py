@@ -2,8 +2,9 @@ import json
 
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.core.cache import cache
 
-from servers.services import ServerService
+ONLINE_TTL = 20  # секунд
 
 
 class GameConsumer(AsyncWebsocketConsumer):
@@ -25,6 +26,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             await self.close(code=4003)
             return
 
+        await self.set_online(True)
         await self.channel_layer.group_add(self.room_group, self.channel_name)
         await self.accept()
 
@@ -43,12 +45,14 @@ class GameConsumer(AsyncWebsocketConsumer):
             and hasattr(self, "user")
             and self.user.is_authenticated
         ):
+            await self.set_online(False)
+
             server = await self.get_server()
             if server and server.status == server.StatusChoices.WAITING:
                 await self.leave_server()
                 server = await self.get_server()
 
-            if server:  # комната ещё существует
+            if server:
                 await self.channel_layer.group_send(
                     self.room_group,
                     {
@@ -59,20 +63,14 @@ class GameConsumer(AsyncWebsocketConsumer):
                 )
             await self.channel_layer.group_discard(self.room_group, self.channel_name)
 
-    @database_sync_to_async
-    def leave_server(self):
-        ServerService.leave_server(self.room_code, self.user)
-
     async def receive(self, text_data):
+        await self.set_online(True)
         try:
             data = json.loads(text_data)
         except json.JSONDecodeError:
             await self.send(
                 text_data=json.dumps(
-                    {
-                        "type": "error",
-                        "detail": "Неверный формат JSON.",
-                    }
+                    {"type": "error", "detail": "Неверный формат JSON."}
                 )
             )
             return
@@ -84,7 +82,6 @@ class GameConsumer(AsyncWebsocketConsumer):
             "ping": self.handle_ping,
             "game_start": self.handle_game_start,
         }
-
         handler = handlers.get(event_type)
         if handler:
             await handler(data)
@@ -104,10 +101,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         if data.get("x") is None or data.get("y") is None:
             await self.send(
                 text_data=json.dumps(
-                    {
-                        "type": "error",
-                        "detail": "Отсутствуют координаты x или y.",
-                    }
+                    {"type": "error", "detail": "Отсутствуют координаты x или y."}
                 )
             )
             return
@@ -127,10 +121,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         if not data.get("stroke"):
             await self.send(
                 text_data=json.dumps(
-                    {
-                        "type": "error",
-                        "detail": "Отсутствуют данные stroke.",
-                    }
+                    {"type": "error", "detail": "Отсутствуют данные stroke."}
                 )
             )
             return
@@ -145,37 +136,28 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def handle_ping(self, data):
         await self.send(
-            text_data=json.dumps(
-                {
-                    "type": "pong",
-                    "timestamp": data.get("timestamp"),
-                }
-            )
+            text_data=json.dumps({"type": "pong", "timestamp": data.get("timestamp")})
         )
 
     async def handle_game_start(self, data):
         server = await self.get_server()
         if not server:
             await self.send(
-                text_data=json.dumps(
-                    {
-                        "type": "error",
-                        "detail": "Комната не найдена.",
-                    }
-                )
+                text_data=json.dumps({"type": "error", "detail": "Комната не найдена."})
             )
             return
         if server.host_id != self.user.id:
             await self.send(
                 text_data=json.dumps(
-                    {
-                        "type": "error",
-                        "detail": "Только хост может начать игру.",
-                    }
+                    {"type": "error", "detail": "Только хост может начать игру."}
                 )
             )
             return
-        await self.start_game()
+        try:
+            await self.start_game()
+        except ValueError as e:
+            await self.send(text_data=json.dumps({"type": "error", "detail": str(e)}))
+            return
         await self.channel_layer.group_send(
             self.room_group,
             {
@@ -201,10 +183,27 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def game_start(self, event):
         await self.send(text_data=json.dumps(event))
 
+    # --- Online status ---
+
+    @database_sync_to_async
+    def set_online(self, is_online):
+        key = f"user:{self.user.id}:online"
+        print(f"SET ONLINE: {key} = {is_online}")
+        if is_online:
+            cache.set(key, 1, timeout=ONLINE_TTL)
+        else:
+            cache.delete(key)
+
+    @staticmethod
+    def is_online(user_id):
+        return cache.get(f"user:{user_id}:online") is not None
+
     # --- DB helpers ---
 
     @database_sync_to_async
     def get_server(self):
+        from servers.services import ServerService
+
         try:
             return ServerService.get_server(self.room_code) if self.room_code else None
         except ValueError:
@@ -215,5 +214,13 @@ class GameConsumer(AsyncWebsocketConsumer):
         return server.players.filter(id=self.user.id).exists()
 
     @database_sync_to_async
+    def leave_server(self):
+        from servers.services import ServerService
+
+        ServerService.leave_server(self.room_code, self.user)
+
+    @database_sync_to_async
     def start_game(self):
+        from servers.services import ServerService
+
         ServerService.start_game(self.room_code, self.user)

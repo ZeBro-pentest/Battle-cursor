@@ -141,10 +141,25 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "unique-snowflake",
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
     }
 }
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    "flush-expired-tokens": {
+        "task": "users.tasks.flush_expired_tokens",
+        "schedule": crontab(hour=3, minute=0),
+    },
+}
+
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "django-db"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -273,7 +288,7 @@ LOGGING = {
         },
         "daphne.server": {
             "handlers": ["console"],
-            "level": "CRITICAL",
+            "level": "DEBUG",
             "propagate": False,
         },
         "daphne.http_protocol": {

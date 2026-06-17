@@ -18,3 +18,6 @@ flower:
 
 superuser:
 	python manage.py createsuperuser
+
+flush-tokens:
+	python manage.py flushexpiredtokens

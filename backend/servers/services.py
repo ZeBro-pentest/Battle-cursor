@@ -48,9 +48,27 @@ class ServerService:
 
     @staticmethod
     def start_game(room_code, user):
+        from game.services import GameService
+
         server = ServerService.get_server(room_code)
         if server.host != user:
             raise ValueError("Только хост может начать игру.")
         validate_game_not_started(server)
-        ServerRepository.update_status(server, Server.StatusChoices.IN_PROGRESS)
-        return server
+
+        players = list(server.players.all())
+        if len(players) < 2:
+            raise ValueError("Недостаточно игроков для начала игры.")
+
+        game = GameService.create(players=players, max_players=server.max_players)
+
+        prompts = GameService._generate_prompts(len(players))
+        from game.services import RoundService
+
+        for i, prompt in enumerate(prompts, start=1):
+            RoundService.create(game=game, number=i, prompt=prompt)
+
+        server.game = game
+        server.status = Server.StatusChoices.IN_PROGRESS
+        server.save(update_fields=["game", "status"])
+
+        return game

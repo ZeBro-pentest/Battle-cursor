@@ -13,6 +13,7 @@ class CustomUserAdmin(UserAdmin):
         "rating",
         "coins",
         "is_active",
+        "is_online",
     )
     list_filter = ("is_verified", "is_active", "is_staff")
     search_fields = ("username", "email")
@@ -38,6 +39,14 @@ class CustomUserAdmin(UserAdmin):
             {"fields": ("is_verified", "rating", "coins", "cursor", "canvas")},
         ),
     )
+
+    def is_online(self, obj):
+        from django.core.cache import cache
+
+        return cache.get(f"user:{obj.id}:online") is not None
+
+    is_online.boolean = True
+    is_online.short_description = "В игре"
 
 
 @admin.register(Cursor)
