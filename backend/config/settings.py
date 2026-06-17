@@ -32,6 +32,8 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(","
 
 AUTH_USER_MODEL = "users.User"
 
+REDIS_URL = "redis://127.0.0.1:6379"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,9 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.staticfiles",
     "cloudinary_storage",
     "cloudinary",
-    "django.contrib.staticfiles",
     # мои приложухи
     "users.apps.UsersConfig",
     "ai",
@@ -133,12 +135,31 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "unique-snowflake",
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
     }
 }
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    "flush-expired-tokens": {
+        "task": "users.tasks.flush_expired_tokens",
+        "schedule": crontab(hour=3, minute=0),
+    },
+}
+
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "django-db"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -172,6 +193,32 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Groq
 GROQ_API_KEY = config("GROQ_API_KEY")
+
+# JWT
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+# Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                {
+                    "host": "127.0.0.1",
+                    "port": 6379,
+                    "socket_keepalive": True,
+                }
+            ],
+            "symmetric_encryption_keys": None,
+            "prefix": "battle_cursor",
+        },
+    },
+}
 
 # ==================== LOGGING CONFIGURATION ====================
 # 🔒 Логирование в консоль (dev) и в файл (prod)
@@ -237,6 +284,21 @@ LOGGING = {
         "chatting": {
             "handlers": ["console"],
             "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "daphne.server": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "daphne.http_protocol": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "daphne.ws_protocol": {
+            "handlers": ["console"],
+            "level": "WARNING",
             "propagate": False,
         },
     },

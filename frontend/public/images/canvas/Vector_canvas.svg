@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Внешний черный контур с мягкими скруглениями (как у углов курсора) -->
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#000000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" rx="20" />
+
+  <!-- Тонкая внутренняя рамка с эффектом легкого свечения/эха от клика -->
+  <rect x="38" y="38" width="436" height="436" fill="none" stroke="#000000" stroke-width="2" rx="14" opacity="0.3" />
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Три луча клика, как на картинке image_3c554e.png -->
+  <g transform="translate(24, 24)">
+    <line x1="-6" y1="-18" x2="-14" y2="-42" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="-18" y1="-6" x2="-42" y2="-14" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="-14" y1="-14" x2="-34" y2="-34" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Три луча клика -->
+  <g transform="translate(488, 24)">
+    <line x1="6" y1="-18" x2="14" y2="-42" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="18" y1="-6" x2="42" y2="-14" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="14" y1="-14" x2="34" y2="-34" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Три луча клика -->
+  <g transform="translate(24, 488)">
+    <line x1="-6" y1="18" x2="-14" y2="42" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="-18" y1="6" x2="-42" y2="14" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="-14" y1="14" x2="-34" y2="34" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Три луча клика -->
+  <g transform="translate(488, 488)">
+    <line x1="6" y1="18" x2="14" y2="42" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="18" y1="6" x2="42" y2="14" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="14" y1="14" x2="34" y2="34" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+  </g>
+</svg>

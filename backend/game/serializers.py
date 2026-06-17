@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from users.serializers import UserProfileSerializer
 
-from .models import Game, Round, Score
+from game.models import Game, Round, Score
 
 
 class ScoreSerializer(serializers.ModelSerializer):
@@ -31,37 +31,28 @@ class RoundSerializer(serializers.ModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
-    owner = UserProfileSerializer(read_only=True)
     players = UserProfileSerializer(many=True, read_only=True)
     players_count = serializers.SerializerMethodField()
+    current_round = serializers.SerializerMethodField()
 
     class Meta:
         model = Game
         fields = [
             "id",
             "number",
-            "owner",
             "players",
             "players_count",
             "max_players",
             "started",
             "done",
             "created_at",
+            "current_round",
         ]
         read_only_fields = fields
 
     def get_players_count(self, obj):
         return obj.players.count()
 
-
-class GameCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Game
-        fields = ["max_players"]
-
-    def validate_max_players(self, value):
-        if value < 2:
-            raise serializers.ValidationError("Минимум 2 игрока.")
-        if value > 8:
-            raise serializers.ValidationError("Максимум 8 игроков.")
-        return value
+    def get_current_round(self, obj):
+        round_obj = obj.rounds.filter(is_finished=False).first()
+        return RoundSerializer(round_obj).data if round_obj else None

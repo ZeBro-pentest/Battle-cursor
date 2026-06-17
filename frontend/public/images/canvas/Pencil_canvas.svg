@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Основная рамка сплошной заливки (повторяет плотный стиль курсора) -->
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#000000" stroke-width="10" rx="6" />
+
+  <!-- Внутренний тонкий контур, создающий эффект чертежной рамки -->
+  <rect x="40" y="40" width="432" height="432" fill="none" stroke="#000000" stroke-width="2" opacity="0.3" />
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Скошенный грифель карандаша с вырезом (как на image_3c589b.png) -->
+  <g transform="translate(44, 44)">
+    <!-- Сам кончик грифеля -->
+    <polygon points="-16,-16 0,-24 12,-12 -4,4" fill="#000000" />
+    <!-- Тело карандаша (уголок) с отступом-вырезом -->
+    <path d="M -16,4 L -2,18 L 18,-2 L 4,-16 L -6,-6 Z" fill="#000000" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Повторение грифеля по диагонали -->
+  <g transform="translate(468, 468) rotate(180)">
+    <polygon points="-16,-16 0,-24 12,-12 -4,4" fill="#000000" />
+    <path d="M -16,4 L -2,18 L 18,-2 L 4,-16 L -6,-6 Z" fill="#000000" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Текстура быстрой карандашной штриховки (3 линии) -->
+  <g transform="translate(468, 44)">
+    <line x1="-20" y1="0" x2="0" y2="-20" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="-12" y1="8" x2="8" y2="-12" stroke="#000000" stroke-width="4" stroke-linecap="round" />
+    <line x1="-28" y1="-8" x2="-8" y2="-28" stroke="#000000" stroke-width="4" stroke-linecap="round" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Карандашная штриховка для баланса -->
+  <g transform="translate(44, 468)">
+    <line x1="0" y1="-20" x2="-20" y2="0" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    <line x1="-8" y1="-12" x2="-28" y2="8" stroke="#000000" stroke-width="4" stroke-linecap="round" />
+    <line x1="8" y1="-28" x2="-12" y2="-8" stroke="#000000" stroke-width="4" stroke-linecap="round" />
+  </g>
+</svg>

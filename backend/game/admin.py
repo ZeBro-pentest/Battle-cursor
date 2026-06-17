@@ -5,10 +5,22 @@ from .models import Game, Round, Score
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
-    list_display = ("number", "owner", "max_players", "started", "done", "created_at")
+    list_display = (
+        "number",
+        "get_server",
+        "max_players",
+        "started",
+        "done",
+        "created_at",
+    )
     list_filter = ("started", "done")
-    search_fields = ("number", "owner__username")
+    search_fields = ("number",)
     readonly_fields = ("id", "number", "created_at")
+
+    def get_server(self, obj):
+        return obj.server.room_code if hasattr(obj, "server") and obj.server else "-"
+
+    get_server.short_description = "Сервер"
 
 
 @admin.register(Round)

@@ -1,112 +1,71 @@
-from django.utils import timezone
+from django.db.models import F, Sum
 
-from .models import Game, Round, Score
-from .validators import (
-    validate_game_not_full,
-    validate_game_not_started,
-    validate_player_not_in_game,
-)
+# для TODO на 27 строке
+from game.models import Game, Round, Score
+from game.repository import GameRepository, RoundRepository, ScoreRepository
 
 
 class GameService:
     @staticmethod
-    def create(owner, validated_data: dict) -> Game:
-        """
-        Создаёт игру и добавляет хоста как первого игрока.
-        """
-        game = Game.objects.create(
-            owner=owner,
-            max_players=validated_data.get("max_players", 8),
-        )
-        game.players.add(owner)
+    def create(players, max_players=8):
+        game = GameRepository.create_game(players=players, max_players=max_players)
+        GameRepository.update_started(game)
         return game
 
     @staticmethod
-    def join(game: Game, user) -> Game:
-        """
-        Добавляет игрока в игру.
-        """
-        validate_game_not_started(game)
-        validate_game_not_full(game)
-        validate_player_not_in_game(game, user)
-        game.players.add(user)
-        return game
-
-    @staticmethod
-    def start(game: Game, user) -> Game:
-        """
-        Запускает игру — только хост может начать.
-        """
-        if game.owner != user:
-            from django.core.exceptions import ValidationError
-
-            raise ValidationError("Только хост может начать игру.")
-        if game.players.count() < 2:
-            from django.core.exceptions import ValidationError
-
-            raise ValidationError("Недостаточно игроков для начала игры.")
-        game.started = True
-        game.save(update_fields=["started"])
-        return game
-
-    @staticmethod
-    def finish(game: Game) -> Game:
-        """
-        Завершает игру и синхронизирует монеты с БД.
-        """
-        game.done = True
-        game.save(update_fields=["done"])
+    def finish(game):
+        GameRepository.update_done(game)
         ScoreService.sync_coins_to_db(game)
         return game
+
+    @staticmethod
+    def get_current_round(game):
+        return RoundRepository.get_current_round(game)
+
+    @staticmethod
+    def _generate_prompts(count):
+        # TODO: заменить на Gemini генерацию промптов
+        defaults = [
+            "Нарисуй кота",
+            "Нарисуй дом",
+            "Нарисуй машину",
+            "Нарисуй дерево",
+            "Нарисуй солнце",
+            "Нарисуй рыбу",
+            "Нарисуй цветок",
+            "Нарисуй гору",
+        ]
+        return defaults[:count]
 
 
 class RoundService:
     @staticmethod
-    def create(game: Game, number: int, prompt: str) -> Round:
-        """
-        Создаёт новый раунд с prompt от Gemini.
-        """
-        round_ = Round.objects.create(
+    def create(game, number, prompt):
+        return RoundRepository.create_round(
             game=game,
             number=number,
             prompt=prompt,
-            started_at=timezone.now(),
         )
-        return round_
 
     @staticmethod
-    def finish(round_: Round) -> Round:
-        """
-        Завершает раунд.
-        """
-        round_.is_finished = True
-        round_.ended_at = timezone.now()
-        round_.save(update_fields=["is_finished", "ended_at"])
-        return round_
+    def finish(round_obj):
+        return RoundRepository.finish_round(round_obj)
 
 
 class ScoreService:
     @staticmethod
-    def create(user, round_: Round, value: float, comment: str) -> Score:
-        """
-        Создаёт Score и начисляет монеты в Redis.
-        """
+    def create(user, round_obj, value, comment):
         coins_earned = round(value * 10, 1)
-        score = Score.objects.create(
+        return ScoreRepository.create_score(
             user=user,
-            round=round_,
+            round_obj=round_obj,
             value=value,
             comment=comment,
             coins_earned=coins_earned,
         )
-        return score
 
     @staticmethod
-    def sync_coins_to_db(game: Game) -> None:
-        """
-        Синхронизирует монеты из Redis в БД после завершения игры.
-        Вызывается из GameService.finish()
-        """
+    def sync_coins_to_db(game):
         from django.contrib.auth import get_user_model
 
         User = get_user_model()
@@ -114,21 +73,14 @@ class ScoreService:
         scores = (
             Score.objects.filter(round__game=game)
             .values("user_id")
-            .annotate(
-                total_coins=__import__("django.db.models", fromlist=["Sum"]).Sum(
-                    "coins_earned"
-                )
-            )
+            .annotate(total_coins=Sum("coins_earned"))
         )
 
         for entry in scores:
             User.objects.filter(id=entry["user_id"]).update(
-                coins=__import__("django.db.models", fromlist=["F"]).F("coins")
-                + entry["total_coins"]
+                coins=F("coins") + entry["total_coins"]
             )
 
         winner = scores.order_by("-total_coins").first()
         if winner:
-            User.objects.filter(id=winner["user_id"]).update(
-                wins=__import__("django.db.models", fromlist=["F"]).F("wins") + 1
-            )
+            User.objects.filter(id=winner["user_id"]).update(rating=F("rating") + 1)

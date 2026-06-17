@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- 1. ВНЕШНИЙ АГРЕССИВНЫЙ КОНТУР (Точный красный цвет с image_3beb3b.png) -->
+  <rect x="18" y="18" width="476" height="476" fill="none" stroke="#d6223a" stroke-width="6" stroke-linejoin="miter" />
+
+  <!-- 2. МАССИВНОЕ ГРАФИТОВОЕ ТЕЛО РАМКИ (Задает вес, как основа курсора) -->
+  <rect x="26" y="26" width="460" height="460" fill="none" stroke="#2b2b2b" stroke-width="14" stroke-linejoin="miter" />
+
+  <!-- 3. ВНУТРЕННИЙ ОГРАНИЧИТЕЛЬНЫЙ КАНТ -->
+  <rect x="34" y="34" width="444" height="444" fill="none" stroke="#d6223a" stroke-width="2" opacity="0.6" />
+
+  <!-- УГЛОВЫЕ МОДУЛИ: Фирменная бирюзовая сердцевина и геометрия скосов -->
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ: Острая неоновая стрелка -->
+  <g transform="translate(26, 26)">
+    <!-- Графитовая подложка угла со срезом -->
+    <polygon points="0,0 60,0 40,20 20,20 20,40 0,60" fill="#2b2b2b" />
+    <!-- Красный внутренний стык -->
+    <path d="M 40,0 L 20,20 L 0,40" fill="none" stroke="#d6223a" stroke-width="2" />
+    <!-- Вложенная неоново-бирюзовая стрелка (в точности как центр курсора) -->
+    <polygon points="6,6 34,6 24,16 16,24 6,34" fill="#86d7df" stroke="#2b2b2b" stroke-width="2" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ: Зеркальный неоновый модуль -->
+  <g transform="translate(486, 26) scale(-1, 1)">
+    <polygon points="0,0 60,0 40,20 20,20 20,40 0,60" fill="#2b2b2b" />
+    <path d="M 40,0 L 20,20 L 0,40" fill="none" stroke="#d6223a" stroke-width="2" />
+    <polygon points="6,6 34,6 24,16 16,24 6,34" fill="#86d7df" stroke="#2b2b2b" stroke-width="2" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ: Зеркальный неоновый модуль -->
+  <g transform="translate(26, 486) scale(1, -1)">
+    <polygon points="0,0 60,0 40,20 20,20 20,40 0,60" fill="#2b2b2b" />
+    <path d="M 40,0 L 20,20 L 0,40" fill="none" stroke="#d6223a" stroke-width="2" />
+    <polygon points="6,6 34,6 24,16 16,24 6,34" fill="#86d7df" stroke="#2b2b2b" stroke-width="2" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ: Зеркальный неоновый модуль -->
+  <g transform="translate(486, 486) scale(-1, -1)">
+    <polygon points="0,0 60,0 40,20 20,20 20,40 0,60" fill="#2b2b2b" />
+    <path d="M 40,0 L 20,20 L 0,40" fill="none" stroke="#d6223a" stroke-width="2" />
+    <polygon points="6,6 34,6 24,16 16,24 6,34" fill="#86d7df" stroke="#2b2b2b" stroke-width="2" />
+  </g>
+
+  <!-- Технологичные линейные индикаторы по бокам для завершения Sci-Fi стиля -->
+  <line x1="220" y1="30" x2="292" y2="30" stroke="#86d7df" stroke-width="4" stroke-linecap="round" />
+  <line x1="220" y1="482" x2="292" y2="482" stroke="#86d7df" stroke-width="4" stroke-linecap="round" />
+  <line x1="30" y1="220" x2="30" y2="292" stroke="#86d7df" stroke-width="4" stroke-linecap="round" />
+  <line x1="482" y1="220" x2="482" y2="292" stroke="#86d7df" stroke-width="4" stroke-linecap="round" />
+</svg>

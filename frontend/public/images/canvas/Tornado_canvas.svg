@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Внутренний фон прозрачный для холста игрока -->
+
+  <!-- ОСНОВНОЙ КОНТУР: Толстая черная обводка с разрывами (имитация стиля c image_3b8a7c.png) -->
+  <rect x="30" y="30" width="452" height="452" fill="none" stroke="#000000" stroke-width="12" stroke-linejoin="miter" stroke-dasharray="160 20 80 20 160 40" />
+
+  <!-- ВНУТРЕННЕЕ ТЕЛО РАМКИ: Терракотовая основа -->
+  <rect x="40" y="40" width="432" height="432" fill="none" stroke="#c84b24" stroke-width="8" stroke-linejoin="miter" />
+
+  <!-- ДОПОЛНИТЕЛЬНЫЙ ВИННЫЙ КАНТ (Цвет глубокой тени курсора) -->
+  <rect x="48" y="48" width="416" height="416" fill="none" stroke="#8c1414" stroke-width="4" stroke-linejoin="miter" />
+
+  <!-- УГЛОВЫЕ МОДУЛИ: Стилизованные двойные полигоны с разрывом линий -->
+
+  <!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ -->
+  <g transform="translate(30, 30)">
+    <!-- Основное терракотовое крыло -->
+    <polygon points="0,0 65,15 40,40 15,65" fill="#c84b24" stroke="#000000" stroke-width="8" stroke-linejoin="miter" />
+    <!-- Внутреннее винно-бордовое крыло тени -->
+    <polygon points="40,40 65,15 50,50 15,65" fill="#8c1414" />
+    <!-- Декоративный черный штрих, подчеркивающий геометрию -->
+    <line x1="10" y1="75" x2="25" y2="90" stroke="#000000" stroke-width="6" stroke-linecap="square" />
+  </g>
+
+  <!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ -->
+  <g transform="translate(482, 30) scale(-1, 1)">
+    <polygon points="0,0 65,15 40,40 15,65" fill="#c84b24" stroke="#000000" stroke-width="8" stroke-linejoin="miter" />
+    <polygon points="40,40 65,15 50,50 15,65" fill="#8c1414" />
+    <line x1="10" y1="75" x2="25" y2="90" stroke="#000000" stroke-width="6" stroke-linecap="square" />
+  </g>
+
+  <!-- НИЖНИЙ ЛЕВЫЙ УГОЛ -->
+  <g transform="translate(30, 482) scale(1, -1)">
+    <polygon points="0,0 65,15 40,40 15,65" fill="#c84b24" stroke="#000000" stroke-width="8" stroke-linejoin="miter" />
+    <polygon points="40,40 65,15 50,50 15,65" fill="#8c1414" />
+    <line x1="10" y1="75" x2="25" y2="90" stroke="#000000" stroke-width="6" stroke-linecap="square" />
+  </g>
+
+  <!-- НИЖНИЙ ПРАВЫЙ УГОЛ -->
+  <g transform="translate(482, 482) scale(-1, -1)">
+    <polygon points="0,0 65,15 40,40 15,65" fill="#c84b24" stroke="#000000" stroke-width="8" stroke-linejoin="miter" />
+    <polygon points="40,40 65,15 50,50 15,65" fill="#8c1414" />
+    <line x1="10" y1="75" x2="25" y2="90" stroke="#000000" stroke-width="6" stroke-linecap="square" />
+  </g>
+
+  <!-- Боковые минималистичные фиксаторы для завершения композиции -->
+  <line x1="240" y1="44" x2="272" y2="44" stroke="#8c1414" stroke-width="6" />
+  <line x1="240" y1="468" x2="272" y2="468" stroke="#8c1414" stroke-width="6" />
+</svg>

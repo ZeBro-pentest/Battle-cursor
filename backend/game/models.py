@@ -18,9 +18,6 @@ class Game(models.Model):
     number = models.CharField(
         max_length=6, unique=True, default=generate_game_number, editable=False
     )
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="owned_games"
-    )
     players = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="joined_games", blank=True
     )

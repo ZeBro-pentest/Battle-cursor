@@ -43,6 +43,11 @@
 📦 Battle-cursor
 ├── 📂 backend
 │   ├── ⚙️ config/
+│   ├── 📂 assets/            # Cloudinary
+│   │   └── 📂 images/
+│   │       ├── 📂 canvas
+│   │       ├── 📂 cursors
+│   │       └── metadata.json # данные cursors/canvas
 │   ├── 📂 templates/
 │   │   └── 📂 emails/
 │   │       ├── verification.html
@@ -58,6 +63,9 @@
 │   └── 📜 manage.py
 ├── 📂 frontend
 │   ├── 📂 public/
+│   │   └── 📂 images/
+│   │       ├── 📂 canvas
+│   │       └── 📂 cursors
 │   ├── 📂 src/
 │   │   ├── 📂 assets/
 │   │   ├── 📂 components/
@@ -72,8 +80,11 @@
 │   ├── 📑 Diagrams.drawio
 │   └── 📑 README.md
 ├── 📂 tests/
-│   ├── 📂postman/           # Postman коллекция
+│   ├── 📂 backend
+│   ├── 📂 frontend
+│   ├── 📂 postman/           # Postman коллекция
 │   ├── 📑 README.md
+│   ├── 📜 package.json
 │   ├── 🔧 .gitignore
 │   └── 🔧 requirements.txt
 └── 📑 README.md
@@ -104,7 +115,7 @@
 **Backend**
 ```bash
 cd backend
-python manage.py runserver
+make run
 ```
 
 **Frontend**
@@ -195,4 +206,4 @@ git clone https://github.com/ZeBro-pentest/Battle-cursor.git
 python backend/manage.py init_game_data
 ```
 
-> Последнее обновление README: 12.06.2026
+> Последнее обновление README: 15.06.2026

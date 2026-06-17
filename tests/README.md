@@ -90,17 +90,32 @@ playwright test
 
 ### Подготовка данных
 Для запуска тестов с собственными данными, создайте файл `tests/postman/data/test_user.json` по следующему шаблону:
-
 ```json
 [
   {
     "username": "your_test_user",
     "email": "your_email@example.com",
     "password": "YourStrongPassword123!",
-    "password_confirm": "YourStrongPassword123!"
+    "password_confirm": "YourStrongPassword123!",
+    "coins": 100
   }
 ]
 ```
+
+### Окружение
+Перед запуском убедитесь что файл окружения `tests/postman/environments/dev.json` существует. Шаблон:
+```json
+{
+  "name": "Battle-cursor Dev",
+  "values": [
+    { "key": "BASE_URL", "value": "http://127.0.0.1/api", "enabled": true },
+    { "key": "username", "value": "your_test_user", "enabled": true },
+    { "key": "email", "value": "your_email@example.com", "enabled": true },
+    { "key": "password", "value": "YourStrongPassword123!", "enabled": true },
+    { "key": "password_confirm", "value": "YourStrongPassword123!", "enabled": true },
+    { "key": "coins", "value": "100", "enabled": true }
+  ]
+}
 
 ### Запуск тестов
 
@@ -152,4 +167,4 @@ pip install -r tests/requirements.txt
 npm install
 ```
 
-> Последнее обновление: 08.06.2026
+> Последнее обновление: 15.06.2026
