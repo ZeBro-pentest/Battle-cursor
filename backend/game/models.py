@@ -58,9 +58,10 @@ class Score(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="scores"
     )
     round = models.ForeignKey(Round, on_delete=models.CASCADE, related_name="scores")
-    value = models.PositiveIntegerField(default=0)
-    comment = models.TextField(max_length=100)
-    coins_earned = models.FloatField(default=0)
+    value = models.FloatField(default=0.0)
+    comment = models.TextField(max_length=500)  # увеличил, комментарий от Groq
+    image_url = models.URLField(blank=True)  # Cloudinary URL рисунка
+    coins_earned = models.FloatField(default=0.0)
 
     class Meta:
         db_table = "scores"

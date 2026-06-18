@@ -301,6 +301,11 @@ LOGGING = {
             "level": "WARNING",
             "propagate": False,
         },
+        "ai": {
+            "handlers": ["console"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
     },
 }
 

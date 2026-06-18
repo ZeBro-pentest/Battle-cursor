@@ -24,7 +24,7 @@ class GameService:
 
     @staticmethod
     def _generate_prompts(count):
-        # TODO: заменить на Gemini генерацию промптов
+        # TODO: заменить на Groq генерацию промптов
         defaults = [
             "Нарисуй кота",
             "Нарисуй дом",
