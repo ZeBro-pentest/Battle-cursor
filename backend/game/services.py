@@ -1,7 +1,6 @@
 from django.db.models import F, Sum
 
-# для TODO на 27 строке
-from game.models import Game, Round, Score
+from game.models import Score
 from game.repository import GameRepository, RoundRepository, ScoreRepository
 
 
@@ -24,18 +23,9 @@ class GameService:
 
     @staticmethod
     def _generate_prompts(count):
-        # TODO: заменить на Groq генерацию промптов
-        defaults = [
-            "Нарисуй кота",
-            "Нарисуй дом",
-            "Нарисуй машину",
-            "Нарисуй дерево",
-            "Нарисуй солнце",
-            "Нарисуй рыбу",
-            "Нарисуй цветок",
-            "Нарисуй гору",
-        ]
-        return defaults[:count]
+        from ai.services import generate_prompts
+
+        return generate_prompts(count)
 
 
 class RoundService:
