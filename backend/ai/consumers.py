@@ -7,7 +7,7 @@ from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 
-ONLINE_TTL = 20
+ONLINE_TTL = 20  # секунд
 DRAWING_TTL = 300  # 5 минут
 
 
@@ -65,6 +65,23 @@ class GameConsumer(AsyncWebsocketConsumer):
                         "username": self.user.username,
                     },
                 )
+
+                # Если игра завершена — проверяем нужно ли удалить
+                if await self.is_game_done(server):
+                    all_offline = await self.check_all_offline(server)
+                    if all_offline:
+                        from ai.tasks import cleanup_game
+
+                        cleanup_game.apply_async(
+                            args=[str(server.game.id), server.room_code],
+                            countdown=10,
+                        )
+                        logger.info(
+                            "cleanup_game scheduled for game=%s server=%s",
+                            server.game.id,
+                            server.room_code,
+                        )
+
             await self.channel_layer.group_discard(self.room_group, self.channel_name)
 
     async def receive(self, text_data):
@@ -86,6 +103,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             "ping": self.handle_ping,
             "game_start": self.handle_game_start,
             "round_end": self.handle_round_end,
+            "debuff_apply": self.handle_debuff_apply,
         }
         handler = handlers.get(event_type)
         if handler:
@@ -164,13 +182,9 @@ class GameConsumer(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({"type": "error", "detail": str(e)}))
             return
 
-        # Сохраняем players_count в Redis
         players_count = await self.get_players_count()
-        await self.cache_set(
-            f"game:{game.id}:players_count", players_count, timeout=3600
-        )
+        cache.set(f"game:{game.id}:players_count", players_count, timeout=3600)
 
-        # Пушим game_start всем
         await self.channel_layer.group_send(
             self.room_group,
             {
@@ -180,7 +194,6 @@ class GameConsumer(AsyncWebsocketConsumer):
             },
         )
 
-        # Стартуем первый раунд через Celery
         first_round = await self.get_first_round(game)
         if first_round:
             from ai.tasks import start_round
@@ -188,10 +201,6 @@ class GameConsumer(AsyncWebsocketConsumer):
             start_round.delay(str(first_round.id), str(game.id), self.room_group)
 
     async def handle_round_end(self, data):
-        """
-        Игрок сдаёт рисунок.
-        Ожидает: {"type": "round_end", "round_id": "...", "image_base64": "...", "image_url": "..."}
-        """
         round_id = data.get("round_id")
         image_base64 = data.get("image_base64", "")
         image_url = data.get("image_url", "")
@@ -207,19 +216,15 @@ class GameConsumer(AsyncWebsocketConsumer):
             )
             return
 
-        # Сохраняем рисунок в Redis
-        await self.cache_set(
+        cache.set(
             f"round:{round_id}:drawing:{self.user.id}",
             {"image_base64": image_base64, "image_url": image_url},
             timeout=DRAWING_TTL,
         )
 
-        # Считаем сколько сдали
-        submitted = await self.count_submitted(round_id)
-
-        # Берём players_count — нужен game_id
+        submitted = len(cache.keys(f"round:{round_id}:drawing:*"))
         game_id = await self.get_game_id_for_round(round_id)
-        players_count = await self.cache_get(f"game:{game_id}:players_count")
+        players_count = cache.get(f"game:{game_id}:players_count")
 
         logger.info(
             "round_end: round=%s user=%s submitted=%d/%s",
@@ -230,12 +235,87 @@ class GameConsumer(AsyncWebsocketConsumer):
         )
 
         if players_count and submitted >= players_count:
-            # Все сдали — отменяем страховку и грейдим
             await self.cancel_force_task(round_id)
             from ai.tasks import grade_round
 
             grade_round.delay(round_id, self.room_group)
             logger.info("All submitted for round %s, grade_round triggered", round_id)
+
+    async def handle_debuff_apply(self, data):
+        from game.debuffs import DEBUFFS
+
+        debuff_id = data.get("debuff_id")
+        target_id = data.get("target_id")
+
+        if not debuff_id or not target_id:
+            await self.send(
+                text_data=json.dumps(
+                    {"type": "error", "detail": "Отсутствуют debuff_id или target_id."}
+                )
+            )
+            return
+
+        debuff = next((d for d in DEBUFFS if d["id"] == debuff_id), None)
+        if not debuff:
+            await self.send(
+                text_data=json.dumps({"type": "error", "detail": "Дебафф не найден."})
+            )
+            return
+
+        game_id = await self.get_game_id_from_server()
+        if not game_id:
+            await self.send(
+                text_data=json.dumps({"type": "error", "detail": "Игра не найдена."})
+            )
+            return
+
+        game_id = str(game_id)
+
+        if cache.get(f"game:{game_id}:debuff_active:{target_id}"):
+            await self.send(
+                text_data=json.dumps(
+                    {"type": "error", "detail": "У цели уже активен дебафф."}
+                )
+            )
+            return
+
+        has_debuff = await self.user_has_debuff(debuff_id)
+        if not has_debuff:
+            await self.send(
+                text_data=json.dumps(
+                    {"type": "error", "detail": "Ваш курсор не имеет этого дебаффа."}
+                )
+            )
+            return
+
+        duration = debuff.get("duration", 5)
+        target_protections = await self.get_target_protections(target_id)
+        if debuff_id in target_protections and duration:
+            duration = duration // 2
+
+        active_ttl = duration if duration else 60
+        cache.set(
+            f"game:{game_id}:debuff_active:{target_id}", debuff_id, timeout=active_ttl
+        )
+
+        await self.channel_layer.group_send(
+            self.room_group,
+            {
+                "type": "debuff_received",
+                "target_id": target_id,
+                "debuff_id": debuff_id,
+                "duration": duration,
+                "from_user_id": str(self.user.id),
+            },
+        )
+
+        logger.info(
+            "debuff_apply: user=%s → target=%s debuff=%s duration=%s",
+            self.user.id,
+            target_id,
+            debuff_id,
+            duration,
+        )
 
     # --- Group event handlers ---
 
@@ -263,6 +343,10 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def game_over(self, event):
         await self.send(text_data=json.dumps(event))
 
+    async def debuff_received(self, event):
+        if str(self.user.id) == event.get("target_id"):
+            await self.send(text_data=json.dumps(event))
+
     # --- Online status ---
 
     @database_sync_to_async
@@ -280,18 +364,6 @@ class GameConsumer(AsyncWebsocketConsumer):
     # --- Redis helpers ---
 
     @database_sync_to_async
-    def cache_set(self, key: str, value, timeout: int):
-        cache.set(key, value, timeout=timeout)
-
-    @database_sync_to_async
-    def cache_get(self, key: str):
-        return cache.get(key)
-
-    @database_sync_to_async
-    def count_submitted(self, round_id: str) -> int:
-        return len(cache.keys(f"round:{round_id}:drawing:*"))
-
-    @database_sync_to_async
     def cancel_force_task(self, round_id: str):
         from celery.app.control import Control
         from config.celery import app as celery_app
@@ -301,30 +373,21 @@ class GameConsumer(AsyncWebsocketConsumer):
             Control(celery_app).revoke(task_id, terminate=False)
             cache.delete(f"round:{round_id}:task_id")
 
-    @database_sync_to_async
-    def get_game_id_for_round(self, round_id: str):
-        from game.models import Round
-
-        try:
-            return str(Round.objects.select_related("game").get(id=round_id).game.id)
-        except Round.DoesNotExist:
-            return None
-
-    @database_sync_to_async
-    def get_first_round(self, game):
-        from game.models import Round
-
-        return Round.objects.filter(game=game).order_by("number").first()
-
     # --- DB helpers ---
 
     @database_sync_to_async
     def get_server(self):
-        from servers.services import ServerService
+        from servers.models import Server
 
         try:
-            return ServerService.get_server(self.room_code) if self.room_code else None
-        except ValueError:
+            return (
+                Server.objects.select_related("game__players").get(
+                    room_code=self.room_code
+                )
+                if self.room_code
+                else None
+            )
+        except Server.DoesNotExist:
             return None
 
     @database_sync_to_async
@@ -349,3 +412,64 @@ class GameConsumer(AsyncWebsocketConsumer):
 
         server = ServerService.get_server(self.room_code)
         return server.players.count()
+
+    @database_sync_to_async
+    def get_first_round(self, game):
+        from game.models import Round
+
+        return Round.objects.filter(game=game).order_by("number").first()
+
+    @database_sync_to_async
+    def get_game_id_for_round(self, round_id: str):
+        from game.models import Round
+
+        try:
+            return str(Round.objects.select_related("game").get(id=round_id).game.id)
+        except Round.DoesNotExist:
+            return None
+
+    @database_sync_to_async
+    def get_game_id_from_server(self):
+        from servers.models import Server
+
+        try:
+            server = Server.objects.select_related("game").get(room_code=self.room_code)
+            return server.game.id if server.game else None
+        except Server.DoesNotExist:
+            return None
+
+    @database_sync_to_async
+    def user_has_debuff(self, debuff_id: str) -> bool:
+        user = self.user.__class__.objects.select_related("cursor").get(id=self.user.id)
+        if not user.cursor:
+            return False
+        return debuff_id in (user.cursor.debuffs or [])
+
+    @database_sync_to_async
+    def get_target_protections(self, target_id: str) -> list:
+        try:
+            user = self.user.__class__.objects.select_related("canvas").get(
+                id=target_id
+            )
+            if not user.canvas:
+                return []
+            return user.canvas.protections or []
+        except Exception:
+            return []
+
+    @database_sync_to_async
+    def is_game_done(self, server) -> bool:
+        try:
+            return server.game is not None and server.game.done
+        except Exception:
+            return False
+
+    @database_sync_to_async
+    def check_all_offline(self, server) -> bool:
+        try:
+            for player in server.game.players.all():
+                if cache.get(f"user:{player.id}:online"):
+                    return False
+            return True
+        except Exception:
+            return False

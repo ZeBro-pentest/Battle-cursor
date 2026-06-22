@@ -1,15 +1,13 @@
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from market.models import Inventory
-
 from .config import DEFAULT_FROM_EMAIL, FRONTEND_URL
 from .models import EmailVerification, User
 
 
 class UserService:
     @staticmethod
-    def register(validated_data: dict) -> User:
+    def register(validated_data: dict, request=None) -> User:
         """
         Создаёт пользователя, инвентарь и отправляет письмо верификации.
         """
@@ -25,8 +23,7 @@ class UserService:
             password=validated_data["password"],
             coins=coins,
         )
-        Inventory.objects.create(user=user)
-        EmailService.send_verification(user)
+        EmailService.send_verification(user, request)
         return user
 
     @staticmethod
@@ -79,12 +76,16 @@ class UserService:
 
 class EmailService:
     @staticmethod
-    def send_verification(user: User) -> None:
+    def send_verification(user: User, request=None) -> None:
         """
         Отправляет письмо с ссылкой верификации через Mailtrap.
         """
         verification = EmailVerification.objects.create(user=user)
-        verify_url = f"{FRONTEND_URL}/verify-email?token={verification.token}"
+        path = f"/verify-email?token={verification.token}"
+        if request is not None:
+            verify_url = request.build_absolute_uri(path)
+        else:
+            verify_url = f"{FRONTEND_URL}{path}"
         
         context = {
             "username": user.username,

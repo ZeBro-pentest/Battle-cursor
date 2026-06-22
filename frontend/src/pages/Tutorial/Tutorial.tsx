@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 import "./Tutorial.css";
 
 const steps = [
@@ -39,6 +42,11 @@ const steps = [
 ];
 
 export function Tutorial() {
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state: RootState) => !!state.auth.accessToken);
+
+  const handlePlay = () => navigate(isLoggedIn ? "/main" : "/register");
+
   return (
     <div className="tutorial-page">
       <div className="container tutorial-steps">
@@ -63,7 +71,7 @@ export function Tutorial() {
       <section className="tutorial-footer">
         <div className="container">
           <h2>Теперь вы готовы к бою!</h2>
-          <button className="cta-button primary large">Начать игру</button>
+          <button className="cta-button primary large" onClick={handlePlay}>Начать игру</button>
         </div>
       </section>
     </div>

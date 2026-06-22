@@ -37,7 +37,7 @@ def _groq_text_request(
     }
     payload = {
         "model": GROQ_MODEL,
-        "max_tokens": max_tokens,
+        "max_completion_tokens": GROQ_MAX_TOKENS,
         "temperature": GROQ_TEMPERATURE,
         "messages": [{"role": "user", "content": prompt_text}],
     }

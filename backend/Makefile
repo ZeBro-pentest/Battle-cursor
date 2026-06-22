@@ -1,3 +1,6 @@
+build:
+	cd ../frontend && npm run build && cd ../backend && python manage.py collectstatic --noinput
+
 run:
 	DJANGO_SETTINGS_MODULE=config.settings daphne -p 8000 config.asgi:application
 

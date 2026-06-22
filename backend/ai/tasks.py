@@ -67,7 +67,7 @@ def start_round(round_id: str, game_id: str, room_group: str):
     # Страховочная задача через 65 сек
     task = force_grade_round.apply_async(
         args=[round_id, room_group],
-        countdown=65,
+        countdown=300,
     )
     cache.set(f"round:{round_id}:task_id", task.id, timeout=120)
 
@@ -238,8 +238,22 @@ def game_over(game_id: str, room_group: str):
     # Завершаем игру + синхронизируем монеты в БД
     GameService.finish(game)
 
-    # Чистим players_count из Redis
+    # Чистим Redis
     cache.delete(f"game:{game_id}:players_count")
+    debuff_keys = cache.keys(f"game:{game_id}:debuff_active:*")
+    if debuff_keys:
+        cache.delete_many(debuff_keys)
+
+    # Удаляем Server из БД сразу
+    try:
+        from servers.models import Server
+
+        server = Server.objects.get(game_id=game_id)
+        room_code = server.room_code
+        server.delete()
+        logger.info("game_over: Server %s deleted", room_code)
+    except Exception as e:
+        logger.warning("game_over: Server not found or already deleted: %s", e)
 
     _push(
         room_group,
@@ -255,3 +269,17 @@ def game_over(game_id: str, room_group: str):
         game_id,
         final_scores[0]["username"] if final_scores else "?",
     )
+
+    # Удаляем Game через 10 минут
+    delete_game.apply_async(args=[game_id], countdown=600)
+
+
+@shared_task
+def delete_game(game_id: str):
+    """Удаляет Game (и связанные Round, Score) через 10 минут после завершения."""
+    try:
+        game = Game.objects.get(id=game_id)
+        game.delete()
+        logger.info("delete_game: Game %s deleted", game_id)
+    except Game.DoesNotExist:
+        logger.info("delete_game: Game %s already deleted", game_id)

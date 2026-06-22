@@ -1,0 +1,60 @@
+.mobile-guard {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.mobile-guard-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.mobile-guard-icon {
+  font-size: 48px;
+  line-height: 1;
+  color: #FF0606;
+  animation: guard-pulse 2s ease-in-out infinite;
+}
+
+@keyframes guard-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.9); }
+}
+
+.mobile-guard-title {
+  font-size: 28px;
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.mobile-guard-red {
+  color: #FF0606;
+}
+
+.mobile-guard-msg {
+  font-size: 15px;
+  color: #ccc;
+  margin: 0;
+  letter-spacing: 0.5px;
+  border-top: 1px solid rgba(255, 6, 6, 0.3);
+  padding-top: 16px;
+  width: 100%;
+}
+
+.mobile-guard-hint {
+  font-size: 12px;
+  color: #555;
+  margin: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}

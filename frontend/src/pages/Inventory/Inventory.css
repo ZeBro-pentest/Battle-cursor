@@ -1,0 +1,127 @@
+@import "../Shop/Shop.css";
+
+/* Скроллируемый грид инвентаря */
+.inv-grid-scroll {
+  max-height: calc(100vh - 340px);
+  overflow-y: auto;
+  padding-right: 6px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #ff060644 #0b0b0b;
+}
+
+.inv-grid-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.inv-grid-scroll::-webkit-scrollbar-track {
+  background: #0b0b0b;
+  border-left: 1px solid rgba(255, 6, 6, 0.08);
+}
+
+.inv-grid-scroll::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 6px;
+  border: 1px solid #0b0b0b;
+}
+
+.inv-grid-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* ── Equipped badge ── */
+.inv-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  padding: 20px 14px 16px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.inv-card:hover {
+  transform: translateY(-2px);
+  border-color: #2a2a2a;
+}
+
+.inv-card.equipped {
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(255, 6, 6, 0.18);
+}
+
+.inv-card-img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.06));
+}
+
+.inv-card-img-placeholder {
+  width: 96px;
+  height: 96px;
+  border: 1px dashed #1e1e1e;
+  border-radius: 6px;
+}
+
+.inv-card-name {
+  font-family: var(--font-benzin);
+  font-size: 12px;
+  color: #bbb;
+  letter-spacing: 1.5px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.inv-card-badge {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.inv-card-badge.on {
+  color: var(--accent);
+}
+
+.inv-card-badge.off {
+  color: #252525;
+}
+
+.inv-empty {
+  color: #1e1e1e;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 32px 0;
+}
+
+/* ── Tabs + Save row ── */
+.inv-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inv-save-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inv-save-msg {
+  font-size: 12px;
+  color: #44aa44;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.inv-save-err {
+  font-size: 12px;
+  color: #cc4444;
+}

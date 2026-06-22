@@ -251,3 +251,75 @@ WebSocket и игровой цикл тестируются вручную че�
 - ✅ `ai` — полностью реализован (Groq оценка + генерация промптов + Celery игровой цикл)
 - ⏳ Frontend — в процессе
 - ⏳ Docker — после завершения бэкенда
+
+## Context Navigation (Graphify + Obsidian)
+
+### Правило 3 слоёв
+1. **Сначала** — читай `graphify-out/GRAPH_REPORT.md` для понимания структуры кода
+2. **Затем** — читай Obsidian vault (`~/vault/battle-cursor/`) для решений, архитектуры, текущего прогресса
+3. **Только потом** — читай raw-файлы, если первые два слоя не дали ответа
+
+### Когда пересобирать граф
+- После структурных изменений (новые модули, крупные рефакторы)
+- Команда: `graphify . --update` (только изменённые файлы)
+- Граф персистентен — не пересобирать каждую сессию
+
+### Запрещено
+- Не модифицировать файлы в `graphify-out/` вручную
+- Не перечитывать всю кодовую базу если граф уже содержит информацию
+
+## Session Commands
+
+### /resume
+При получении этой команды:
+1. Прочитай 3 последних лога из `~/vault/battle-cursor/logs/`
+2. Прочитай `~/vault/battle-cursor/architecture/decisions.md`
+3. Прочитай `graphify-out/GRAPH_REPORT.md`
+4. Дай summary: текущее состояние и что осталось сделать
+
+### /save
+При получении этой команды:
+1. Создай лог сессии в `~/vault/battle-cursor/logs/YYYY-MM-DD-<описание>.md`
+2. Зафиксируй: что сделано, какие решения приняты, что pending
+3. Добавь wikilinks на созданные/изменённые заметки
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+
+## Context Navigation (Graphify + Obsidian)
+
+### Правило 3 слоёв
+1. **Сначала** — читай `graphify-out/GRAPH_REPORT.md` для понимания структуры кода
+2. **Затем** — читай `Obsidian/battle-cursor/` для решений, архитектуры, прогресса
+3. **Только потом** — читай raw-файлы если первые два слоя не дали ответа
+
+### Когда пересобирать граф
+- После структурных изменений (новые модули, крупные рефакторы)
+- Команда: `graphify . --update` (только изменённые файлы)
+- Git hook автоматически пересобирает граф после каждого коммита
+
+### Запрещено
+- Не модифицировать файлы в `graphify-out/` вручную
+- Не перечитывать всю кодовую базу если граф уже содержит информацию
+
+## Session Commands
+
+### /resume
+При получении этой команды:
+1. Прочитай `graphify-out/GRAPH_REPORT.md`
+2. Прочитай 3 последних лога из `Obsidian/battle-cursor/logs/`
+3. Прочитай `Obsidian/battle-cursor/architecture/decisions.md`
+4. Дай summary: текущее состояние и что осталось сделать
+
+### /save
+При получении этой команды:
+1. Создай лог сессии в `Obsidian/logs/YYYY-MM-DD-<описание>.md` (относительно корня проекта Battle-cursor/)
+2. Зафиксируй: что сделано, какие решения приняты, что pending
+3. Добавь wikilinks на созданные/изменённые файлы

@@ -32,6 +32,55 @@ header {
     color: var(--accent);
 }
 
+.nav-username {
+    text-decoration: none;
+    color: #ccc;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: var(--font-benzin);
+    position: relative;
+    display: inline-block;
+}
+
+.nav-username::before,
+.nav-username::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-benzin);
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.nav-username::before {
+    color: rgba(255, 0, 255, 0.75);
+    animation: nav-glitch-1 4s 1.5s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+}
+
+.nav-username::after {
+    color: rgba(0, 255, 255, 0.75);
+    animation: nav-glitch-2 4s 1.5s infinite;
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+}
+
+@keyframes nav-glitch-1 {
+    0%, 88%, 100% { transform: none; opacity: 0; }
+    90% { transform: translateX(-3px); opacity: 0.9; }
+    92% { transform: translateX(2px);  opacity: 0; }
+    94% { transform: translateX(-1px); opacity: 0.6; }
+}
+
+@keyframes nav-glitch-2 {
+    0%, 89%, 100% { transform: none; opacity: 0; }
+    91% { transform: translateX(3px);  opacity: 0.9; }
+    93% { transform: translateX(-2px); opacity: 0; }
+    95% { transform: translateX(1px);  opacity: 0.5; }
+}
+
 .nav-cta {
     padding: 10px 25px;
     background: transparent;
@@ -49,6 +98,27 @@ header {
     box-shadow: 0 0 15px rgba(255, 6, 6, 0.4);
 }
 
+a.logo {
+    text-decoration: none;
+    display: block;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+a.logo:hover {
+    box-shadow: 0 0 24px rgba(255, 6, 6, 0.55);
+}
+
+a.logo:hover .logo img {
+    animation: logo-spin 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes logo-spin {
+    0%   { transform: rotate(0deg)   scale(1); }
+    40%  { transform: rotate(200deg) scale(1.08); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
 .logo {
     width: 70px;
     height: 70px;
@@ -64,11 +134,14 @@ header {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform-origin: center;
 }
 
 .header-text {
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .project-label {

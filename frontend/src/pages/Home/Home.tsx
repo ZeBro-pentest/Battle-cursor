@@ -1,9 +1,21 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
+import cloudinaryImages from "../../assets/cloudinary-images.json";
 import "./Home.css";
 
 export function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state: RootState) => !!state.auth.accessToken);
+
+  const handlePlay = () => navigate(isLoggedIn ? "/main" : "/register");
+
+  useEffect(() => {
+    document.body.classList.add("no-scrollbar");
+    return () => document.body.classList.remove("no-scrollbar");
+  }, []);
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -47,7 +59,7 @@ export function Home() {
             Докажи свое превосходство в мире цифровых сражений.
           </p>
           <div className="hero-actions">
-            <button className="cta-button primary">Играть сейчас</button>
+            <button className="cta-button primary" onClick={handlePlay}>Играть сейчас</button>
             <Link to="/tutorial" className="cta-button secondary">
               Обучение
             </Link>
@@ -147,8 +159,8 @@ export function Home() {
             
             const renderSquares = (isDup = false) => 
               cursorNames.map((name, i) => {
-                const path = `/images/cursors/${name}_cursor.png`;
-                const canvasPath = `/images/canvas/${name}_canvas.svg`;
+                const path = cloudinaryImages[`images/cursors/${name}_cursor.png` as keyof typeof cloudinaryImages];
+                const canvasPath = cloudinaryImages[`images/canvas/${name}_canvas.svg` as keyof typeof cloudinaryImages];
                 
                 return (
                   <div key={isDup ? `dup-${i}` : i} className="decor-square">
@@ -185,7 +197,7 @@ export function Home() {
           <p className="cta-desc">
             Присоединяйтесь к сообществу Battle Cursor сегодня.
           </p>
-          <button className="cta-button primary large">
+          <button className="cta-button primary large" onClick={handlePlay}>
             Присоединиться бесплатно
           </button>
         </div>

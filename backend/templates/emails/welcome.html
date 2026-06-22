@@ -1,75 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Добро пожаловать в Battle Cursor</title>
-    <style>
-        @media screen and (max-width: 620px) {
-            .container {
-                width: 90% !important;
-            }
-            .header-text {
-                font-size: 24px !important;
-            }
-            .content-box {
-                padding: 30px 20px !important;
-            }
-            .button {
-                width: 100% !important;
-                padding: 18px 10px !important;
-            }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Добро пожаловать — Battle Cursor</title>
 </head>
-<body style="background-color: #0b0b0b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #0b0b0b;">
-        <tr>
-            <td align="center" style="padding: 40px 0;">
-                <table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background-color: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                    <!-- Header -->
-                    <tr>
-                        <td align="center" style="padding: 40px 40px 20px 40px; border-bottom: 1px solid rgba(255, 6, 6, 0.1);">
-                            <h1 class="header-text" style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -1px; text-transform: uppercase;">
-                                BATTLE <span style="color: #FF0606;">CURSOR</span>
-                            </h1>
-                        </td>
-                    </tr>
-                    <!-- Content -->
-                    <tr>
-                        <td align="center" class="content-box" style="padding: 40px;">
-                            <h2 style="margin: 0 0 20px 0; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #ffffff;">ДОБРО ПОЖАЛОВАТЬ!</h2>
-                            <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.7);">
-                                Привет, <strong style="color: #ffffff;">{{ username }}</strong>!<br>
-                                Твой аккаунт успешно подтвержден. Теперь тебе доступны все возможности арены Battle Cursor.
-                            </p>
-                            <!-- Button -->
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td align="center">
-                                        <table border="0" cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td align="center" bgcolor="#FF0606" style="border-radius: 8px;">
-                                                    <a href="{{ login_url }}" target="_blank" class="button" style="display: inline-block; padding: 18px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;">В БОЙ!</a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <!-- Footer -->
-                    <tr>
-                        <td align="center" style="padding: 30px 40px; background-color: #080808; border-top: 1px solid #1a1a1a;">
-                            <p style="margin: 0; font-size: 12px; line-height: 1.4; color: rgba(255, 255, 255, 0.4);">
-                                &copy; 2026 Battle Cursor. Все права защищены.
-                            </p>
-                        </td>
-                    </tr>
-                </table>
+<body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f4;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="560" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border-radius:6px;overflow:hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:#111111;padding:28px 40px;text-align:center;">
+              <span style="font-size:22px;font-weight:bold;color:#ffffff;letter-spacing:1px;">
+                BATTLE<span style="color:#FF0606;">_CURSOR</span>
+              </span>
             </td>
-        </tr>
-    </table>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:36px 40px;">
+              <p style="margin:0 0 12px;font-size:16px;color:#111111;">Привет, <strong>{{ username }}</strong>!</p>
+              <p style="margin:0 0 28px;font-size:15px;color:#444444;line-height:1.6;">
+                Твой email подтверждён — добро пожаловать в Battle Cursor!<br>
+                Теперь ты можешь войти и начать играть.
+              </p>
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="background:#FF0606;border-radius:4px;">
+                    <a href="{{ login_url }}" target="_blank"
+                       style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none;">
+                      Войти в игру
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f9f9f9;padding:20px 40px;border-top:1px solid #eeeeee;text-align:center;">
+              <p style="margin:0;font-size:12px;color:#aaaaaa;">
+                &copy; 2026 Battle Cursor
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>

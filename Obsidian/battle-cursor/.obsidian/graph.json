@@ -1,0 +1,32 @@
+{
+  "colorGroups": [
+    {
+      "query": "tag:#architecture",
+      "color": {
+        "a": 1,
+        "rgb": 4491519
+      }
+    },
+    {
+      "query": "tag:#model",
+      "color": {
+        "a": 1,
+        "rgb": 4504388
+      }
+    },
+    {
+      "query": "tag:#feature",
+      "color": {
+        "a": 1,
+        "rgb": 16746564
+      }
+    },
+    {
+      "query": "tag:#log",
+      "color": {
+        "a": 1,
+        "rgb": 12272827
+      }
+    }
+  ]
+}

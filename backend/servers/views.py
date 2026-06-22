@@ -11,7 +11,7 @@ from servers.serializers import (
 from servers.services import ServerService
 
 
-class ServerListView(APIView):
+class ServerCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
