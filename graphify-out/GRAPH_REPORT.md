@@ -1,15 +1,16 @@
-# Graph Report - .  (2026-06-22)
+# Graph Report - Battle-cursor  (2026-06-22)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 395 files · ~303,602 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 440 nodes · 751 edges · 63 communities (37 shown, 26 thin omitted)
-- Extraction: 70% EXTRACTED · 30% INFERRED · 0% AMBIGUOUS · INFERRED: 226 edges (avg confidence: 0.52)
+- 849 nodes · 1312 edges · 89 communities (62 shown, 27 thin omitted)
+- Extraction: 81% EXTRACTED · 19% INFERRED · 0% AMBIGUOUS · INFERRED: 247 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1d71a2fc`
+- Built from commit: `f529dfc7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -52,17 +53,40 @@
 - [[_COMMUNITY_Community 41|Community 41]]
 - [[_COMMUNITY_Community 42|Community 42]]
 - [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 63|Community 63]]
+- [[_COMMUNITY_Community 64|Community 64]]
+- [[_COMMUNITY_Community 65|Community 65]]
+- [[_COMMUNITY_Community 66|Community 66]]
+- [[_COMMUNITY_Community 67|Community 67]]
+- [[_COMMUNITY_Community 68|Community 68]]
+- [[_COMMUNITY_Community 69|Community 69]]
+- [[_COMMUNITY_Community 70|Community 70]]
+- [[_COMMUNITY_Community 71|Community 71]]
+- [[_COMMUNITY_Community 72|Community 72]]
+- [[_COMMUNITY_Community 73|Community 73]]
+- [[_COMMUNITY_Community 74|Community 74]]
+- [[_COMMUNITY_Community 75|Community 75]]
+- [[_COMMUNITY_Community 76|Community 76]]
+- [[_COMMUNITY_Community 77|Community 77]]
+- [[_COMMUNITY_Community 78|Community 78]]
+- [[_COMMUNITY_Community 79|Community 79]]
+- [[_COMMUNITY_Community 80|Community 80]]
+- [[_COMMUNITY_Community 81|Community 81]]
+- [[_COMMUNITY_Community 82|Community 82]]
+- [[_COMMUNITY_Community 83|Community 83]]
+- [[_COMMUNITY_Community 84|Community 84]]
+- [[_COMMUNITY_Community 86|Community 86]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `GameConsumer` - 34 edges
-2. `GameConsumer` - 31 edges
-3. `User` - 29 edges
-4. `Purchase` - 20 edges
-5. `EmailVerification` - 20 edges
-6. `Score` - 19 edges
-7. `UserProfileSerializer` - 17 edges
-8. `UserRegisterSerializer` - 16 edges
-9. `UserUpdateSerializer` - 16 edges
+1. `GameConsumer` - 35 edges
+2. `GameConsumer` - 34 edges
+3. `GameConsumer` - 31 edges
+4. `User` - 29 edges
+5. `Purchase` - 20 edges
+6. `EmailVerification` - 20 edges
+7. `Score` - 19 edges
+8. `Battle-cursor — CLAUDE.md` - 18 edges
+9. `UserProfileSerializer` - 17 edges
 10. `UserService` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -70,20 +94,20 @@
   consumers.py → services.py
 - `Server` --uses--> `Meta`  [INFERRED]
   models.py → serializers.py
-- `Command` --uses--> `Canvas`  [INFERRED]
-  management/commands/init_game_data.py → models.py
-- `Command` --uses--> `Cursor`  [INFERRED]
-  management/commands/init_game_data.py → models.py
 - `GameAdmin` --uses--> `Game`  [INFERRED]
+  admin.py → models.py
+- `GameAdmin` --uses--> `Round`  [INFERRED]
+  admin.py → models.py
+- `GameAdmin` --uses--> `Score`  [INFERRED]
   admin.py → models.py
 
 ## Import Cycles
 - 1-file cycle: `celery.py -> celery.py`
 
-## Communities (63 total, 26 thin omitted)
+## Communities (89 total, 27 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.07
+Cohesion: 0.08
 Nodes (19): ServerAdmin, APIView, Server, StatusChoices, ServerRepository, Meta, ServerCreateSerializer, ServerDetailSerializer (+11 more)
 
 ### Community 1 - "Community 1"
@@ -95,24 +119,28 @@ Cohesion: 0.12
 Nodes (29): InventoryAdmin, PurchaseAdmin, APIView, Inventory, Inventory, ItemType, Meta, Purchase (+21 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.08
-Nodes (38): AbstractUser, CanvasAdmin, CursorAdmin, CustomUserAdmin, EmailVerificationAdmin, APIView, BaseTokenObtainPairView, Canvas (+30 more)
+Cohesion: 0.07
+Nodes (44): AbstractUser, CanvasAdmin, CursorAdmin, CustomUserAdmin, EmailVerificationAdmin, APIView, BaseCommand, BaseTokenObtainPairView (+36 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.09
 Nodes (3): AsyncWebsocketConsumer, GameConsumer, Игрок сдаёт рисунок.         Ожидает: {"type": "round_end", "round_id": "...", "
 
 ### Community 5 - "Community 5"
-Cohesion: 0.08
-Nodes (21): GameAdmin, RoundAdmin, ScoreAdmin, APIView, Game, Meta, Round, Score (+13 more)
+Cohesion: 0.06
+Nodes (29): GameAdmin, RoundAdmin, ScoreAdmin, APIView, Game, Meta, Round, Score (+21 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.40
-Nodes (4): Пароль:     - минимум 8 символов     - минимум одна цифра     - минимум одна бук, Список дебаффов — каждый элемент должен быть валидным id из debuffs.py, validate_debuffs_list(), validate_password_strength()
+Cohesion: 0.08
+Nodes (28): APIView, BaseTokenObtainPairView, ServerCreateView, ServerDetailView, ServerJoinView, ServerLeaveView, User, EmailService (+20 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.50
 Nodes (3): BaseMiddleware, get_user_from_token(), JWTAuthMiddleware
+
+### Community 9 - "Community 9"
+Cohesion: 0.05
+Nodes (43): `ai`, Backend, Battle-cursor — CLAUDE.md, Context Navigation (Graphify + Obsidian), Context Navigation (Graphify + Obsidian), Frontend, `game`, graphify (+35 more)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.12
@@ -122,33 +150,117 @@ Nodes (20): generate_prompts(), grade_drawing(), _groq_text_request(), Гене�
 Cohesion: 0.21
 Nodes (7): App(), Footer(), Header(), Home(), NotFound(), steps, Tutorial()
 
-### Community 29 - "Community 29"
-Cohesion: 0.22
-Nodes (8): Задание для раунда:     - не пустое     - от 3 до 100 символов, Нельзя присоединиться к уже начатой или завершённой игре., Нельзя присоединиться к игре дважды., Нельзя присоединиться если игра заполнена., validate_game_not_full(), validate_game_not_started(), validate_player_not_in_game(), validate_prompt()
-
 ### Community 30 - "Community 30"
 Cohesion: 0.29
 Nodes (4): AppConfig, MarketConfig, clear_market_cache(), При изменении или удалении Курсоров/Холстов из приложения users,     этот сигнал
 
+### Community 63 - "Community 63"
+Cohesion: 0.06
+Nodes (30): dependencies, axios, @hookform/resolvers, react-hook-form, react-redux, react-router-dom, @reduxjs/toolkit, zod (+22 more)
+
+### Community 64 - "Community 64"
+Cohesion: 0.11
+Nodes (22): generate_prompts(), grade_drawing(), _groq_text_request(), Генерирует уникальные промпты для раундов через Groq.     При ошибке возвращает, Базовый текстовый запрос к Groq без изображения., Отправляет рисунок в Groq и возвращает оценку и комментарий.      Returns:, _cleanup_round(), _collect_drawings() (+14 more)
+
+### Community 65 - "Community 65"
+Cohesion: 0.16
+Nodes (10): Home(), MobileGuard(), Purchase, Purchases(), marketAPI, AppDispatch, RootState, store (+2 more)
+
+### Community 66 - "Community 66"
+Cohesion: 0.12
+Nodes (16): Backend, Email, Frontend, Git префиксы, Redis ключи, WebSocket, Авторизация WS, Архитектурные решения — Battle-cursor (+8 more)
+
+### Community 67 - "Community 67"
+Cohesion: 0.15
+Nodes (12): Header(), FEATURES, Main(), RARITY_COLOR, Server, api, authAPI, failedQueue (+4 more)
+
+### Community 68 - "Community 68"
+Cohesion: 0.13
+Nodes (8): Inventory(), Tab, Profile(), RARITY_COLOR, ProfileDetail(), RARITY_COLOR, Inventory, UserProfile
+
+### Community 69 - "Community 69"
+Cohesion: 0.21
+Nodes (9): DEBUFF_MAP, DEBUFF_RARITY_COLOR, DebuffInfo, Props, PurchaseModal(), Props, RARITY_COLOR, RARITY_LABEL (+1 more)
+
+### Community 70 - "Community 70"
+Cohesion: 0.18
+Nodes (9): CURSORS, FEATURES, FormData, Login(), schema, useResendCooldown(), authSlice, AuthState (+1 more)
+
+### Community 71 - "Community 71"
+Cohesion: 0.17
+Nodes (11): api.tsx, Header, Inventory, Pending, Profile, ProfileSettings, ShopItemDetail, Изменённые файлы (+3 more)
+
+### Community 72 - "Community 72"
+Cohesion: 0.18
+Nodes (10): Backend (pytest), Frontend (Playwright), Postman + Newman + Allure, Postman — подготовка данных, Запуск, Пирамида, Связанные заметки, Структура (+2 more)
+
+### Community 73 - "Community 73"
+Cohesion: 0.31
+Nodes (8): RARITY_COLOR, Shop(), Tab, initialState, marketSlice, MarketState, Canvas, Cursor
+
+### Community 74 - "Community 74"
+Cohesion: 0.20
+Nodes (9): 2026-06-22 — Frontend static & Cloudinary, Cloudinary upload, Django → React SPA, JWT access token, Pending, Исправление путей к изображениям, Решения, Связанные заметки (+1 more)
+
+### Community 75 - "Community 75"
+Cohesion: 0.22
+Nodes (8): metadata.json, Redis, WS событие применения, Валидация при применении, Дебаффы, Защита (Canvas), Механика, Связанные заметки
+
+### Community 76 - "Community 76"
+Cohesion: 0.29
+Nodes (6): main(), Upload frontend/public images to Cloudinary and generate mapping JSON. Run from, upload(), URL configuration for config project.  The `urlpatterns` list routes URLs to vie, serve_frontend(), Path
+
+### Community 77 - "Community 77"
+Cohesion: 0.25
+Nodes (7): Canvas, Cursor, EmailVerification, Redis кэш (users), User (AbstractUser), Модели: Users, Связанные заметки
+
+### Community 78 - "Community 78"
+Cohesion: 0.25
+Nodes (7): generate_prompts — генерация заданий, grade_drawing — оценка рисунка, Groq AI — Оценка и генерация промптов, _groq_text_request — базовый запрос, Интеграция с игровым циклом, Модель, Связанные заметки
+
+### Community 79 - "Community 79"
+Cohesion: 0.29
+Nodes (6): CURSORS, FEATURES, FormData, getStrength(), Register(), schema
+
+### Community 80 - "Community 80"
+Cohesion: 0.29
+Nodes (6): Game, Redis (игровое состояние), Round, Score, Модели: Game, Связанные заметки
+
+### Community 81 - "Community 81"
+Cohesion: 0.29
+Nodes (6): Inventory, Purchase, Redis кэш (market), REST эндпоинты, Модели: Market, Связанные заметки
+
+### Community 82 - "Community 82"
+Cohesion: 0.29
+Nodes (6): REST эндпоинты, Server, WebSocket, Модели: Server, Онлайн статус, Связанные заметки
+
+### Community 83 - "Community 83"
+Cohesion: 0.29
+Nodes (6): Redis кэш, Курсоры и Канвасы, Магазин (Market), Механика, Связанные заметки, Эндпоинты
+
+### Community 84 - "Community 84"
+Cohesion: 0.33
+Nodes (5): Celery задачи (`ai/tasks.py`), Игровой цикл, Очки и монеты, Связанные заметки, Схема
+
 ## Knowledge Gaps
-- **24 isolated node(s):** `Migration`, `Migration`, `Migration`, `Migration`, `Migration` (+19 more)
+- **196 isolated node(s):** `Описание проекта`, `Backend`, `Frontend`, `Тестирование`, `Структура проекта` (+191 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **26 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **27 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `ServerService` connect `Community 0` to `Community 1`, `Community 6`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Why does `GameConsumer` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.025) - this node is a cross-community bridge._
-- **Why does `ServerService` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._
 - **Are the 21 inferred relationships involving `User` (e.g. with `CanvasAdmin` and `CursorAdmin`) actually correct?**
   _`User` has 21 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 14 inferred relationships involving `Purchase` (e.g. with `InventoryAdmin` and `PurchaseAdmin`) actually correct?**
   _`Purchase` has 14 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 15 inferred relationships involving `EmailVerification` (e.g. with `CanvasAdmin` and `CursorAdmin`) actually correct?**
-  _`EmailVerification` has 15 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Игрок сдаёт рисунок.         Ожидает: {"type": "round_end", "round_id": "...", "`, `Базовый текстовый запрос к Groq без изображения.`, `Отправляет рисунок в Groq и возвращает оценку и комментарий.      Returns:` to the rest of the system?**
-  _64 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `Описание проекта`, `Backend`, `Frontend` to the rest of the system?**
+  _257 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.07446808510638298 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07678075855689177 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.07823613086770982 - nodes in this community are weakly interconnected._

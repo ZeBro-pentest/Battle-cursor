@@ -2,15 +2,14 @@
 Upload frontend/public images to Cloudinary and generate mapping JSON.
 Run from backend/: python upload_to_cloudinary.py
 """
+
 import json
 from pathlib import Path
 
 import cloudinary
 import cloudinary.uploader
 
-CLOUD_NAME = "dpzsnbfe5"
-API_KEY = "417422922336855"
-API_SECRET = "jh4kbGdeo4CRQLKw9Jufo7InR28"
+from . import API_KEY, API_SECRET, CLOUD_NAME
 
 cloudinary.config(
     cloud_name=CLOUD_NAME,
