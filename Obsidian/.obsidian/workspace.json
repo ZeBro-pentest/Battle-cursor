@@ -4,20 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "8664d2e29c18a182",
+        "id": "8e832604aad3bffd",
         "type": "tabs",
         "children": [
           {
-            "id": "9ba42c4160a0c251",
+            "id": "f1b3b31cd5b3c898",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "markdown",
               "state": {
-                "file": "Без названия.base",
-                "viewName": "Таблица"
+                "file": "battle-cursor/logs/2026-06-22-frontend-static-cloudinary.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-table",
-              "title": "Без названия"
+              "icon": "lucide-file",
+              "title": "2026-06-22-frontend-static-cloudinary"
             }
           }
         ]
@@ -40,7 +41,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": true
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Файловый менеджер"
@@ -179,11 +180,33 @@
       "bases:Создать новую базу": false
     }
   },
-  "active": "bfcfb87ea48abc54",
+  "active": "f1b3b31cd5b3c898",
   "lastOpenFiles": [
+    "frontend/src/assets/cloudinary-images.json.md",
+    "battle-cursor/features/game-cycle.md",
+    "battle-cursor/features/debuffs.md",
+    "battle-cursor/features/market.md",
+    "battle-cursor/features/groq-scoring.md",
+    "battle-cursor/logs/2026-06-22-frontend-static-cloudinary.md",
+    "battle-cursor/features/testing.md",
+    "battle-cursor/data/models-users.md",
+    "battle-cursor/data/models-server.md",
+    "battle-cursor/data/models-market.md",
+    "battle-cursor/data/models-game.md",
+    "frontend/src/assets",
+    "frontend/src",
+    "frontend",
+    "battle-cursor/architecture/decisions.md",
+    "battle-cursor/logs/2026-06-22-frontend-static-cloudinary.md.tmp.37995.223865ebfaa4",
+    "battle-cursor/features/testing.md.tmp.37995.af7c001c47cc",
+    "battle-cursor/features/market.md.tmp.37995.f532b3afa926",
+    "battle-cursor/features/groq-scoring.md.tmp.37995.416eb30c0213",
+    "battle-cursor/features/debuffs.md.tmp.37995.cbf39cbeb346",
+    "battle-cursor/features/game-cycle.md.tmp.37995.1b016a7e4353",
+    "battle-cursor/data/models-market.md.tmp.37995.109a21475a2d",
+    "Без названия.canvas",
     "Без названия.md",
     "Добро пожаловать.md",
-    "создайте ссылку.md",
-    "Без названия.base"
+    "создайте ссылку.md"
   ]
 }

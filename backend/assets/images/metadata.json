@@ -5,7 +5,8 @@
       "image": "standard_cursor.png",
       "price": 0,
       "rarity": "null",
-      "debuffs": []
+      "debuffs": [],
+      "image_orig": "standard_cursor_orig.png"
     },
     {
       "name": "Stylus",
@@ -16,7 +17,8 @@
         "chill",
         "blur",
         "fog"
-      ]
+      ],
+      "image_orig": "Stylus_cursor_orig.png"
     },
     {
       "name": "Blot",
@@ -27,7 +29,8 @@
         "smudge",
         "weight",
         "static"
-      ]
+      ],
+      "image_orig": "Blot_cursor_orig.png"
     },
     {
       "name": "Spark",
@@ -38,7 +41,8 @@
         "carousel",
         "flash",
         "eraser"
-      ]
+      ],
+      "image_orig": "Spark_cursor_orig.png"
     },
     {
       "name": "Arrow",
@@ -49,7 +53,8 @@
         "anonim",
         "mirror",
         "advertising"
-      ]
+      ],
+      "image_orig": "Arrow_cursor_orig.png"
     },
     {
       "name": "Quill",
@@ -60,7 +65,8 @@
         "palette",
         "captcha",
         "darkness"
-      ]
+      ],
+      "image_orig": "Quill_cursor_orig.png"
     },
     {
       "name": "Pencil",
@@ -73,7 +79,8 @@
         "carousel",
         "collapse",
         "vandal"
-      ]
+      ],
+      "image_orig": "Pencil_cursor_orig.png"
     },
     {
       "name": "Vector",
@@ -86,7 +93,8 @@
         "blur",
         "shake",
         "zoom"
-      ]
+      ],
+      "image_orig": "Vector_cursor_orig.png"
     },
     {
       "name": "Stroke",
@@ -99,7 +107,8 @@
         "mirror",
         "quickly",
         "popup"
-      ]
+      ],
+      "image_orig": "Stroke_cursor_orig.png"
     },
     {
       "name": "Virus",
@@ -112,7 +121,8 @@
         "static",
         "timer",
         "palette_swap"
-      ]
+      ],
+      "image_orig": "Virus_cursor_orig.png"
     },
     {
       "name": "Trap",
@@ -125,7 +135,8 @@
         "darkness",
         "blocking",
         "freeze"
-      ]
+      ],
+      "image_orig": "Trap_cursor_orig.png"
     },
     {
       "name": "Warper",
@@ -140,7 +151,8 @@
         "timer",
         "riddle",
         "puzzle"
-      ]
+      ],
+      "image_orig": "Warper_cursor_orig.png"
     },
     {
       "name": "Dictator",
@@ -155,7 +167,8 @@
         "blocking",
         "quiz",
         "code"
-      ]
+      ],
+      "image_orig": "Dictator_cursor_orig.png"
     },
     {
       "name": "Wraith",
@@ -170,7 +183,8 @@
         "collapse",
         "maze",
         "agreement"
-      ]
+      ],
+      "image_orig": "Wraith_cursor_orig.png"
     },
     {
       "name": "Hybrid",
@@ -185,7 +199,8 @@
         "zoom",
         "survey",
         "password"
-      ]
+      ],
+      "image_orig": "Hybrid_cursor_orig.png"
     },
     {
       "name": "Breach",
@@ -200,7 +215,8 @@
         "popup",
         "scan",
         "verify"
-      ]
+      ],
+      "image_orig": "Breach_cursor_orig.png"
     },
     {
       "name": "Parasite",
@@ -217,7 +233,8 @@
         "password",
         "siren",
         "hiss"
-      ]
+      ],
+      "image_orig": "Parasite_cursor_orig.png"
     },
     {
       "name": "Chaos",
@@ -234,7 +251,8 @@
         "verify",
         "echo",
         "pyhindu"
-      ]
+      ],
+      "image_orig": "Chaos_cursor_orig.png"
     },
     {
       "name": "Phantom",
@@ -251,7 +269,8 @@
         "puzzle",
         "ringtone",
         "whisper"
-      ]
+      ],
+      "image_orig": "Phantom_cursor_orig.png"
     },
     {
       "name": "Tornado",
@@ -268,7 +287,8 @@
         "riddle",
         "glitch",
         "storm"
-      ]
+      ],
+      "image_orig": "Tornado_cursor_orig.png"
     },
     {
       "name": "Mutant",
@@ -285,7 +305,8 @@
         "agreement",
         "zombie",
         "bombs"
-      ]
+      ],
+      "image_orig": "Mutant_cursor_orig.png"
     },
     {
       "name": "Judge",
@@ -304,7 +325,8 @@
         "glitch",
         "questions",
         "exam"
-      ]
+      ],
+      "image_orig": "Judge_cursor_orig.png"
     },
     {
       "name": "Eraser",
@@ -323,7 +345,8 @@
         "bombs",
         "weighting",
         "weapons"
-      ]
+      ],
+      "image_orig": "Eraser_cursor_orig.png"
     },
     {
       "name": "Absolute",
@@ -342,7 +365,8 @@
         "siren",
         "rickroll",
         "disco"
-      ]
+      ],
+      "image_orig": "Absolute_cursor_orig.png"
     },
     {
       "name": "Overlord",
@@ -361,7 +385,8 @@
         "zombie",
         "transparency",
         "brightness"
-      ]
+      ],
+      "image_orig": "Overlord_cursor_orig.png"
     },
     {
       "name": "Collapse",
@@ -380,7 +405,8 @@
         "pyhindu",
         "roulette",
         "dvd"
-      ]
+      ],
+      "image_orig": "Collapse_cursor_orig.png"
     }
   ],
   "canvases": [

@@ -13,7 +13,27 @@ from .serializers import (
     UserRegisterSerializer,
     UserUpdateSerializer,
 )
-from .services import UserService
+from .services import EmailService, UserService
+
+_REFRESH_COOKIE = "refresh"
+_REFRESH_COOKIE_PATH = "/api/auth/"
+_REFRESH_COOKIE_MAX_AGE = 7 * 24 * 60 * 60
+
+
+def _set_refresh_cookie(response, refresh_token: str) -> None:
+    response.set_cookie(
+        key=_REFRESH_COOKIE,
+        value=refresh_token,
+        httponly=True,
+        samesite="None",
+        secure=True,
+        max_age=_REFRESH_COOKIE_MAX_AGE,
+        path=_REFRESH_COOKIE_PATH,
+    )
+
+
+def _delete_refresh_cookie(response) -> None:
+    response.delete_cookie(_REFRESH_COOKIE, path=_REFRESH_COOKIE_PATH)
 
 
 class LoginView(BaseTokenObtainPairView):
@@ -22,16 +42,18 @@ class LoginView(BaseTokenObtainPairView):
         if response.status_code == 200:
             from rest_framework_simplejwt.tokens import AccessToken
 
-            from .models import User
-
             token = AccessToken(response.data["access"])
             user = User.objects.get(id=token["user_id"])
 
             if not user.is_verified and not user.is_superuser:
+                EmailService.send_verification(user)
                 return Response(
-                    {"detail": "Email не подтверждён."},
+                    {"detail": "Подтвердите email. Письмо отправлено повторно."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
+
+            refresh_token = response.data.pop("refresh")
+            _set_refresh_cookie(response, refresh_token)
         return response
 
 
@@ -39,14 +61,42 @@ class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        refresh_token = request.COOKIES.get(_REFRESH_COOKIE)
+        if not refresh_token:
+            return Response(
+                {"detail": "Токен не найден."}, status=status.HTTP_400_BAD_REQUEST
+            )
         try:
-            token = RefreshToken(request.data.get("refresh"))
+            token = RefreshToken(refresh_token)
             token.blacklist()
         except Exception:
             return Response(
                 {"detail": "Невалидный токен."}, status=status.HTTP_400_BAD_REQUEST
             )
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        response = Response(status=status.HTTP_204_NO_CONTENT)
+        _delete_refresh_cookie(response)
+        return response
+
+
+class CookieTokenRefreshView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        refresh_token = request.COOKIES.get(_REFRESH_COOKIE)
+        if not refresh_token:
+            return Response(
+                {"detail": "Refresh token не найден."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        try:
+            token = RefreshToken(refresh_token)
+            access = str(token.access_token)
+        except Exception:
+            return Response(
+                {"detail": "Невалидный или истёкший токен."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        return Response({"access": access})
 
 
 class RegisterView(APIView):
@@ -80,7 +130,7 @@ class RegisterView(APIView):
 
         serializer = UserRegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = UserService.register(serializer.validated_data)
+        user = UserService.register(serializer.validated_data, request)
         return Response(
             UserProfileSerializer(user).data, status=status.HTTP_201_CREATED
         )
@@ -105,6 +155,21 @@ class VerifyEmailView(APIView):
             {"detail": "Email успешно подтвержден. Теперь вы можете войти."},
             status=status.HTTP_200_OK,
         )
+
+
+class ResendVerificationView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get("email")
+        if not email:
+            return Response({"detail": "Email не указан."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = User.objects.get(email=email, is_verified=False)
+            EmailService.send_verification(user, request)
+        except User.DoesNotExist:
+            pass
+        return Response({"detail": "Если аккаунт существует и не подтверждён — письмо отправлено."})
 
 
 class ProfileView(APIView):

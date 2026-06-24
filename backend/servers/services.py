@@ -48,7 +48,8 @@ class ServerService:
 
     @staticmethod
     def start_game(room_code, user):
-        from game.services import GameService
+        from django.db import transaction
+        from game.services import GameService, RoundService
 
         server = ServerService.get_server(room_code)
         if server.host != user:
@@ -59,16 +60,15 @@ class ServerService:
         if len(players) < 2:
             raise ValueError("Недостаточно игроков для начала игры.")
 
-        game = GameService.create(players=players, max_players=server.max_players)
-
+        # HTTP-запрос к Groq — до транзакции, чтобы не держать соединение открытым
         prompts = GameService._generate_prompts(len(players))
-        from game.services import RoundService
 
-        for i, prompt in enumerate(prompts, start=1):
-            RoundService.create(game=game, number=i, prompt=prompt)
-
-        server.game = game
-        server.status = Server.StatusChoices.IN_PROGRESS
-        server.save(update_fields=["game", "status"])
+        with transaction.atomic():
+            game = GameService.create(players=players, max_players=server.max_players)
+            for i, prompt in enumerate(prompts, start=1):
+                RoundService.create(game=game, number=i, prompt=prompt)
+            server.game = game
+            server.status = Server.StatusChoices.IN_PROGRESS
+            server.save(update_fields=["game", "status"])
 
         return game

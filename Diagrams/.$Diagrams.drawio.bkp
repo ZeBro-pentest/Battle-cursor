@@ -1,6 +1,6 @@
 <mxfile host="Electron" pages="5">
   <diagram name="Architecture" id="G5pQws5OZowkKIKjqROz">
-    <mxGraphModel dx="2491" dy="993" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1635" dy="482" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -108,7 +108,7 @@
             <mxPoint x="190" y="45.333333333333485" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gIVeBhQYW5AtnsCqb8-D-17" parent="gIVeBhQYW5AtnsCqb8-D-16" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Gemini" vertex="1">
+        <mxCell id="gIVeBhQYW5AtnsCqb8-D-17" parent="gIVeBhQYW5AtnsCqb8-D-16" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Groq" vertex="1">
           <mxGeometry height="30" width="100" y="30" as="geometry" />
         </mxCell>
         <mxCell id="gIVeBhQYW5AtnsCqb8-D-18" parent="gIVeBhQYW5AtnsCqb8-D-16" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Celery" vertex="1">
@@ -802,7 +802,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="xxgknNRuAGwnDyfji4U6" name="Sequence">
-    <mxGraphModel dx="2020" dy="2375" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1664" dy="2162" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -852,7 +852,7 @@
             <mxPoint x="1330" y="1055" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="-MUO_exG6p05vqFH37Bg-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4C0099;" value="&lt;span style=&quot;font-family: &amp;quot;Anthropic Sans&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 14px; text-align: start; white-space: nowrap;&quot;&gt;Gemini&lt;/span&gt;" vertex="1">
+        <mxCell id="-MUO_exG6p05vqFH37Bg-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4C0099;" value="&lt;span style=&quot;font-family: &amp;quot;Anthropic Sans&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 14px; text-align: start; white-space: nowrap;&quot;&gt;Groq&lt;/span&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="1270" y="265" as="geometry" />
         </mxCell>
         <mxCell id="-MUO_exG6p05vqFH37Bg-12" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=none;endFill=0;">
@@ -1005,10 +1005,10 @@
         <mxCell id="-MUO_exG6p05vqFH37Bg-55" parent="-MUO_exG6p05vqFH37Bg-48" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="6. return base64 - Redis возвращает рисунок Celery" vertex="1">
           <mxGeometry height="30" width="490" y="180" as="geometry" />
         </mxCell>
-        <mxCell id="-MUO_exG6p05vqFH37Bg-56" parent="-MUO_exG6p05vqFH37Bg-48" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="7. base64 + prompt - Celery отправляет рисунок и задание в Gemin" vertex="1">
+        <mxCell id="-MUO_exG6p05vqFH37Bg-56" parent="-MUO_exG6p05vqFH37Bg-48" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="7. base64 + prompt - Celery отправляет рисунок и задание в Groq" vertex="1">
           <mxGeometry height="30" width="490" y="210" as="geometry" />
         </mxCell>
-        <mxCell id="-MUO_exG6p05vqFH37Bg-57" parent="-MUO_exG6p05vqFH37Bg-48" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="8. value + comment - Gemini возвращает оценку и комментарий" vertex="1">
+        <mxCell id="-MUO_exG6p05vqFH37Bg-57" parent="-MUO_exG6p05vqFH37Bg-48" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="8. value + comment - Groq возвращает оценку и комментарий" vertex="1">
           <mxGeometry height="30" width="490" y="240" as="geometry" />
         </mxCell>
         <mxCell id="-MUO_exG6p05vqFH37Bg-58" parent="-MUO_exG6p05vqFH37Bg-48" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="9. save Score to DB - Celery сохраняет результат в базу данных" vertex="1">
@@ -1192,7 +1192,7 @@
         <mxCell id="sjbFes18KOrsSFWLguy6-56" parent="sjbFes18KOrsSFWLguy6-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="4. player_joined { user_id } - Consumer уведомляет остальных игроков о новом участнике" vertex="1">
           <mxGeometry height="30" width="520" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="sjbFes18KOrsSFWLguy6-57" parent="sjbFes18KOrsSFWLguy6-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="5. cursor_move { x, y, user_id } - Фронт отправляет координаты курсора каждые 50мс" vertex="1">
+        <mxCell id="sjbFes18KOrsSFWLguy6-57" parent="sjbFes18KOrsSFWLguy6-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="5. cursor_move { x, y, user_id } - Фронт отправляет координаты курсора каждые ?мс" vertex="1">
           <mxGeometry height="30" width="520" y="150" as="geometry" />
         </mxCell>
         <mxCell id="sjbFes18KOrsSFWLguy6-58" parent="sjbFes18KOrsSFWLguy6-52" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="6. broadcast cursor_move - Consumer рассылает координаты всем игрокам в группе" vertex="1">

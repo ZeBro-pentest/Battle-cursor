@@ -48,3 +48,6 @@ Thumbs.db
 # Migrations (опционально — многие не игнорируют)
 # */migrations/*.py
 # !*/migrations/__init__.py
+
+graphify-out/
+**/graphify-out/

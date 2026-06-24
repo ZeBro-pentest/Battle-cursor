@@ -26,21 +26,35 @@ class Command(BaseCommand):
             img_path = os.path.join(base_path, "cursors", item["image"])
             if os.path.exists(img_path):
                 self.stdout.write(f"Загрузка курсора: {item['name']}...")
-                # Загружаем в Cloudinary
+                base_name = os.path.splitext(item["image"])[0]
                 upload_result = cloudinary.uploader.upload(
                     img_path,
                     folder="cursors",
-                    public_id=os.path.splitext(item["image"])[0]
+                    public_id=base_name,
                 )
-                # Создаем или обновляем в БД
+                defaults = {
+                    "image": upload_result["public_id"],
+                    "price": item["price"],
+                    "rarity": item["rarity"],
+                    "debuffs": item.get("debuffs", []),
+                }
+                # Загружаем оригинал если указан в metadata
+                image_orig = item.get("image_orig")
+                if image_orig:
+                    orig_path = os.path.join(base_path, "cursors", image_orig)
+                    if os.path.exists(orig_path):
+                        self.stdout.write(f"  → загрузка оригинала: {image_orig}")
+                        orig_result = cloudinary.uploader.upload(
+                            orig_path,
+                            folder="cursors",
+                            public_id=os.path.splitext(image_orig)[0],
+                        )
+                        defaults["image_orig"] = orig_result["public_id"]
+                    else:
+                        self.stdout.write(self.style.WARNING(f"  → оригинал не найден: {orig_path}"))
                 cursor, created = Cursor.objects.update_or_create(
                     name=item["name"],
-                    defaults={
-                        "image": upload_result["public_id"],
-                        "price": item["price"],
-                        "rarity": item["rarity"],
-                        "debuffs": item.get("debuffs", [])
-                    }
+                    defaults=defaults,
                 )
                 status = "Создан" if created else "Обновлен"
                 self.stdout.write(self.style.SUCCESS(f"Курсор '{item['name']}' {status}"))

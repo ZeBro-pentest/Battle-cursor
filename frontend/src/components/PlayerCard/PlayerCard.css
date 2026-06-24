@@ -1,0 +1,103 @@
+.pcard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100px;
+}
+
+.pcard-avatar {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border: 2px solid var(--pcard-color, #2a2a2a);
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--pcard-color, #2a2a2a) 40%, transparent);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.pcard-avatar--framed {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.pcard-avatar--empty {
+  border-style: dashed;
+  border-color: #2a2a2a;
+  box-shadow: none;
+}
+
+.pcard-frame {
+  position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pcard-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.pcard-svg {
+  width: 40px;
+  height: 40px;
+  color: #444;
+}
+
+.pcard-empty-mark {
+  font-family: var(--mono);
+  font-size: 22px;
+  color: #333;
+}
+
+.pcard-badge {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.pcard-badge--host {
+  background: #1a1200;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+}
+
+.pcard-badge--you {
+  background: #0a0a1a;
+  border: 1px solid #4488ff;
+  color: #4488ff;
+}
+
+.pcard-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #ccc;
+  letter-spacing: 1px;
+  text-align: center;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 6px;
+}
+
+.pcard-name--empty {
+  color: #333;
+}

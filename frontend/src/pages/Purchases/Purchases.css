@@ -1,0 +1,135 @@
+@import "../Shop/Shop.css";
+
+/* Сбрасываем скрытие скроллбара от shop-page */
+.shop-page:has(.purchases-list) {
+  overflow-y: hidden;
+  scrollbar-width: auto;
+}
+.shop-page:has(.purchases-list)::-webkit-scrollbar {
+  display: block;
+}
+
+.purchases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(100vh - 320px);
+  overflow-y: auto;
+  padding-right: 6px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #ff060644 #0b0b0b;
+}
+
+.purchases-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.purchases-list::-webkit-scrollbar-track {
+  background: #0b0b0b;
+  border-left: 1px solid rgba(255, 6, 6, 0.08);
+}
+
+.purchases-list::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 6px;
+  border: 1px solid #0b0b0b;
+}
+
+.purchases-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.purchase-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #111;
+  border: 1px solid #161616;
+  border-radius: 8px;
+  padding: 14px 20px;
+  transition: border-color 0.15s;
+}
+
+.purchase-row:hover {
+  border-color: #222;
+}
+
+.purchase-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.05));
+}
+
+.purchase-img-placeholder {
+  width: 48px;
+  height: 48px;
+  border: 1px dashed #1e1e1e;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.purchase-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.purchase-name {
+  font-family: var(--font-benzin);
+  font-size: 14px;
+  color: #ccc;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.purchase-meta {
+  font-size: 11px;
+  color: #2d2d2d;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.purchase-type {
+  font-size: 10px;
+  color: #2a2a2a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: #0d0d0d;
+  border: 1px solid #181818;
+  border-radius: 4px;
+  padding: 3px 10px;
+  flex-shrink: 0;
+}
+
+.purchase-price {
+  font-family: var(--font-benzin);
+  font-size: 14px;
+  color: #ffcc00;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.purchase-price small {
+  display: block;
+  font-size: 9px;
+  color: #2d2d2d;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: var(--sans);
+}
+
+.purchases-empty {
+  text-align: center;
+  color: #1e1e1e;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 48px 0;
+}
