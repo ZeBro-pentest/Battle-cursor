@@ -96,7 +96,7 @@ export function Login() {
       const status = err.response?.status;
       const detail = err.response?.data?.detail;
       if (status === 403) {
-        setServerError("Подтвердите email перед входом — проверьте почту.");
+        setServerError("Подтвердите email перед входом — проверьте почту и папку «Спам».");
         setUnverifiedEmail(data.email);
       } else {
         setServerError(detail || "Неверный email или пароль");

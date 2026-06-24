@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "http://127.0.0.1:8000/";
+export const WS_BASE_URL = BASE_URL.replace(/^http/, "ws").replace(/\/$/, "");
 
 export const api = axios.create({
   baseURL: BASE_URL,
@@ -16,6 +17,17 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export async function refreshAccessToken(): Promise<string> {
+  const { data } = await axios.post(
+    `${BASE_URL}api/auth/login/refresh/`,
+    {},
+    { withCredentials: true },
+  );
+  const newToken: string = data.access;
+  localStorage.setItem("access_token", newToken);
+  return newToken;
+}
 
 let isRefreshing = false;
 let failedQueue: Array<{
@@ -38,6 +50,7 @@ api.interceptors.response.use(
     if (error.response?.status !== 401 || original._retry) {
       return Promise.reject(error);
     }
+    console.log("[auth] Interceptor: got 401, attempting refresh");
     if (isRefreshing) {
       return new Promise<string>((resolve, reject) => {
         failedQueue.push({ resolve, reject });
@@ -49,19 +62,15 @@ api.interceptors.response.use(
     original._retry = true;
     isRefreshing = true;
     try {
-      const { data } = await axios.post(
-        `${BASE_URL}api/auth/login/refresh/`,
-        {},
-        { withCredentials: true },
-      );
-      const newToken: string = data.access;
-      localStorage.setItem("access_token", newToken);
+      const newToken = await refreshAccessToken();
       flushQueue(newToken);
       original.headers.Authorization = `Bearer ${newToken}`;
+      console.log("[auth] Interceptor: refresh success");
       return api(original);
     } catch (refreshError) {
       flushQueue(null, refreshError);
       localStorage.removeItem("access_token");
+      console.log("[auth] Interceptor: refresh failed, redirecting to login");
       window.location.href = "/login";
       return Promise.reject(refreshError);
     } finally {
@@ -103,6 +112,7 @@ export const serversAPI = {
   joinServer: (room_code: string) => api.post(`api/servers/${room_code}/join/`),
   leaveServer: (room_code: string) => api.post(`api/servers/${room_code}/leave/`),
   getServer: (room_code: string) => api.get(`api/servers/${room_code}/`),
+  deleteServer: (room_code: string) => api.delete(`api/servers/${room_code}/delete/`),
 };
 
 export const marketAPI = {

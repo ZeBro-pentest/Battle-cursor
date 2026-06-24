@@ -15,15 +15,45 @@ from .config import (
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_PROMPTS = [
+_FALLBACK_PROMPTS = [
+    # Животные
     "Нарисуй кота",
-    "Нарисуй дом",
-    "Нарисуй машину",
-    "Нарисуй дерево",
-    "Нарисуй солнце",
+    "Нарисуй собаку",
+    "Нарисуй лису",
+    "Нарисуй медведя",
+    "Нарисуй дракона",
     "Нарисуй рыбу",
-    "Нарисуй цветок",
+    "Нарисуй птицу",
+    "Нарисуй лошадь",
+    "Нарисуй кролика",
+    "Нарисуй осьминога",
+    # Предметы
+    "Нарисуй машину",
+    "Нарисуй замок",
+    "Нарисуй корабль",
+    "Нарисуй самолёт",
+    "Нарисуй велосипед",
+    "Нарисуй гитару",
+    "Нарисуй часы",
+    "Нарисуй ракету",
+    # Еда
+    "Нарисуй торт",
+    "Нарисуй пиццу",
+    "Нарисуй арбуз",
+    "Нарисуй мороженое",
+    "Нарисуй суши",
+    "Нарисуй бургер",
+    # Природа
+    "Нарисуй дерево",
     "Нарисуй гору",
+    "Нарисуй вулкан",
+    "Нарисуй радугу",
+    "Нарисуй закат над морем",
+    # Сцены
+    "Нарисуй дом в лесу",
+    "Нарисуй космический корабль в открытом космосе",
+    "Нарисуй подводный город",
+    "Нарисуй рыцаря на коне",
 ]
 
 
@@ -37,7 +67,7 @@ def _groq_text_request(
     }
     payload = {
         "model": GROQ_MODEL,
-        "max_completion_tokens": GROQ_MAX_TOKENS,
+        "max_completion_tokens": max_tokens,
         "temperature": GROQ_TEMPERATURE,
         "messages": [{"role": "user", "content": prompt_text}],
     }
@@ -68,7 +98,7 @@ def grade_drawing(image_base64: str, prompt: str) -> dict:
     }
     payload = {
         "model": GROQ_MODEL,
-        "max_tokens": GROQ_MAX_TOKENS,
+        "max_completion_tokens": GROQ_MAX_TOKENS,
         "temperature": GROQ_TEMPERATURE,
         "messages": [
             {
@@ -127,4 +157,5 @@ def generate_prompts(count: int) -> list[str]:
             logger.error("Groq prompts parse error: %s", e)
 
     logger.warning("Falling back to default prompts")
-    return DEFAULT_PROMPTS[:count]
+    import random
+    return random.sample(_FALLBACK_PROMPTS, min(count, len(_FALLBACK_PROMPTS)))

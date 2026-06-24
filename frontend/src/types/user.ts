@@ -2,6 +2,7 @@ export interface Cursor {
   id: string;
   name: string;
   image_url: string | null;
+  image_orig_url: string | null;
   price: number;
   debuffs: string[];
   rarity: string;

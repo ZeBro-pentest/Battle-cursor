@@ -24,3 +24,6 @@ superuser:
 
 flush-tokens:
 	python manage.py flushexpiredtokens
+
+ngrok:
+	ngrok http 8000

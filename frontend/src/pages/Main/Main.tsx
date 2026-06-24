@@ -22,9 +22,18 @@ const RARITY_COLOR: Record<string, string> = {
 
 const FEATURES = [
   { icon: "◈", text: "До 8 игроков в одной комнате одновременно" },
-  { icon: "⚡", text: "60+ дебаффов пяти уровней редкости — от Common до Legendary" },
-  { icon: "★", text: "Groq AI оценивает каждый рисунок по шкале от 0.1 до 5.0" },
-  { icon: "◎", text: "Монеты за победу — трать в магазине на курсоры и холсты" },
+  {
+    icon: "⚡",
+    text: "60+ дебаффов пяти уровней редкости — от Common до Legendary",
+  },
+  {
+    icon: "★",
+    text: "Groq AI оценивает каждый рисунок по шкале от 0.1 до 5.0",
+  },
+  {
+    icon: "◎",
+    text: "Монеты за победу — трать в магазине на курсоры и холсты",
+  },
 ];
 
 export function Main() {
@@ -35,9 +44,11 @@ export function Main() {
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
   const [profileLoading, setProfileLoading] = useState(true);
-  const [serversLoading, setServersLoading] = useState(true);
+  const [serversLoading, setServersLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
 
   const fetchServers = useCallback(() => {
+    setServersLoading(true);
     serversAPI
       .getServers()
       .then((r) => setServers(r.data))
@@ -51,11 +62,25 @@ export function Main() {
       .then((r) => setProfile(r.data))
       .catch(() => {})
       .finally(() => setProfileLoading(false));
+  }, []);
 
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const id = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => clearTimeout(id);
+  }, [countdown]);
+
+  const handleRefresh = () => {
     fetchServers();
-    const interval = setInterval(fetchServers, 10_000);
-    return () => clearInterval(interval);
-  }, [fetchServers]);
+    setCountdown(10);
+  };
+
+  const handleDeleteServer = async (room_code: string) => {
+    try {
+      await serversAPI.deleteServer(room_code);
+      fetchServers();
+    } catch {}
+  };
 
   const handleCreate = async () => {
     setCreating(true);
@@ -64,7 +89,9 @@ export function Main() {
       const { data } = await serversAPI.createServer(maxPlayers);
       navigate(`/games/${data.room_code}`);
     } catch (err: unknown) {
-      const e = err as { response?: { data?: { detail?: string; non_field_errors?: string[] } } };
+      const e = err as {
+        response?: { data?: { detail?: string; non_field_errors?: string[] } };
+      };
       const msg =
         e?.response?.data?.detail ??
         e?.response?.data?.non_field_errors?.[0] ??
@@ -75,17 +102,17 @@ export function Main() {
   };
 
   const avatarColor = profile?.cursor
-    ? RARITY_COLOR[profile.cursor.rarity] ?? "#888"
+    ? (RARITY_COLOR[profile.cursor.rarity] ?? "#888")
     : "#444";
+  const avatarHasFrame = !!profile?.canvas?.image_url;
 
   return (
     <div className="main-page">
       <div className="main-grid">
-
         {/* ── Левая колонка: Профиль ── */}
         <aside className="main-col main-col--profile">
           <div
-            className="mp-avatar"
+            className={`mp-avatar${avatarHasFrame ? " mp-avatar--framed" : ""}`}
             style={{ "--avatar-color": avatarColor } as React.CSSProperties}
           >
             {profile?.cursor?.image_url ? (
@@ -100,6 +127,9 @@ export function Main() {
                   strokeLinecap="round"
                 />
               </svg>
+            )}
+            {avatarHasFrame && (
+              <img src={profile!.canvas!.image_url!} alt="" className="mp-avatar-frame" />
             )}
           </div>
 
@@ -128,7 +158,9 @@ export function Main() {
                       <span className="mp-eq-key">Курсор</span>
                       <span
                         className="mp-eq-val"
-                        style={{ color: RARITY_COLOR[profile.cursor.rarity] ?? "#aaa" }}
+                        style={{
+                          color: RARITY_COLOR[profile.cursor.rarity] ?? "#aaa",
+                        }}
                       >
                         {profile.cursor.name}
                       </span>
@@ -139,7 +171,9 @@ export function Main() {
                       <span className="mp-eq-key">Холст</span>
                       <span
                         className="mp-eq-val"
-                        style={{ color: RARITY_COLOR[profile.canvas.rarity] ?? "#aaa" }}
+                        style={{
+                          color: RARITY_COLOR[profile.canvas.rarity] ?? "#aaa",
+                        }}
                       >
                         {profile.canvas.name}
                       </span>
@@ -151,16 +185,25 @@ export function Main() {
           ) : null}
 
           <nav className="mp-nav">
-            <button className="mp-nav-link" onClick={() => navigate("/profile")}>
+            <button
+              className="mp-nav-link"
+              onClick={() => navigate("/profile")}
+            >
               Профиль
             </button>
             <button className="mp-nav-link" onClick={() => navigate("/shop")}>
               Магазин
             </button>
-            <button className="mp-nav-link" onClick={() => navigate("/inventory")}>
+            <button
+              className="mp-nav-link"
+              onClick={() => navigate("/inventory")}
+            >
               Инвентарь
             </button>
-            <button className="mp-nav-link" onClick={() => navigate("/purchases")}>
+            <button
+              className="mp-nav-link"
+              onClick={() => navigate("/purchases")}
+            >
               Покупки
             </button>
           </nav>
@@ -172,30 +215,48 @@ export function Main() {
           <div className="mc-welcome-frame">
             <p className="mc-tag">// ДОБРО ПОЖАЛОВАТЬ</p>
             <h3 className="mc-welcome-heading">
-              {profile
-                ? <>Здравствуйте, <span className="mc-name">{profile.username}</span>!</>
-                : "Здравствуйте!"}
+              {profile ? (
+                <>
+                  Здравствуйте,{" "}
+                  <span className="mc-name">{profile.username}</span>!
+                </>
+              ) : (
+                "Здравствуйте!"
+              )}
             </h3>
             <p className="mc-welcome-text">
-              Мы рады вас видеть! Это <span className="mc-accent">Battle_cursor</span> —
-              браузерная PvP-игра, где до 8 игроков рисуют по промптам от искусственного
-              интеллекта, применяют дебаффы друг другу и борются за лучшую оценку от Groq AI.
-              Зарабатывай монеты, прокачивай арсенал и покоряй таблицу лидеров.
+              Мы рады вас видеть! Это{" "}
+              <span className="mc-accent">Battle_cursor</span> — браузерная
+              PvP-игра, где до 8 игроков рисуют по промптам от искусственного
+              интеллекта, применяют дебаффы друг другу и борются за лучшую
+              оценку от Groq AI. Зарабатывай монеты, прокачивай арсенал и
+              покоряй таблицу лидеров.
             </p>
             <ul className="mc-features">
               {FEATURES.map((f, i) => (
-                <li key={i} className="mc-feature" style={{ animationDelay: `${i * 0.1}s` }}>
+                <li
+                  key={i}
+                  className="mc-feature"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
                   <span className="mc-feature-icon">{f.icon}</span>
                   <span>{f.text}</span>
                 </li>
               ))}
             </ul>
-            <button className="mc-tutorial-btn" onClick={() => navigate("/tutorial")}>
+            <button
+              className="mc-tutorial-btn"
+              onClick={() => navigate("/tutorial")}
+            >
               Как играть
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5"
-                  stroke="currentColor" strokeWidth="1.5"
-                  strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </button>
           </div>
@@ -204,16 +265,33 @@ export function Main() {
         {/* ── Правая колонка: Лобби ── */}
         <aside className="main-col main-col--lobby">
           <div className="ml-section">
-            <p className="ml-eyebrow">// Активные комнаты</p>
+            <div className="ml-section-header">
+              <p className="ml-eyebrow">// Активные комнаты</p>
+              <button
+                className="ml-refresh-btn"
+                onClick={handleRefresh}
+                disabled={countdown > 0}
+              >
+                {countdown > 0 ? `Обновить (${countdown}с)` : "Обновить"}
+              </button>
+            </div>
             <div className="ml-servers">
               {serversLoading ? (
                 <p className="ml-hint">загрузка...</p>
               ) : servers.length === 0 ? (
                 <p className="ml-hint">Нет активных комнат</p>
               ) : (
-                servers.map((s) => {
+                [...servers]
+                  .sort((a, b) =>
+                    a.host === profile?.username ? -1 : b.host === profile?.username ? 1 : 0,
+                  )
+                  .map((s) => {
                   const full = s.players_count >= s.max_players;
-                  const slots = Array.from({ length: s.max_players }, (_, i) => i < s.players_count);
+                  const isOwn = s.host === profile?.username;
+                  const slots = Array.from(
+                    { length: s.max_players },
+                    (_, i) => i < s.players_count,
+                  );
                   return (
                     <div
                       key={s.room_code}
@@ -222,12 +300,29 @@ export function Main() {
                     >
                       <div className="ml-server-top">
                         <div className="ml-server-left">
-                          <span className={`ml-server-dot${full ? " ml-server-dot--full" : ""}`} />
+                          <span
+                            className={`ml-server-dot${full ? " ml-server-dot--full" : ""}`}
+                          />
                           <span className="ml-server-code">{s.room_code}</span>
                         </div>
-                        <span className={`ml-server-status${full ? " ml-server-status--full" : ""}`}>
-                          {full ? "FULL" : "PLAY"}
-                        </span>
+                        <div className="ml-server-top-right">
+                          <span
+                            className={`ml-server-status${full ? " ml-server-status--full" : ""}`}
+                          >
+                            {full ? "FULL" : "PLAY"}
+                          </span>
+                          {isOwn && (
+                            <button
+                              className="ml-server-delete"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteServer(s.room_code);
+                              }}
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <div className="ml-server-bottom">
                         <span className="ml-server-host">@{s.host}</span>
@@ -258,12 +353,16 @@ export function Main() {
                   <button
                     className="ml-stepper-btn"
                     onClick={() => setMaxPlayers((p) => Math.max(2, p - 1))}
-                  >−</button>
+                  >
+                    −
+                  </button>
                   <span className="ml-stepper-val">{maxPlayers}</span>
                   <button
                     className="ml-stepper-btn"
                     onClick={() => setMaxPlayers((p) => Math.min(8, p + 1))}
-                  >+</button>
+                  >
+                    +
+                  </button>
                 </div>
               </div>
               <button
@@ -277,7 +376,6 @@ export function Main() {
             </div>
           </div>
         </aside>
-
       </div>
     </div>
   );

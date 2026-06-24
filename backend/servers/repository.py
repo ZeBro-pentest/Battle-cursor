@@ -4,7 +4,9 @@ from servers.models import Server
 class ServerRepository:
     @staticmethod
     def create_server(host, max_players=8):
-        return Server.objects.create(host=host, max_players=max_players)
+        server = Server.objects.create(host=host, max_players=max_players)
+        server.players.add(host)
+        return server
 
     @staticmethod
     def get_by_room_code(room_code):

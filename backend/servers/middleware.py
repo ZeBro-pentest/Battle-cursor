@@ -24,6 +24,13 @@ class JWTAuthMiddleware(BaseMiddleware):
 
         if auth_header.startswith("Bearer "):
             token_key = auth_header.split(" ")[1]
+        else:
+            from urllib.parse import parse_qs
+            query_string = scope.get("query_string", b"").decode()
+            params = parse_qs(query_string)
+            token_key = params.get("token", [None])[0]
+
+        if token_key:
             scope["user"] = await get_user_from_token(token_key)
         else:
             scope["user"] = AnonymousUser()

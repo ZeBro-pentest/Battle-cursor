@@ -43,6 +43,7 @@ def _cleanup_round(round_id: str):
     if keys:
         cache.delete_many(keys)
     cache.delete(f"round:{round_id}:task_id")
+    cache.delete(f"round:{round_id}:submitted")
 
 
 # ---------------------------------------------------------------------------
@@ -67,7 +68,7 @@ def start_round(round_id: str, game_id: str, room_group: str):
     # Страховочная задача через 65 сек
     task = force_grade_round.apply_async(
         args=[round_id, room_group],
-        countdown=300,
+        countdown=65,
     )
     cache.set(f"round:{round_id}:task_id", task.id, timeout=120)
 
@@ -91,6 +92,8 @@ def grade_round(self, round_id: str, room_group: str):
     Оценивает рисунки всех игроков за раунд.
     После оценки запускает следующий раунд или game_over.
     """
+    from django.db import transaction
+
     try:
         round_obj = Round.objects.select_related("game").get(id=round_id)
     except Round.DoesNotExist:
@@ -105,8 +108,10 @@ def grade_round(self, round_id: str, room_group: str):
     if not drawings:
         logger.warning("grade_round: No drawings for round %s", round_id)
 
+    # Фаза 1: HTTP-запросы к Groq — до транзакции
     prompt = round_obj.prompt
     scores_data = []
+    db_scores = []
 
     for user_id, data in drawings.items():
         try:
@@ -120,35 +125,63 @@ def grade_round(self, round_id: str, room_group: str):
         comment = result["comment"]
         coins_earned = round(score_value * 10, 1)
 
-        Score.objects.update_or_create(
-            user=user,
-            round=round_obj,
-            defaults={
-                "value": score_value,
-                "comment": comment,
-                "image_url": data.get("image_url", ""),
-                "coins_earned": coins_earned,
-            },
-        )
+        db_scores.append({
+            "user": user,
+            "value": score_value,
+            "comment": comment,
+            "image_url": data.get("image_url", ""),
+            "coins_earned": coins_earned,
+        })
+        scores_data.append({
+            "user_id": str(user_id),
+            "username": user.username,
+            "score": score_value,
+            "comment": comment,
+            "coins_earned": coins_earned,
+        })
+        logger.info("Graded round=%s user=%s score=%.1f", round_id, user_id, score_value)
 
-        scores_data.append(
-            {
-                "user_id": str(user_id),
-                "username": user.username,
-                "score": score_value,
-                "comment": comment,
-                "coins_earned": coins_earned,
-            }
-        )
+    # Фаза 2: атомарная запись в БД + dispatch следующей задачи через on_commit
+    game = round_obj.game
 
-        logger.info(
-            "Graded round=%s user=%s score=%.1f", round_id, user_id, score_value
-        )
+    with transaction.atomic():
+        for s in db_scores:
+            Score.objects.update_or_create(
+                user=s["user"],
+                round=round_obj,
+                defaults={
+                    "value": s["value"],
+                    "comment": s["comment"],
+                    "image_url": s["image_url"],
+                    "coins_earned": s["coins_earned"],
+                },
+            )
+        RoundService.finish(round_obj)
 
-    RoundService.finish(round_obj)
+        next_round = Round.objects.filter(
+            game=game, number=round_obj.number + 1, is_finished=False
+        ).first()
+
+        if next_round:
+            next_id, game_id = str(next_round.id), str(game.id)
+            transaction.on_commit(
+                lambda nid=next_id, gid=game_id: start_round.apply_async(args=[nid, gid, room_group], countdown=5)
+            )
+        else:
+            game_id = str(game.id)
+            transaction.on_commit(
+                lambda gid=game_id: game_over.apply_async(args=[gid, room_group], countdown=5)
+            )
+
+    # Фаза 3: накапливаем монеты в Redis для финального синка в game_over
+    game_id_str = str(game.id)
+    for s in db_scores:
+        coin_key = f"game:{game_id_str}:coins:{s['user'].id}"
+        current = cache.get(coin_key, 0.0)
+        cache.set(coin_key, current + s["coins_earned"], timeout=3600)
+
     _cleanup_round(round_id)
 
-    # Пушим результаты раунда фронту
     _push(
         room_group,
         {
@@ -160,25 +193,6 @@ def grade_round(self, round_id: str, room_group: str):
     )
 
     logger.info("Round %s graded, %d scores saved", round_id, len(scores_data))
-
-    # Определяем следующий раунд
-    game = round_obj.game
-    next_round = Round.objects.filter(
-        game=game, number=round_obj.number + 1, is_finished=False
-    ).first()
-
-    if next_round:
-        # Пауза 5 сек (игроки смотрят результаты) → следующий раунд
-        start_round.apply_async(
-            args=[str(next_round.id), str(game.id), room_group],
-            countdown=5,
-        )
-    else:
-        # Все раунды завершены → итоги
-        game_over.apply_async(
-            args=[str(game.id), room_group],
-            countdown=5,
-        )
 
 
 @shared_task
@@ -209,6 +223,8 @@ def game_over(game_id: str, room_group: str):
     - синхронизирует монеты и рейтинг в БД
     - пушит финальные результаты фронту
     """
+    from django.db import transaction
+
     try:
         game = Game.objects.prefetch_related("rounds__scores__user").get(id=game_id)
     except Game.DoesNotExist:
@@ -235,25 +251,31 @@ def game_over(game_id: str, room_group: str):
         for entry in totals
     ]
 
-    # Завершаем игру + синхронизируем монеты в БД
-    GameService.finish(game)
+    with transaction.atomic():
+        # Завершаем игру + синхронизируем монеты в БД
+        GameService.finish(game)
+
+        # Удаляем Server из БД
+        try:
+            from servers.models import Server
+
+            server = Server.objects.get(game_id=game_id)
+            room_code = server.room_code
+            server.delete()
+            logger.info("game_over: Server %s deleted", room_code)
+        except Exception as e:
+            logger.warning("game_over: Server not found or already deleted: %s", e)
+
+        # Удаляем Game через 10 минут — только после коммита
+        transaction.on_commit(
+            lambda: delete_game.apply_async(args=[game_id], countdown=600)
+        )
 
     # Чистим Redis
     cache.delete(f"game:{game_id}:players_count")
     debuff_keys = cache.keys(f"game:{game_id}:debuff_active:*")
     if debuff_keys:
         cache.delete_many(debuff_keys)
-
-    # Удаляем Server из БД сразу
-    try:
-        from servers.models import Server
-
-        server = Server.objects.get(game_id=game_id)
-        room_code = server.room_code
-        server.delete()
-        logger.info("game_over: Server %s deleted", room_code)
-    except Exception as e:
-        logger.warning("game_over: Server not found or already deleted: %s", e)
 
     _push(
         room_group,
@@ -270,9 +292,6 @@ def game_over(game_id: str, room_group: str):
         final_scores[0]["username"] if final_scores else "?",
     )
 
-    # Удаляем Game через 10 минут
-    delete_game.apply_async(args=[game_id], countdown=600)
-
 
 @shared_task
 def delete_game(game_id: str):
@@ -283,3 +302,20 @@ def delete_game(game_id: str):
         logger.info("delete_game: Game %s deleted", game_id)
     except Game.DoesNotExist:
         logger.info("delete_game: Game %s already deleted", game_id)
+
+
+@shared_task
+def cleanup_game(game_id: str, room_code: str):
+    """Вызывается когда все игроки отключились после завершённой игры."""
+    from servers.models import Server
+
+    keys = cache.keys(f"game:{game_id}:*")
+    if keys:
+        cache.delete_many(keys)
+
+    try:
+        server = Server.objects.get(room_code=room_code)
+        server.delete()
+        logger.info("cleanup_game: Server %s deleted", room_code)
+    except Server.DoesNotExist:
+        logger.info("cleanup_game: Server %s already deleted", room_code)

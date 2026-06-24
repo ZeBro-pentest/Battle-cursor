@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.x.x",
     "@reduxjs/toolkit": "^2.x.x",
     "axios": "^1.18.0",
+    "react-colorful": "^5.7.0",
     "react-hook-form": "^7.x.x",
     "react-redux": "^9.x.x",
     "react-router-dom": "^7.17.0",

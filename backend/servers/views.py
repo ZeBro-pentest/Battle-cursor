@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,10 +23,14 @@ class ServerCreateView(APIView):
     def post(self, request):
         serializer = ServerCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        server = ServerService.create_server(
-            host=request.user,
-            max_players=serializer.validated_data.get("max_players", 8),
-        )
+        try:
+            server = ServerService.create_server(
+                host=request.user,
+                max_players=serializer.validated_data.get("max_players", 8),
+            )
+        except ValidationError as e:
+            msg = e.messages[0] if e.messages else str(e)
+            return Response({"detail": msg}, status=status.HTTP_400_BAD_REQUEST)
         return Response(
             ServerDetailSerializer(server).data, status=status.HTTP_201_CREATED
         )
@@ -52,6 +57,20 @@ class ServerJoinView(APIView):
         except ValueError as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(ServerDetailSerializer(server).data)
+
+
+class ServerDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, room_code):
+        try:
+            server = ServerService.get_server(room_code)
+        except ValueError:
+            return Response({"detail": "Комната не найдена."}, status=status.HTTP_404_NOT_FOUND)
+        if server.host != request.user:
+            return Response({"detail": "Только хост может удалить комнату."}, status=status.HTTP_403_FORBIDDEN)
+        server.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ServerLeaveView(APIView):

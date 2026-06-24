@@ -1,8 +1,12 @@
+import logging
+
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .config import DEFAULT_FROM_EMAIL, FRONTEND_URL
 from .models import EmailVerification, User
+
+logger = logging.getLogger(__name__)
 
 
 class UserService:
@@ -32,10 +36,7 @@ class UserService:
         Верифицирует email по токену.
         Возвращает True если успешно, False если токен невалиден.
         """
-        import uuid
         try:
-            # Проверяем, что токен - это валидный UUID
-            uuid.UUID(str(token))
             verification = EmailVerification.objects.get(token=token, is_used=False)
         except (EmailVerification.DoesNotExist, ValueError, TypeError):
             return False
@@ -70,7 +71,7 @@ class UserService:
             verification = EmailVerification.objects.filter(user=user, is_used=False).latest("created_at")
             return str(verification.token)
         except Exception as e:
-            print(f"DEBUG TOKEN ERROR: {str(e)}") # Это появится в терминале Django
+            logger.error("Verification token lookup failed for %s: %s", email, e)
             raise e
 
 
@@ -81,11 +82,7 @@ class EmailService:
         Отправляет письмо с ссылкой верификации через Mailtrap.
         """
         verification = EmailVerification.objects.create(user=user)
-        path = f"/verify-email?token={verification.token}"
-        if request is not None:
-            verify_url = request.build_absolute_uri(path)
-        else:
-            verify_url = f"{FRONTEND_URL}{path}"
+        verify_url = f"{FRONTEND_URL}/verify-email?token={verification.token}"
         
         context = {
             "username": user.username,
@@ -94,14 +91,18 @@ class EmailService:
         html_message = render_to_string("emails/verification.html", context)
         plain_message = strip_tags(html_message)
 
-        send_mail(
-            subject="Подтвердите email — Battle Cursor",
-            message=plain_message,
-            from_email=DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
-            html_message=html_message,
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                subject="Подтвердите email — Battle Cursor",
+                message=plain_message,
+                from_email=DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                html_message=html_message,
+                fail_silently=False,
+            )
+            logger.info("Verification email sent to %s", user.email)
+        except Exception as e:
+            logger.error("Verification email send failed for %s: %s", user.email, e)
 
     @staticmethod
     def send_welcome(user: User) -> None:
@@ -115,11 +116,15 @@ class EmailService:
         html_message = render_to_string("emails/welcome.html", context)
         plain_message = strip_tags(html_message)
 
-        send_mail(
-            subject="Добро пожаловать в Battle Cursor!",
-            message=plain_message,
-            from_email=DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
-            html_message=html_message,
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                subject="Добро пожаловать в Battle Cursor!",
+                message=plain_message,
+                from_email=DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                html_message=html_message,
+                fail_silently=False,
+            )
+            logger.info("Welcome email sent to %s", user.email)
+        except Exception as e:
+            logger.error("Welcome email send failed for %s: %s", user.email, e)

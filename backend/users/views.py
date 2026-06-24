@@ -1,4 +1,3 @@
-from django.conf import settings as django_settings
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -26,8 +25,8 @@ def _set_refresh_cookie(response, refresh_token: str) -> None:
         key=_REFRESH_COOKIE,
         value=refresh_token,
         httponly=True,
-        samesite="Lax",
-        secure=not django_settings.DEBUG,
+        samesite="None",
+        secure=True,
         max_age=_REFRESH_COOKIE_MAX_AGE,
         path=_REFRESH_COOKIE_PATH,
     )
@@ -47,8 +46,9 @@ class LoginView(BaseTokenObtainPairView):
             user = User.objects.get(id=token["user_id"])
 
             if not user.is_verified and not user.is_superuser:
+                EmailService.send_verification(user)
                 return Response(
-                    {"detail": "Email не подтверждён."},
+                    {"detail": "Подтвердите email. Письмо отправлено повторно."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 

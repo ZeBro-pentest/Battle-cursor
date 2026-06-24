@@ -213,8 +213,10 @@ class GameConsumer(AsyncWebsocketConsumer):
             timeout=DRAWING_TTL,
         )
 
-        # Считаем сколько игроков сдали
-        submitted = len(cache.keys(f"round:{round_id}:drawing:*"))
+        # Атомарно считаем сколько игроков сдали
+        counter_key = f"round:{round_id}:submitted"
+        cache.add(counter_key, 0, timeout=DRAWING_TTL)
+        submitted = cache.incr(counter_key)
 
         # Берём players_count
         game_id = await self.get_game_id_for_round(round_id)

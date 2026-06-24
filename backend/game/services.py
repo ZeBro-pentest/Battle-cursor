@@ -1,7 +1,7 @@
-from django.db.models import F, Sum
+from django.core.cache import cache
+from django.db.models import F
 
-from game.models import Score
-from game.repository import GameRepository, RoundRepository, ScoreRepository
+from game.repository import GameRepository, RoundRepository
 
 
 class GameService:
@@ -14,7 +14,7 @@ class GameService:
     @staticmethod
     def finish(game):
         GameRepository.update_done(game)
-        ScoreService.sync_coins_to_db(game)
+        ScoreService.sync_coins_from_redis(game)
         return game
 
     @staticmethod
@@ -44,33 +44,25 @@ class RoundService:
 
 class ScoreService:
     @staticmethod
-    def create(user, round_obj, value, comment):
-        coins_earned = round(value * 10, 1)
-        return ScoreRepository.create_score(
-            user=user,
-            round_obj=round_obj,
-            value=value,
-            comment=comment,
-            coins_earned=coins_earned,
-        )
-
-    @staticmethod
-    def sync_coins_to_db(game):
+    def sync_coins_from_redis(game):
         from django.contrib.auth import get_user_model
 
         User = get_user_model()
 
-        scores = (
-            Score.objects.filter(round__game=game)
-            .values("user_id")
-            .annotate(total_coins=Sum("coins_earned"))
-        )
+        max_coins = 0.0
+        winner_id = None
 
-        for entry in scores:
-            User.objects.filter(id=entry["user_id"]).update(
-                coins=F("coins") + entry["total_coins"]
-            )
+        for player in game.players.all():
+            coin_key = f"game:{game.id}:coins:{player.id}"
+            redis_coins = cache.get(coin_key)
+            if redis_coins:
+                User.objects.filter(id=player.id).update(
+                    coins=F("coins") + redis_coins
+                )
+                if redis_coins > max_coins:
+                    max_coins = redis_coins
+                    winner_id = player.id
+            cache.delete(coin_key)
 
-        winner = scores.order_by("-total_coins").first()
-        if winner:
-            User.objects.filter(id=winner["user_id"]).update(rating=F("rating") + 1)
+        if winner_id:
+            User.objects.filter(id=winner_id).update(rating=F("rating") + 1)
