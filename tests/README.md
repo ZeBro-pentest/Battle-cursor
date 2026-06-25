@@ -75,8 +75,12 @@ pytest backend/api/ -v
 
 **Frontend — e2e**
 ```bash
-cd tests/frontend
-playwright test
+cd tests/frontend && npx playwright test
+```
+
+**Frontend — просмотр Allure отчёта**
+```bash
+cd tests && npx allure serve allure-results
 ```
 
 ---

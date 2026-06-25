@@ -38,20 +38,6 @@ class Command(BaseCommand):
                     "rarity": item["rarity"],
                     "debuffs": item.get("debuffs", []),
                 }
-                # Загружаем оригинал если указан в metadata
-                image_orig = item.get("image_orig")
-                if image_orig:
-                    orig_path = os.path.join(base_path, "cursors", image_orig)
-                    if os.path.exists(orig_path):
-                        self.stdout.write(f"  → загрузка оригинала: {image_orig}")
-                        orig_result = cloudinary.uploader.upload(
-                            orig_path,
-                            folder="cursors",
-                            public_id=os.path.splitext(image_orig)[0],
-                        )
-                        defaults["image_orig"] = orig_result["public_id"]
-                    else:
-                        self.stdout.write(self.style.WARNING(f"  → оригинал не найден: {orig_path}"))
                 cursor, created = Cursor.objects.update_or_create(
                     name=item["name"],
                     defaults=defaults,

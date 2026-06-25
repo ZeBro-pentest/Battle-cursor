@@ -7,3 +7,15 @@ node_modules/
 .venv/
 allure-results/
 allure-report/
+
+# Playwright
+frontend/test-results/
+frontend/playwright-report/
+frontend/node_modules/
+
+# Env
+frontend/.env.test
+
+# Allure
+allure-results/
+allure-report/

@@ -13,11 +13,7 @@
       "image": "Stylus_cursor.png",
       "price": 20,
       "rarity": "common",
-      "debuffs": [
-        "chill",
-        "blur",
-        "fog"
-      ],
+      "debuffs": ["chill", "blur", "tar"],
       "image_orig": "Stylus_cursor_orig.png"
     },
     {
@@ -25,11 +21,7 @@
       "image": "Blot_cursor.png",
       "price": 30,
       "rarity": "common",
-      "debuffs": [
-        "smudge",
-        "weight",
-        "static"
-      ],
+      "debuffs": ["smudge", "weight", "static"],
       "image_orig": "Blot_cursor_orig.png"
     },
     {
@@ -37,11 +29,7 @@
       "image": "Spark_cursor.png",
       "price": 25,
       "rarity": "common",
-      "debuffs": [
-        "carousel",
-        "flash",
-        "eraser"
-      ],
+      "debuffs": ["carousel", "flash", "eraser"],
       "image_orig": "Spark_cursor_orig.png"
     },
     {
@@ -49,11 +37,7 @@
       "image": "Arrow_cursor.png",
       "price": 35,
       "rarity": "common",
-      "debuffs": [
-        "anonim",
-        "mirror",
-        "advertising"
-      ],
+      "debuffs": ["anonim", "mirror", "advertising"],
       "image_orig": "Arrow_cursor_orig.png"
     },
     {
@@ -61,11 +45,7 @@
       "image": "Quill_cursor.png",
       "price": 15,
       "rarity": "common",
-      "debuffs": [
-        "palette",
-        "captcha",
-        "darkness"
-      ],
+      "debuffs": ["palette", "captcha", "darkness"],
       "image_orig": "Quill_cursor_orig.png"
     },
     {
@@ -73,13 +53,7 @@
       "image": "Pencil_cursor.png",
       "price": 100,
       "rarity": "rare",
-      "debuffs": [
-        "chill",
-        "smudge",
-        "carousel",
-        "collapse",
-        "vandal"
-      ],
+      "debuffs": ["chill", "smudge", "carousel", "collapse", "vandal"],
       "image_orig": "Pencil_cursor_orig.png"
     },
     {
@@ -87,13 +61,7 @@
       "image": "Vector_cursor.png",
       "price": 120,
       "rarity": "rare",
-      "debuffs": [
-        "anonim",
-        "palette",
-        "blur",
-        "shake",
-        "zoom"
-      ],
+      "debuffs": ["anonim", "palette", "blur", "shake", "zoom"],
       "image_orig": "Vector_cursor_orig.png"
     },
     {
@@ -101,13 +69,7 @@
       "image": "Stroke_cursor.png",
       "price": 110,
       "rarity": "rare",
-      "debuffs": [
-        "weight",
-        "flash",
-        "mirror",
-        "quickly",
-        "popup"
-      ],
+      "debuffs": ["weight", "flash", "mirror", "quickly", "popup"],
       "image_orig": "Stroke_cursor_orig.png"
     },
     {
@@ -115,13 +77,7 @@
       "image": "Virus_cursor.png",
       "price": 90,
       "rarity": "rare",
-      "debuffs": [
-        "captcha",
-        "tar",
-        "static",
-        "timer",
-        "palette_swap"
-      ],
+      "debuffs": ["captcha", "tar", "static", "timer", "palette_swap"],
       "image_orig": "Virus_cursor_orig.png"
     },
     {
@@ -129,13 +85,7 @@
       "image": "Trap_cursor.png",
       "price": 95,
       "rarity": "rare",
-      "debuffs": [
-        "eraser",
-        "advertising",
-        "darkness",
-        "blocking",
-        "freeze"
-      ],
+      "debuffs": ["eraser", "advertising", "darkness", "blocking", "freeze"],
       "image_orig": "Trap_cursor_orig.png"
     },
     {
@@ -422,120 +372,70 @@
       "image": "Stylus_canvas.svg",
       "price": 20,
       "rarity": "common",
-      "protections": [
-        "chill",
-        "smudge",
-        "carousel"
-      ]
+      "protections": ["chill", "smudge", "carousel"]
     },
     {
       "name": "Blot",
       "image": "Blot_canvas.svg",
       "price": 30,
       "rarity": "common",
-      "protections": [
-        "anonim",
-        "palette",
-        "blur"
-      ]
+      "protections": ["anonim", "palette", "blur"]
     },
     {
       "name": "Spark",
       "image": "Spark_canvas.svg",
       "price": 25,
       "rarity": "common",
-      "protections": [
-        "weight",
-        "flash",
-        "mirror"
-      ]
+      "protections": ["weight", "flash", "mirror"]
     },
     {
       "name": "Arrow",
       "image": "Arrow_canvas.svg",
       "price": 35,
       "rarity": "common",
-      "protections": [
-        "captcha",
-        "tar",
-        "static"
-      ]
+      "protections": ["captcha", "tar", "static"]
     },
     {
       "name": "Quill",
       "image": "Quill_canvas.svg",
       "price": 15,
       "rarity": "common",
-      "protections": [
-        "eraser",
-        "advertising",
-        "darkness"
-      ]
+      "protections": ["eraser", "advertising", "darkness"]
     },
     {
       "name": "Pencil",
       "image": "Pencil_canvas.svg",
       "price": 100,
       "rarity": "rare",
-      "protections": [
-        "chill",
-        "smudge",
-        "carousel",
-        "shake",
-        "timer"
-      ]
+      "protections": ["chill", "smudge", "carousel", "shake", "timer"]
     },
     {
       "name": "Vector",
       "image": "Vector_canvas.svg",
       "price": 110,
       "rarity": "rare",
-      "protections": [
-        "anonim",
-        "palette",
-        "blur",
-        "quickly",
-        "blocking"
-      ]
+      "protections": ["anonim", "palette", "blur", "quickly", "blocking"]
     },
     {
       "name": "Stroke",
       "image": "Stroke_canvas.svg",
       "price": 90,
       "rarity": "rare",
-      "protections": [
-        "weight",
-        "flash",
-        "mirror",
-        "palette_swap",
-        "collapse"
-      ]
+      "protections": ["weight", "flash", "mirror", "palette_swap", "collapse"]
     },
     {
       "name": "Virus",
       "image": "Virus_canvas.svg",
       "price": 120,
       "rarity": "rare",
-      "protections": [
-        "captcha",
-        "tar",
-        "static",
-        "freeze",
-        "zoom"
-      ]
+      "protections": ["captcha", "tar", "static", "freeze", "zoom"]
     },
     {
       "name": "Trap",
       "image": "Trap_canvas.svg",
       "price": 95,
       "rarity": "rare",
-      "protections": [
-        "eraser",
-        "advertising",
-        "darkness",
-        "vandal",
-        "popup"
-      ]
+      "protections": ["eraser", "advertising", "darkness", "vandal", "popup"]
     },
     {
       "name": "Warper",

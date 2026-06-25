@@ -7,17 +7,13 @@ from .models import Canvas, Cursor, User
 
 class CursorSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
-    image_orig_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Cursor
-        fields = ["id", "name", "image_url", "image_orig_url", "price", "debuffs", "rarity"]
+        fields = ["id", "name", "image_url", "price", "debuffs", "rarity"]
 
     def get_image_url(self, obj):
         return obj.image.url if obj.image else None
-
-    def get_image_orig_url(self, obj):
-        return obj.image_orig.url if obj.image_orig else None
 
 
 class CanvasSerializer(serializers.ModelSerializer):
