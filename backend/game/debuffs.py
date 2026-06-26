@@ -14,8 +14,8 @@ DEBUFFS = [
         "rarity": "COMMON",
     },
     {
-        "id": "fog",
-        "name": "Fog",
+        "id": "tar",
+        "name": "Tar",
         "description": "Во весь экран появляется туман",
         "duration": 5,
         "rarity": "COMMON",

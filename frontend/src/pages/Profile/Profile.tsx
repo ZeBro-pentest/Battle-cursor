@@ -63,7 +63,7 @@ export function Profile() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !profile) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -75,7 +75,7 @@ export function Profile() {
         e.preventDefault();
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (!ctx || historyRef.current.length === 0) return;
         ctx.putImageData(historyRef.current.pop()!, 0, 0);
       }
@@ -98,7 +98,7 @@ export function Profile() {
   const saveHistory = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
     if (historyRef.current.length >= MAX_HISTORY) historyRef.current.shift();
     historyRef.current.push(
@@ -119,7 +119,7 @@ export function Profile() {
   const onMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
     saveHistory();
     isDrawing.current = true;
@@ -155,7 +155,7 @@ export function Profile() {
     if (!isDrawing.current) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
     const size = isEraser ? brushSize * 3 : brushSize;
     const { x, y } = getPos(e);
@@ -175,14 +175,14 @@ export function Profile() {
     isDrawing.current = false;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (ctx) ctx.globalCompositeOperation = "source-over";
   };
 
   const handleClear = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
     saveHistory();
     ctx.fillStyle = "#ffffff";
@@ -249,7 +249,7 @@ export function Profile() {
         {/* ── Center: Canvas ── */}
         <main className="profile-col profile-col--center">
           <div className="profile-canvas-wrap">
-            <div className="canvas-wrapper">
+            <div className={`canvas-wrapper${profile.canvas?.image_url ? "" : " canvas-wrapper--default"}`}>
               {profile.canvas?.image_url && (
                 <img
                   src={profile.canvas.image_url}
@@ -259,7 +259,7 @@ export function Profile() {
               )}
               <canvas
                 ref={canvasRef}
-                className="drawing-canvas"
+                className={`drawing-canvas${profile.cursor?.image_url ? " drawing-canvas--custom-cursor" : ""}`}
                 width={450}
                 height={440}
                 onMouseDown={onMouseDown}
@@ -269,10 +269,10 @@ export function Profile() {
                 onMouseLeave={onCanvasLeave}
               />
             </div>
-            {profile.cursor?.name && (
+            {profile.cursor?.image_url && (
               <img
                 ref={cursorImgRef}
-                src={`/images/cursors_orig/${profile.cursor.name}_cursor_orig.png`}
+                src={profile.cursor.image_url}
                 alt=""
                 className="canvas-custom-cursor"
               />

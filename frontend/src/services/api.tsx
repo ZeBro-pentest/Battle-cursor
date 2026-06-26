@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:8000/";
+const BASE_URL = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000/";
 export const WS_BASE_URL = BASE_URL.replace(/^http/, "ws").replace(/\/$/, "");
 
 export const api = axios.create({
@@ -50,6 +50,11 @@ api.interceptors.response.use(
     if (error.response?.status !== 401 || original._retry) {
       return Promise.reject(error);
     }
+
+    if (original.url?.includes("/auth/login/")) {
+      return Promise.reject(error);
+    }
+
     console.log("[auth] Interceptor: got 401, attempting refresh");
     if (isRefreshing) {
       return new Promise<string>((resolve, reject) => {

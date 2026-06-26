@@ -27,7 +27,6 @@ class Cursor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     image = CloudinaryField("cursor_image")
-    image_orig = CloudinaryField("cursor_image_orig", null=True, blank=True)
     price = models.PositiveIntegerField(default=0)
     debuffs = models.JSONField(default=list, validators=[validate_debuffs_list])
     rarity = models.CharField(

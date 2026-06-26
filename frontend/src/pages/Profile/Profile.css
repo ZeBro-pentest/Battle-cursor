@@ -102,6 +102,11 @@
     display: inline-block;
 }
 
+.canvas-wrapper--default {
+  border: 2px solid #333;
+  border-radius: 4px;
+}
+
 .canvas-frame-img {
     position: absolute;
     top: -40px;
@@ -116,9 +121,12 @@
 .drawing-canvas {
     position: relative;
     z-index: 0;
-    cursor: none;
     background: #ffffff;
     display: block;
+}
+
+.drawing-canvas--custom-cursor {
+    cursor: none;
 }
 
 .canvas-custom-cursor {

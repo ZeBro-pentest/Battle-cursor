@@ -1,0 +1,17 @@
+{
+  "name": "battle-cursor-e2e",
+  "version": "1.0.0",
+  "description": "Playwright e2e tests for Battle Cursor frontend",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.1",
+    "dotenv": "^16.0.0"
+  }
+}
