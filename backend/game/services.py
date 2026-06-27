@@ -1,7 +1,11 @@
+import logging
+
 from django.core.cache import cache
 from django.db.models import F
 
 from game.repository import GameRepository, RoundRepository
+
+logger = logging.getLogger(__name__)
 
 
 class GameService:
@@ -63,6 +67,15 @@ class ScoreService:
                     max_coins = redis_coins
                     winner_id = player.id
             cache.delete(coin_key)
+            logger.info(
+                "sync_coins: player=%s redis_coins=%s max_coins=%s winner_id=%s",
+                player.id, redis_coins, max_coins, winner_id,
+            )
 
-        if winner_id:
+        logger.info(
+            "sync_coins: final winner_id=%s max_coins=%s rating_updated=%s",
+            winner_id, max_coins, winner_id is not None and max_coins >= 50,
+        )
+
+        if winner_id and max_coins >= 50:
             User.objects.filter(id=winner_id).update(rating=F("rating") + 1)

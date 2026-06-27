@@ -58,7 +58,7 @@ _FALLBACK_PROMPTS = [
 
 
 def _groq_text_request(
-    prompt_text: str, max_tokens: int = GROQ_MAX_TOKENS
+    prompt_text: str, max_tokens: int = GROQ_MAX_TOKENS, temperature: float = GROQ_TEMPERATURE
 ) -> str | None:
     """Базовый текстовый запрос к Groq без изображения."""
     headers = {
@@ -68,7 +68,7 @@ def _groq_text_request(
     payload = {
         "model": GROQ_MODEL,
         "max_completion_tokens": max_tokens,
-        "temperature": GROQ_TEMPERATURE,
+        "temperature": temperature,
         "messages": [{"role": "user", "content": prompt_text}],
     }
     try:
@@ -146,8 +146,10 @@ def generate_prompts(count: int) -> list[str]:
     """
     text = _groq_text_request(
         PROMPT_GENERATION_PROMPT.format(count=count),
-        max_tokens=300,
+        max_tokens=500,
+        temperature=0.9,
     )
+    logger.info("Groq prompts response: %s", text)
     if text:
         try:
             prompts = json.loads(text)

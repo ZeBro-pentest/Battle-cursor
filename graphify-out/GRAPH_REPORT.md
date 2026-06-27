@@ -1,16 +1,16 @@
-# Graph Report - Battle-cursor  (2026-06-25)
+# Graph Report - Battle-cursor  (2026-06-26)
 
 ## Corpus Check
-- 482 files · ~462,723 words
+- 487 files · ~473,701 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 11089 nodes · 32681 edges · 388 communities (351 shown, 37 thin omitted)
+- 11129 nodes · 32717 edges · 389 communities (353 shown, 36 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 396 edges (avg confidence: 0.64)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9ec4b0e4`
+- Built from commit: `1399d72b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -279,6 +279,7 @@
 - [[_COMMUNITY_Community 372|Community 372]]
 - [[_COMMUNITY_Community 373|Community 373]]
 - [[_COMMUNITY_Community 374|Community 374]]
+- [[_COMMUNITY_Community 375|Community 375]]
 - [[_COMMUNITY_Community 376|Community 376]]
 - [[_COMMUNITY_Community 377|Community 377]]
 - [[_COMMUNITY_Community 378|Community 378]]
@@ -317,7 +318,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (388 total, 37 thin omitted)
+## Communities (389 total, 36 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.01
@@ -344,8 +345,8 @@ Cohesion: 0.02
 Nodes (76): $(), _addCheck(), Ae(), applyPatches(), as(), base64(), base64url(), cidr() (+68 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.18
-Nodes (21): APIView, BaseTokenObtainPairView, EmailVerification, UserProfileSerializer, UserRegisterSerializer, UserUpdateSerializer, EmailService, UserService (+13 more)
+Cohesion: 0.16
+Nodes (22): APIView, BaseTokenObtainPairView, EmailVerification, UserProfileSerializer, UserRegisterSerializer, UserUpdateSerializer, EmailService, Возвращает последний неиспользованный токен верификации для email.         Испол (+14 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.02
@@ -436,8 +437,8 @@ Cohesion: 0.07
 Nodes (70): Ba(), bc(), be(), bi(), C(), cc(), Ci(), De() (+62 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.08
-Nodes (6): AsyncWebsocketConsumer, GameConsumer, Игрок сдаёт рисунок по окончании раунда.         Ожидает: {"type": "round_end",, Игрок применяет дебафф к цели. Одноразовое применение без монет.         Ожидает, Проверяет что активный курсор игрока имеет данный дебафф., Возвращает список защит канваса целевого игрока.
+Cohesion: 0.06
+Nodes (10): AsyncWebsocketConsumer, BaseMiddleware, ASGI config for config project.  It exposes the ASGI callable as a module-level, GameConsumer, Игрок сдаёт рисунок по окончании раунда.         Ожидает: {"type": "round_end",, Игрок применяет дебафф к цели. Одноразовое применение без монет.         Ожидает, Проверяет что активный курсор игрока имеет данный дебафф., Возвращает список защит канваса целевого игрока. (+2 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.08
@@ -692,8 +693,8 @@ Cohesion: 0.09
 Nodes (33): at(), Bt(), cn(), ct(), deleteProperty(), en(), get(), getOwnPropertyDescriptor() (+25 more)
 
 ### Community 97 - "Community 97"
-Cohesion: 0.14
-Nodes (16): AbstractUser, BaseCommand, Command, UserAdmin, CanvasAdmin, CursorAdmin, CustomUserAdmin, EmailVerificationAdmin (+8 more)
+Cohesion: 0.10
+Nodes (21): AbstractUser, BaseCommand, Command, Migration, UserAdmin, CanvasAdmin, CursorAdmin, CustomUserAdmin (+13 more)
 
 ### Community 98 - "Community 98"
 Cohesion: 0.10
@@ -776,8 +777,8 @@ Cohesion: 0.09
 Nodes (32): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+24 more)
 
 ### Community 118 - "Community 118"
-Cohesion: 0.15
-Nodes (15): Migration, GameAdmin, RoundAdmin, ScoreAdmin, Game, Meta, Round, Score (+7 more)
+Cohesion: 0.14
+Nodes (16): Migration, GameAdmin, RoundAdmin, ScoreAdmin, Game, Meta, Round, Score (+8 more)
 
 ### Community 120 - "Community 120"
 Cohesion: 0.09
@@ -837,7 +838,7 @@ Nodes (6): AjaxAdapter(), DecoratedClass(), Defaults(), makeRequire(), Options()
 
 ### Community 136 - "Community 136"
 Cohesion: 0.02
-Nodes (86): $(), aa(), _addCheck(), and(), Ar(), args(), array(), base64() (+78 more)
+Nodes (81): $(), aa(), _addCheck(), and(), Ar(), args(), array(), base64() (+73 more)
 
 ### Community 137 - "Community 137"
 Cohesion: 0.11
@@ -852,8 +853,8 @@ Cohesion: 0.13
 Nodes (4): HidePlaceholder(), MultipleSelection(), Placeholder(), SingleSelection()
 
 ### Community 140 - "Community 140"
-Cohesion: 0.11
-Nodes (6): GameRepository, RoundRepository, ScoreRepository, GameService, RoundService, ScoreService
+Cohesion: 0.14
+Nodes (5): GameRepository, RoundRepository, GameService, RoundService, ScoreService
 
 ### Community 141 - "Community 141"
 Cohesion: 0.13
@@ -908,8 +909,8 @@ Cohesion: 0.22
 Nodes (10): cn(), en(), fd(), id(), nn(), on(), sn(), tn() (+2 more)
 
 ### Community 157 - "Community 157"
-Cohesion: 0.15
-Nodes (12): Battle-cursor, Claude Code, Git префиксы, Graphify, Obsidian, Запуск проекта, Клонирование, Механика (+4 more)
+Cohesion: 0.09
+Nodes (22): 1. Клонирование, 2. Настройка .env, 3. Установка Docker, 4. Сборка и запуск, 5. Инициализация данных (первый запуск), 6. Доступ через ngrok (для внешнего доступа), Battle-cursor, Claude Code (+14 more)
 
 ### Community 159 - "Community 159"
 Cohesion: 0.18
@@ -990,6 +991,10 @@ Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url(
 ### Community 193 - "Community 193"
 Cohesion: 0.06
 Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+
+### Community 221 - "Community 221"
+Cohesion: 0.18
+Nodes (10): 2026-06-26 — Docker config polish, backend/.dockerignore, docker-compose.yml, frontend/nginx.conf, Makefile (корень проекта), Pending, README.md, Изменённые файлы (+2 more)
 
 ### Community 312 - "Community 312"
 Cohesion: 0.05
@@ -1117,7 +1122,7 @@ Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
 
 ### Community 345 - "Community 345"
 Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Nodes (42): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+34 more)
 
 ### Community 346 - "Community 346"
 Cohesion: 0.07
@@ -1140,8 +1145,8 @@ Cohesion: 0.07
 Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
 
 ### Community 351 - "Community 351"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.08
+Nodes (34): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cs() (+26 more)
 
 ### Community 352 - "Community 352"
 Cohesion: 0.07
@@ -1184,8 +1189,8 @@ Cohesion: 0.13
 Nodes (28): Ar(), bn(), br(), Dr(), ed(), endsWith(), Er(), fr() (+20 more)
 
 ### Community 362 - "Community 362"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Cohesion: 0.07
+Nodes (39): addOwned(), dirty(), fm(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), gm() (+31 more)
 
 ### Community 363 - "Community 363"
 Cohesion: 0.11
@@ -1235,6 +1240,10 @@ Nodes (8): checker(), clearAcross(), hide(), reset(), show(), showClear(), showQ
 Cohesion: 0.40
 Nodes (5): Gu(), hl(), qf(), Tu(), Xf()
 
+### Community 375 - "Community 375"
+Cohesion: 0.25
+Nodes (7): 2026-06-26 — Docker setup, Docker файлы (все новые), Makefile, Pending, Решения, Фикс Redis URL, Что сделано
+
 ### Community 376 - "Community 376"
 Cohesion: 0.27
 Nodes (6): Home(), AppDispatch, RootState, store, steps, Tutorial()
@@ -1244,12 +1253,12 @@ Cohesion: 0.20
 Nodes (9): CustomCursor.tsx, Pending, Playwright e2e тесты, Profile.tsx / Profile.css, VITE_API_URL, Решения, Сессия 2026-06-25 — Playwright e2e тесты + курсор + image_orig удалён, Удаление image_orig (+1 more)
 
 ### Community 378 - "Community 378"
-Cohesion: 0.25
-Nodes (4): BaseMiddleware, ASGI config for config project.  It exposes the ASGI callable as a module-level, get_user_from_token(), JWTAuthMiddleware
+Cohesion: 0.33
+Nodes (5): Pending, Изменения в README, Лог сессии: обновление README.md — 26.06.2026, Решения, Что сделано
 
 ### Community 379 - "Community 379"
-Cohesion: 0.25
-Nodes (5): Migration, Пароль:     - минимум 8 символов     - минимум одна цифра     - минимум одна бук, Список дебаффов — каждый элемент должен быть валидным id из debuffs.py, validate_debuffs_list(), validate_password_strength()
+Cohesion: 0.40
+Nodes (4): 2026-06-26 — Фикс подключения через ngrok, Pending, Решения, Что сделано
 
 ### Community 380 - "Community 380"
 Cohesion: 0.33
@@ -1268,23 +1277,23 @@ Cohesion: 0.40
 Nodes (4): Error details, Instructions, Test info, Test source
 
 ## Knowledge Gaps
-- **318 isolated node(s):** `Playwright e2e тесты`, `Удаление image_orig`, `CustomCursor.tsx`, `VITE_API_URL`, `Profile.tsx / Profile.css` (+313 more)
+- **346 isolated node(s):** `backend/.dockerignore`, `docker-compose.yml`, `Makefile (корень проекта)`, `frontend/nginx.conf`, `README.md` (+341 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **37 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **36 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `_()` connect `Community 0` to `Community 129`, `Community 132`, `Community 134`, `Community 13`, `Community 142`, `Community 19`, `Community 21`, `Community 22`, `Community 23`, `Community 151`, `Community 153`, `Community 26`, `Community 25`, `Community 24`, `Community 30`, `Community 33`, `Community 34`, `Community 35`, `Community 36`, `Community 37`, `Community 38`, `Community 42`, `Community 43`, `Community 44`, `Community 47`, `Community 51`, `Community 53`, `Community 193`, `Community 325`, `Community 327`, `Community 328`, `Community 329`, `Community 330`, `Community 332`, `Community 333`, `Community 334`, `Community 335`, `Community 336`, `Community 337`, `Community 91`, `Community 112`, `Community 371`, `Community 121`, `Community 125`?**
-  _High betweenness centrality (0.315) - this node is a cross-community bridge._
-- **Why does `_e()` connect `Community 25` to `Community 0`, `Community 132`, `Community 17`, `Community 18`, `Community 20`, `Community 21`, `Community 22`, `Community 24`, `Community 160`, `Community 33`, `Community 34`, `Community 35`, `Community 36`, `Community 37`, `Community 38`, `Community 43`, `Community 44`, `Community 45`, `Community 51`, `Community 52`, `Community 179`, `Community 328`, `Community 330`, `Community 332`, `Community 333`, `Community 334`, `Community 335`, `Community 337`, `Community 346`, `Community 348`, `Community 351`, `Community 98`, `Community 359`, `Community 112`, `Community 368`?**
-  _High betweenness centrality (0.217) - this node is a cross-community bridge._
+  _High betweenness centrality (0.288) - this node is a cross-community bridge._
+- **Why does `_e()` connect `Community 25` to `Community 0`, `Community 132`, `Community 17`, `Community 18`, `Community 20`, `Community 21`, `Community 22`, `Community 24`, `Community 160`, `Community 33`, `Community 34`, `Community 35`, `Community 36`, `Community 37`, `Community 38`, `Community 43`, `Community 44`, `Community 45`, `Community 51`, `Community 52`, `Community 179`, `Community 328`, `Community 330`, `Community 332`, `Community 333`, `Community 334`, `Community 335`, `Community 337`, `Community 345`, `Community 346`, `Community 348`, `Community 98`, `Community 359`, `Community 112`, `Community 368`?**
+  _High betweenness centrality (0.209) - this node is a cross-community bridge._
 - **Why does `h()` connect `Community 51` to `Community 0`, `Community 1`, `Community 2`, `Community 129`, `Community 134`, `Community 8`, `Community 10`, `Community 13`, `Community 21`, `Community 22`, `Community 151`, `Community 30`, `Community 33`, `Community 35`, `Community 36`, `Community 37`, `Community 38`, `Community 40`, `Community 41`, `Community 43`, `Community 44`, `Community 47`, `Community 53`, `Community 315`, `Community 193`, `Community 325`, `Community 327`, `Community 328`, `Community 329`, `Community 336`, `Community 351`, `Community 352`, `Community 353`, `Community 354`, `Community 99`, `Community 359`, `Community 112`, `Community 368`?**
-  _High betweenness centrality (0.204) - this node is a cross-community bridge._
+  _High betweenness centrality (0.201) - this node is a cross-community bridge._
 - **Are the 30 inferred relationships involving `_()` (e.g. with `kf()` and `w()`) actually correct?**
   _`_()` has 30 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Playwright e2e тесты`, `Удаление image_orig`, `CustomCursor.tsx` to the rest of the system?**
-  _360 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `backend/.dockerignore`, `docker-compose.yml`, `Makefile (корень проекта)` to the rest of the system?**
+  _388 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.014124293785310734 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

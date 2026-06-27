@@ -1,0 +1,862 @@
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+
+.game-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #0b0b0b;
+  color: #fff;
+  user-select: none;
+}
+
+/* ── Game header ────────────────────────────────────────────────────────── */
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 44px;
+  border-bottom: 1px solid #222;
+  flex-shrink: 0;
+}
+
+.game-header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 120px;
+}
+
+.game-header-logo {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.game-header-title {
+  font-size: 14px;
+  color: #555;
+}
+
+.game-header-center {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  min-width: 60px;
+  text-align: center;
+  line-height: 1;
+}
+
+.game-header-timer--urgent {
+  color: #ff4444;
+}
+
+.game-header-right {
+  font-size: 13px;
+  color: #777;
+  min-width: 120px;
+  text-align: right;
+}
+
+/* ── Player cards ───────────────────────────────────────────────────────── */
+
+.game-players {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  border-bottom: 1px solid #222;
+  flex-shrink: 0;
+}
+
+.game-player-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 8px;
+  min-width: 80px;
+  max-width: 100px;
+  border: 1px solid #333;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.1s;
+}
+
+.game-player-card:hover {
+  border-color: #555;
+}
+
+.game-player-card--selected {
+  border-color: #4488ff;
+  box-shadow: 0 0 6px rgba(68, 136, 255, 0.4);
+}
+
+.game-player-card--me {
+  border-color: #555;
+  cursor: default;
+}
+
+.game-player-card--offline {
+  opacity: 0.4;
+}
+
+.game-player-online-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #444;
+}
+
+.game-player-online-dot--on {
+  background: #44cc44;
+}
+
+.game-player-cursor-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.game-player-cursor-placeholder {
+  width: 36px;
+  height: 36px;
+  background: #222;
+  margin: 0 auto;
+}
+
+.game-player-debuff-active {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+  border: 1px solid currentColor;
+}
+
+.game-player-username {
+  font-size: 10px;
+  color: #ccc;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 90px;
+}
+
+.game-player-stats {
+  display: flex;
+  gap: 6px;
+  font-size: 9px;
+  color: #888;
+}
+
+
+/* ── Main area ──────────────────────────────────────────────────────────── */
+
+.game-main {
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  flex: 1;
+  overflow: hidden;
+  gap: 0;
+}
+
+.game-section-label {
+  font-size: 11px;
+  color: #555;
+  margin: 0 0 8px 0;
+  font-family: monospace;
+}
+
+/* ── Debuffs panel ──────────────────────────────────────────────────────── */
+
+.game-debuffs {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+  border-right: 1px solid #1a1a1a;
+  overflow-y: auto;
+  gap: 2px;
+}
+
+.game-debuffs-empty {
+  font-size: 11px;
+  color: #444;
+  margin: 0;
+}
+
+.game-debuff-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 5px 6px;
+  border: 1px solid #222;
+  cursor: pointer;
+}
+
+.game-debuff-item:hover {
+  border-color: #444;
+}
+
+.game-debuff-item--selected {
+  border-color: #4488ff;
+  background: rgba(68, 136, 255, 0.05);
+}
+
+.game-debuff-item--used {
+  opacity: 0.4;
+  cursor: default;
+  border-color: #1a1a1a;
+}
+
+.game-debuff-name {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.game-debuff-rarity {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.game-debuff-apply-btn {
+  margin-top: 6px;
+  padding: 6px;
+  background: #222;
+  border: 1px solid #444;
+  color: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.game-debuff-apply-btn:hover:not(:disabled) {
+  background: #2a2a2a;
+}
+
+.game-debuff-apply-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.game-key-hint {
+  color: #555;
+  font-size: 10px;
+}
+
+.game-key-hints {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 10px;
+  color: #444;
+}
+
+/* ── Canvas area ────────────────────────────────────────────────────────── */
+
+.game-canvas-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-canvas-top {
+  text-align: center;
+  padding: 6px 0 8px;
+  flex-shrink: 0;
+}
+
+.game-canvas-prompt {
+  font-size: 17px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.game-canvas-score {
+  font-size: 13px;
+  color: #aaa;
+  min-height: 18px;
+}
+
+.game-canvas-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.game-canvas-wrapper--default {
+  border: 1px solid #333;
+}
+
+.game-canvas-frame {
+  position: absolute;
+  inset: -40px;
+  width: calc(100% + 80px);
+  height: calc(100% + 80px);
+  pointer-events: none;
+  z-index: 1;
+  object-fit: fill;
+}
+
+.game-drawing-canvas {
+  display: block;
+  cursor: none;
+  z-index: 0;
+  position: relative;
+  background: #fff;
+}
+
+.game-custom-cursor {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  pointer-events: none;
+  transform: translate(-4px, -4px);
+  visibility: hidden;
+  z-index: 9999;
+}
+
+
+/* ── Tools panel ────────────────────────────────────────────────────────── */
+
+.game-tools {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+  border-left: 1px solid #1a1a1a;
+  overflow-y: auto;
+  gap: 6px;
+}
+
+.game-palette {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+}
+
+.game-swatch {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid #333;
+  cursor: pointer;
+  padding: 0;
+}
+
+.game-swatch--active {
+  border: 2px solid #fff;
+}
+
+.game-eraser-btn {
+  padding: 5px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #aaa;
+  font-size: 11px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.game-eraser-btn--active {
+  border-color: #fff;
+  color: #fff;
+}
+
+.game-brush-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.game-brush-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #888;
+}
+
+.game-brush-range {
+  width: 100%;
+  accent-color: #4488ff;
+}
+
+.game-clear-btn {
+  padding: 5px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #888;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.game-clear-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.game-undo-hint {
+  font-size: 10px;
+  color: #444;
+  margin: 0;
+  font-family: monospace;
+}
+
+/* ── Timer overlay ──────────────────────────────────────────────────────── */
+
+.game-timer-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 180px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+  z-index: 100;
+  line-height: 1;
+}
+
+/* ── Notification ───────────────────────────────────────────────────────── */
+
+.game-notification {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #ddd;
+  z-index: 200;
+  max-width: 280px;
+}
+
+/* ── Overlays (round results / game over) ───────────────────────────────── */
+
+.game-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  overflow-y: auto;
+}
+
+.game-overlay-inner {
+  width: 90%;
+  max-width: 960px;
+  padding: 24px;
+}
+
+.game-overlay-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+.game-overlay-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #fff;
+}
+
+.game-overlay-countdown {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Round results grid */
+.game-results-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.game-result-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 160px;
+  border: 1px solid #333;
+  padding: 10px 8px;
+}
+
+.game-result-card--me {
+  border-color: #4488ff;
+}
+
+.game-result-rank {
+  font-size: 11px;
+  color: #777;
+  align-self: flex-start;
+}
+
+.game-result-img {
+  width: 140px;
+  height: 130px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #222;
+}
+
+.game-result-username {
+  font-size: 12px;
+  color: #ddd;
+  text-align: center;
+}
+
+.game-result-score {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.game-result-comment {
+  font-size: 10px;
+  color: #888;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Game over */
+
+.game-overlay--final {
+  background: #0b0b0b;
+  align-items: flex-start;
+}
+
+.game-overlay--final .game-overlay-inner {
+  max-width: 860px;
+  padding: 48px 32px 60px;
+}
+
+.game-over-title {
+  margin: 0 0 6px 0;
+  font-size: 32px;
+  color: #fff;
+  font-family: var(--font-benzin);
+  letter-spacing: 0.04em;
+}
+
+.game-over-my-rank {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 28px 0;
+  font-size: 14px;
+  color: #888;
+  font-family: var(--mono);
+}
+
+.game-over-sep {
+  color: #444;
+}
+
+.game-over-coins {
+  color: #ffcc00;
+}
+
+.game-over-winner-badge {
+  background: rgba(255, 6, 6, 0.12);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 11px;
+  font-family: var(--font-benzin);
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  text-transform: uppercase;
+}
+
+.game-final-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 40px;
+}
+
+.game-final-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto auto 60px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid #222;
+  font-size: 14px;
+  font-family: var(--mono);
+}
+
+.game-final-row--winner {
+  border-color: var(--accent);
+  background: rgba(255, 6, 6, 0.04);
+}
+
+.game-final-row--me {
+  border-color: #3366cc;
+  background: rgba(51, 102, 204, 0.05);
+}
+
+.game-final-row--winner.game-final-row--me {
+  border-color: var(--accent);
+  background: rgba(255, 6, 6, 0.07);
+}
+
+.game-final-rank {
+  color: #555;
+  font-size: 12px;
+}
+
+.game-final-rank--winner {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.game-final-username {
+  color: #ddd;
+}
+
+.game-final-score {
+  color: #fff;
+}
+
+.game-final-coins {
+  color: #ffcc00;
+}
+
+.game-final-rating-badge {
+  font-size: 11px;
+  color: var(--accent);
+  font-family: var(--font-benzin);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+
+.game-home-btn {
+  padding: 9px 20px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  color: #ccc;
+  font-family: var(--font-benzin);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+  margin-top: 8px;
+}
+
+.game-home-btn:hover {
+  background: rgba(255, 6, 6, 0.1);
+  box-shadow: 0 0 16px rgba(255, 6, 6, 0.2);
+  color: #fff;
+}
+
+/* ── Round history ──────────────────────────────────────────────────────────── */
+
+.game-round-history {
+  margin: 24px 0 20px;
+}
+
+.game-round-history-title {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 14px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--mono);
+}
+
+.game-round-section {
+  margin-bottom: 20px;
+}
+
+.game-round-section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.game-round-section-num {
+  font-size: 12px;
+  font-weight: bold;
+  color: #777;
+  white-space: nowrap;
+}
+
+.game-round-section-prompt {
+  font-size: 14px;
+  color: #ddd;
+}
+
+.game-round-cards {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.game-round-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 150px;
+  border: 1px solid #2a2a2a;
+  padding: 8px 6px;
+}
+
+.game-round-card--me {
+  border-color: #4488ff;
+}
+
+.game-round-card-rank {
+  font-size: 10px;
+  color: #666;
+  align-self: flex-start;
+}
+
+.game-round-card-img {
+  width: 138px;
+  height: 120px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #1a1a1a;
+}
+
+.game-round-card-img-placeholder {
+  width: 138px;
+  height: 120px;
+  background: #1a1a1a;
+  border: 1px solid #222;
+}
+
+.game-round-card-username {
+  font-size: 12px;
+  color: #ccc;
+  text-align: center;
+}
+
+.game-round-card-score {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.game-round-card-coins {
+  font-size: 11px;
+  color: #ffcc44;
+}
+
+.game-round-card-comment {
+  font-size: 10px;
+  color: #777;
+  text-align: center;
+  margin: 2px 0 0;
+  line-height: 1.4;
+}
+
+.game-round-card-download {
+  margin-top: 4px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  color: #aaa;
+  font-family: var(--font-benzin);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+}
+
+.game-round-card-download:hover {
+  background: rgba(255, 6, 6, 0.1);
+  color: #fff;
+}
+
+/* ── Round start overlay ────────────────────────────────────────────────────── */
+
+@keyframes round-start-fade {
+  0%   { opacity: 0; transform: scale(0.96); }
+  12%  { opacity: 1; transform: scale(1); }
+  75%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+
+.game-round-start-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+  animation: round-start-fade 1.8s ease-in-out forwards;
+}
+
+.game-round-start-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.game-round-start-label {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.game-round-start-number {
+  font-size: 120px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1;
+}
+
+.game-round-start-prompt {
+  font-size: 22px;
+  color: #ccc;
+  max-width: 600px;
+  line-height: 1.4;
+}

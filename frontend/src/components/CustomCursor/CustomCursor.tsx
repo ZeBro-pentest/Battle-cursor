@@ -28,7 +28,7 @@ const CURSOR_HOTSPOTS: Record<string, [number, number]> = {
   Judge: [0, 0],
   Eraser: [0, 0],
   Absolute: [0, 0],
-  Overlord: [0, 0],
+  Overlord: [8, 8],
   Collapse: [0, 0],
 };
 

@@ -34,31 +34,6 @@ export function Lobby() {
     userAPI.getProfile().then((r) => setProfile(r.data)).catch(() => {});
   }, []);
 
-  // Step 1: join the server, then populate initial player list
-  useEffect(() => {
-    if (!room_code) return;
-    serversAPI.joinServer(room_code)
-      .then((r) => {
-        const data = r.data;
-        setHost(data.host);
-        setMaxPlayers(data.max_players);
-        setPlayers(
-          (data.players as string[]).map((username) => ({
-            id: null,
-            username,
-            cursor: null,
-            canvas: null,
-          })),
-        );
-        setJoined(true);
-      })
-      .catch((err) => {
-        const detail =
-          err?.response?.data?.detail ?? "Не удалось войти в комнату.";
-        setJoinError(detail);
-      });
-  }, [room_code]);
-
   // Enrich player with profile data when we get their user_id
   const enrichPlayer = useCallback((userId: string, username: string) => {
     userAPI.getProfileById(userId).then((r) => {
@@ -75,6 +50,35 @@ export function Lobby() {
       });
     }).catch(() => {});
   }, []);
+
+  // Step 1: join the server, then populate initial player list
+  useEffect(() => {
+    if (!room_code) return;
+    serversAPI.joinServer(room_code)
+      .then((r) => {
+        const data = r.data;
+        setHost(data.host);
+        setMaxPlayers(data.max_players);
+        const playersData = data.players as { id: string; username: string }[];
+        console.log("players from server:", data.players);
+        setPlayers(
+          playersData.map((p) => ({
+            id: p.id,
+            username: p.username,
+            cursor: null,
+            canvas: null,
+          })),
+        );
+        setJoined(true);
+        // Enrich each player already in the room with full profile data
+        playersData.forEach((p) => enrichPlayer(p.id, p.username));
+      })
+      .catch((err) => {
+        const detail =
+          err?.response?.data?.detail ?? "Не удалось войти в комнату.";
+        setJoinError(detail);
+      });
+  }, [room_code, enrichPlayer]);
 
   // Step 2: connect WebSocket only after successful join
   useEffect(() => {
@@ -111,6 +115,10 @@ export function Lobby() {
           setShowCountdown(true);
           break;
         }
+        case "server_deleted": {
+          navigate("/main");
+          break;
+        }
         default:
           break;
       }
@@ -144,12 +152,16 @@ export function Lobby() {
   };
 
   const handleCountdownComplete = () => {
-    const gid = gameIdRef.current;
-    if (gid) navigate(`/game/${gid}`);
+    navigate(`/game/${room_code}`);
   };
 
   const isHost = profile?.username === host;
   const emptySlots = Math.max(0, maxPlayers - players.length);
+  const sortedPlayers = [...players].sort((a, b) => {
+    if (a.username === host) return -1;
+    if (b.username === host) return 1;
+    return 0;
+  });
 
   if (joinError) {
     return (
@@ -194,7 +206,7 @@ export function Lobby() {
         </header>
 
         <div className="lobby-grid">
-          {players.map((p) => (
+          {sortedPlayers.map((p) => (
             <PlayerCard
               key={p.username}
               username={p.username}

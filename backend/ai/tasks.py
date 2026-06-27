@@ -1,5 +1,7 @@
 import logging
 
+import cloudinary.api
+import cloudinary.uploader
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
@@ -65,6 +67,10 @@ def start_round(round_id: str, game_id: str, room_group: str):
         logger.error("start_round: Round %s not found", round_id)
         return
 
+    from django.utils import timezone
+    round_obj.started_at = timezone.now()
+    round_obj.save(update_fields=["started_at"])
+
     # Страховочная задача через 65 сек
     task = force_grade_round.apply_async(
         args=[round_id, room_group],
@@ -120,7 +126,23 @@ def grade_round(self, round_id: str, room_group: str):
             logger.warning("grade_round: User %s not found, skipping", user_id)
             continue
 
-        result = grade_drawing(data.get("image_base64", ""), prompt)
+        image_base64 = data.get("image_base64", "")
+        image_url = data.get("image_url", "")
+
+        # Upload drawing to Cloudinary
+        try:
+            upload_result = cloudinary.uploader.upload(
+                f"data:image/png;base64,{image_base64}",
+                folder="drawings",
+                public_id=f"{round_id}_{user_id}",
+                resource_type="image",
+            )
+            image_url = upload_result.get("secure_url", "")
+        except Exception as e:
+            logger.error("Cloudinary upload failed: %s", e)
+            image_url = ""
+
+        result = grade_drawing(image_base64, prompt)
         score_value = result["score"]
         comment = result["comment"]
         coins_earned = round(score_value * 10, 1)
@@ -129,7 +151,7 @@ def grade_round(self, round_id: str, room_group: str):
             "user": user,
             "value": score_value,
             "comment": comment,
-            "image_url": data.get("image_url", ""),
+            "image_url": image_url,
             "coins_earned": coins_earned,
         })
         scores_data.append({
@@ -138,6 +160,7 @@ def grade_round(self, round_id: str, room_group: str):
             "score": score_value,
             "comment": comment,
             "coins_earned": coins_earned,
+            "image_url": image_url,
         })
         logger.info("Graded round=%s user=%s score=%.1f", round_id, user_id, score_value)
 
@@ -308,6 +331,20 @@ def delete_game(game_id: str):
 def cleanup_game(game_id: str, room_code: str):
     """Вызывается когда все игроки отключились после завершённой игры."""
     from servers.models import Server
+
+    # Удаляем рисунки из Cloudinary для всех раундов игры
+    try:
+        from game.models import Round
+        rounds = Round.objects.filter(game_id=game_id)
+        for round_obj in rounds:
+            try:
+                cloudinary.api.delete_resources_by_prefix(
+                    f"drawings/{round_obj.id}_"
+                )
+            except Exception as e:
+                logger.warning("Cloudinary cleanup failed for round %s: %s", round_obj.id, e)
+    except Exception as e:
+        logger.error("cleanup_game drawings error: %s", e)
 
     keys = cache.keys(f"game:{game_id}:*")
     if keys:

@@ -120,6 +120,10 @@ export const serversAPI = {
   deleteServer: (room_code: string) => api.delete(`api/servers/${room_code}/delete/`),
 };
 
+export const gameAPI = {
+  getGame: (room_code: string) => api.get(`api/game/${room_code}/`),
+};
+
 export const marketAPI = {
   getShop: () => api.get("api/market/"),
   getInventory: () => api.get("api/market/inventory/"),

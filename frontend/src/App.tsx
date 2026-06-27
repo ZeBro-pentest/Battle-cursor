@@ -17,6 +17,7 @@ import { Shop } from "./pages/Shop/Shop";
 import { ShopItemDetail } from "./pages/Shop/ShopItemDetail";
 import { Inventory } from "./pages/Inventory/Inventory";
 import { Purchases } from "./pages/Purchases/Purchases";
+import { Game } from "./pages/Game/Game";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "./store/store";
 import { setAccessToken, clearAuth } from "./store/authSlice";
@@ -99,6 +100,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
 
+        {/* Игровой экран — без MainLayout (у него свой game-header) */}
+        <Route element={<RequireAuth />}>
+          <Route path="/game/:room_code" element={<Game />} />
+        </Route>
+
         {/* Все страницы с хедером */}
         <Route element={<MainLayout />}>
           {/* Публичные — доступны всем */}
@@ -112,7 +118,7 @@ function App() {
             <Route path="/games" element={<div>Games (todo)</div>} />
             <Route path="/games/create" element={<div>Create Game (todo)</div>} />
             <Route path="/games/:room_code" element={<Lobby />} />
-            <Route path="/game/:id" element={<div>Game (todo)</div>} />
+
             <Route path="/games/:id/results" element={<div>Results (todo)</div>} />
 
             <Route path="/profile" element={<Profile />} />

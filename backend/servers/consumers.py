@@ -34,6 +34,10 @@ class GameConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.room_group, self.channel_name)
         await self.accept()
 
+        # Host reconnected within grace period → cancel pending server deletion
+        if server.host_id == self.user.id:
+            cache.delete(f"server:{self.room_code}:host_disconnected")
+
         await self.channel_layer.group_send(
             self.room_group,
             {
@@ -53,8 +57,19 @@ class GameConsumer(AsyncWebsocketConsumer):
 
             server = await self.get_server()
             if server and server.status == server.StatusChoices.WAITING:
-                await self.leave_server()
-                server = await self.get_server()
+                if server.host_id == self.user.id:
+                    # Grace period: wait 10s before deleting server
+                    cache.set(
+                        f"server:{self.room_code}:host_disconnected", 1, timeout=30
+                    )
+                    from servers.tasks import delete_server_if_host_absent
+
+                    delete_server_if_host_absent.apply_async(
+                        args=[self.room_code, self.room_group], countdown=10
+                    )
+                else:
+                    await self.leave_server()
+                    server = await self.get_server()
 
             if server:
                 await self.channel_layer.group_send(
@@ -212,6 +227,14 @@ class GameConsumer(AsyncWebsocketConsumer):
             {"image_base64": image_base64, "image_url": image_url},
             timeout=DRAWING_TTL,
         )
+        logger.info(
+            "Drawing saved: round=%s user=%s base64_len=%d",
+            round_id, self.user.id, len(image_base64),
+        )
+
+        # Проверяем что сохранилось
+        saved = cache.get(f"round:{round_id}:drawing:{self.user.id}")
+        logger.info("Verify saved: %s", "OK" if saved else "FAILED")
 
         # Атомарно считаем сколько игроков сдали
         counter_key = f"round:{round_id}:submitted"
@@ -330,6 +353,9 @@ class GameConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps(event))
 
     async def player_left(self, event):
+        await self.send(text_data=json.dumps(event))
+
+    async def server_deleted(self, event):
         await self.send(text_data=json.dumps(event))
 
     async def cursor_update(self, event):
