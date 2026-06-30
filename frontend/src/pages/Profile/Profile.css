@@ -601,3 +601,134 @@
     letter-spacing: 4px;
     text-transform: uppercase;
 }
+
+/* ── Drawing actions ── */
+.profile-drawing-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-drawing-btn {
+    padding: 9px 20px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    font-family: var(--font-benzin);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ccc;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.profile-drawing-btn:hover {
+    background: rgba(255, 6, 6, 0.1);
+    color: #fff;
+}
+
+/* ── Modal ── */
+.profile-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.profile-modal {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 24px 32px;
+    max-width: 400px;
+    width: 90%;
+}
+
+.profile-modal-text {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #ccc;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.profile-modal-btn {
+    padding: 9px 24px;
+    border-radius: 5px;
+    font-family: var(--font-benzin);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.profile-modal-btn--confirm {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: #ccc;
+}
+
+.profile-modal-btn--confirm:hover {
+    background: rgba(255, 6, 6, 0.1);
+    color: #fff;
+}
+
+.profile-modal-btn--cancel {
+    background: transparent;
+    border: 1px solid #333;
+    color: #555;
+}
+
+.profile-modal-btn--cancel:hover {
+    border-color: #555;
+    color: #aaa;
+}
+
+/* ── Saved drawing ── */
+.profile-saved-drawing {
+    width: 100%;
+    text-align: center;
+}
+
+.profile-saved-drawing-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 5px;
+    opacity: 0.5;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.profile-saved-drawing-img {
+    max-width: 200px;
+    border: 1px solid #222;
+    border-radius: 4px;
+}
+
+/* ── Profile detail drawing ── */
+.profile-detail-drawing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-detail-drawing-img {
+    max-width: 100%;
+    border: 1px solid #222;
+    border-radius: 4px;
+}

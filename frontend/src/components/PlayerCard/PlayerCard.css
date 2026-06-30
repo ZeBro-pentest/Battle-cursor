@@ -4,6 +4,7 @@
   align-items: center;
   gap: 10px;
   width: 100px;
+  cursor: pointer;
 }
 
 .pcard-avatar {

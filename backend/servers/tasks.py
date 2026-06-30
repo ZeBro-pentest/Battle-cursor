@@ -14,6 +14,26 @@ def _push(room_group: str, payload: dict):
 
 
 @shared_task
+def cleanup_offline_waiting_players():
+    """Каждые 30 сек кикает офлайн игроков из WAITING комнат (dirty disconnect)."""
+    from servers.models import Server
+
+    waiting_servers = Server.objects.filter(
+        status=Server.StatusChoices.WAITING
+    ).prefetch_related("players")
+
+    for server in waiting_servers:
+        for player in server.players.all():
+            if not cache.get(f"user:{player.id}:online"):
+                server.players.remove(player)
+                logger.info(
+                    "cleanup_offline_waiting_players: kicked %s from WAITING server %s",
+                    player.id,
+                    server.room_code,
+                )
+
+
+@shared_task
 def delete_server_if_host_absent(room_code: str, room_group: str):
     if not cache.get(f"server:{room_code}:host_disconnected"):
         return

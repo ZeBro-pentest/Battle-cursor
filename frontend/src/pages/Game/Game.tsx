@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { HexColorPicker } from "react-colorful";
 import { serversAPI, userAPI, gameAPI, WS_BASE_URL } from "../../services/api";
 import type { Cursor, UserProfile } from "../../types/user";
 import { DEBUFF_MAP, DEBUFF_RARITY_COLOR } from "../../constants/debuffs";
+import { floodFill } from "../../utils/floodFill";
+import { DebuffOverlay } from "../../components/debuffs/DebuffOverlay";
+import { getCanvasStyle } from "../../components/debuffs/effects/BlurEffect";
 import "./Game.css";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
+
 
 const PALETTE = [
   "#000000",
@@ -28,6 +33,8 @@ const PALETTE = [
 
 const MAX_HISTORY = 20;
 
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface GamePlayer {
@@ -36,6 +43,7 @@ interface GamePlayer {
   coins: number;
   rating: number;
   cursor: Cursor | null;
+  canvas: { image_url: string | null } | null;
   online: boolean;
 }
 
@@ -68,7 +76,7 @@ interface FinalScore {
   total_coins: number;
 }
 
-type GamePhase = "waiting" | "playing" | "round_results" | "game_over";
+type GamePhase = "waiting" | "playing" | "round_results";
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
@@ -79,12 +87,14 @@ export function Game() {
   // Profile & players
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [players, setPlayers] = useState<GamePlayer[]>([]);
+  const [playersLoaded, setPlayersLoaded] = useState(false);
 
   // Game state
   const [phase, setPhase] = useState<GamePhase>("waiting");
   const [round, setRound] = useState<RoundState | null>(null);
   const [timeLeft, setTimeLeft] = useState(60);
   const [totalScore, setTotalScore] = useState(0);
+  const [playerScores, setPlayerScores] = useState<Record<string, number>>({});
 
   // Debuff selection
   const [selectedTargetIdx, setSelectedTargetIdx] = useState(0);
@@ -93,6 +103,12 @@ export function Game() {
   const [activeDebuffs, setActiveDebuffs] = useState<Record<string, string>>(
     {},
   );
+  const [activeEffects, setActiveEffects] = useState<Set<string>>(new Set());
+  const [activeTargetDebuffs, setActiveTargetDebuffs] = useState<Set<string>>(new Set());
+
+  // Canvas protections
+  const [myProtections, setMyProtections] = useState<string[]>([]);
+  const [usedProtections, setUsedProtections] = useState<Set<string>>(new Set());
 
   // Overlays
   const [timerOverlay, setTimerOverlay] = useState<number | null>(null);
@@ -101,8 +117,8 @@ export function Game() {
     prompt: string;
   } | null>(null);
   const [roundResults, setRoundResults] = useState<RoundScore[]>([]);
-  const [roundHistory, setRoundHistory] = useState<RoundHistoryEntry[]>([]);
-  const [finalScores, setFinalScores] = useState<FinalScore[]>([]);
+  const [, setRoundHistory] = useState<RoundHistoryEntry[]>([]);
+  const roundHistoryRef = useRef<RoundHistoryEntry[]>([]);
   const [notification, setNotification] = useState<string | null>(null);
   const [roundResultsTimer, setRoundResultsTimer] = useState(10);
 
@@ -112,11 +128,13 @@ export function Game() {
   const isDrawing = useRef(false);
   const historyRef = useRef<ImageData[]>([]);
   const [color, setColor] = useState("#000000");
+  const [showColorPicker, setShowColorPicker] = useState(false);
   const [brushSize, setBrushSize] = useState(4);
   const [isEraser, setIsEraser] = useState(false);
+  const [isFloodFill, setIsFloodFill] = useState(false);
 
   // Other players' cursors (canvas-relative coords, 0-1 normalized)
-  const [setOtherCursors] = useState<Map<string, { x: number; y: number }>>(
+  const [_otherCursors, setOtherCursors] = useState<Map<string, { x: number; y: number }>>(
     new Map(),
   );
 
@@ -130,6 +148,11 @@ export function Game() {
   const timerOverlayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
+  const activeEffectsRef = useRef<Set<string>>(new Set());
+  const lastDrawPosRef = useRef<{ x: number; y: number } | null>(null);
+  const smoothPosRef = useRef({ x: 0, y: 0 });
+  const timeLeftRef = useRef(60);
+  const lastApplyTimeRef = useRef(0);
 
   // Keep refs in sync
   useEffect(() => {
@@ -141,6 +164,12 @@ export function Game() {
   useEffect(() => {
     playersRef.current = players;
   }, [players]);
+  useEffect(() => {
+    activeEffectsRef.current = activeEffects;
+  }, [activeEffects]);
+  useEffect(() => {
+    timeLeftRef.current = timeLeft;
+  }, [timeLeft]);
 
   // ── Load profile ──────────────────────────────────────────────────────────
 
@@ -163,37 +192,39 @@ export function Game() {
           id: string;
           username: string;
         }[];
-        setPlayers(
-          playersData.map((p) => ({
-            user_id: p.id,
-            username: p.username,
-            coins: 0,
-            rating: 0,
-            cursor: null,
-            online: true,
-          })),
-        );
-        // Обогащаем каждого игрока полным профилем
-        playersData.forEach((p) => {
-          userAPI
-            .getProfileById(p.id)
-            .then((res) => {
-              const up: UserProfile = res.data;
-              setPlayers((prev) =>
-                prev.map((pl) =>
-                  pl.user_id === p.id
-                    ? {
-                        ...pl,
-                        coins: up.coins,
-                        rating: up.rating,
-                        cursor: up.cursor,
-                      }
-                    : pl,
-                ),
-              );
-            })
-            .catch(() => {});
-        });
+        Promise.all(
+          playersData.map((p) =>
+            userAPI.getProfileById(p.id).then((res) => res.data as UserProfile),
+          ),
+        )
+          .then((profiles) => {
+            setPlayers(
+              profiles.map((up) => ({
+                user_id: up.id,
+                username: up.username,
+                coins: up.coins,
+                rating: up.rating,
+                cursor: up.cursor,
+                canvas: up.canvas,
+                online: true,
+              })),
+            );
+            setPlayersLoaded(true);
+          })
+          .catch(() => {
+            setPlayers(
+              playersData.map((p) => ({
+                user_id: p.id,
+                username: p.username,
+                coins: 0,
+                rating: 0,
+                cursor: null,
+                canvas: null,
+                online: true,
+              })),
+            );
+            setPlayersLoaded(true);
+          });
       })
       .catch((err) => {
         if (err.response?.status === 404) navigate("/main");
@@ -213,10 +244,12 @@ export function Game() {
               coins: profile.coins,
               rating: profile.rating,
               cursor: profile.cursor,
+              canvas: profile.canvas,
             }
           : p,
       ),
     );
+    setMyProtections(profile.canvas?.protections ?? []);
   }, [profile]);
 
   // ── Fetch current round on mount (handles missed round_started WS event) ──
@@ -264,12 +297,54 @@ export function Game() {
     );
   }, []);
 
+  // ── Effect helpers ────────────────────────────────────────────────────────
+
+  const applyEffect = useCallback((debuffId: string, duration: number | null) => {
+    setActiveEffects((prev) => new Set([...prev, debuffId]));
+    if (duration) {
+      setTimeout(() => {
+        setActiveEffects((prev) => {
+          const next = new Set(prev);
+          next.delete(debuffId);
+          return next;
+        });
+      }, duration * 1000);
+    }
+  }, []);
+
+  const sendWS = useCallback((data: object) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify(data));
+    } else {
+      console.warn("[ws] Not ready, message dropped:", data);
+    }
+  }, []);
+
+  const removeEffect = useCallback((debuffId: string) => {
+    setActiveEffects((prev) => {
+      const next = new Set(prev);
+      next.delete(debuffId);
+      return next;
+    });
+    setActiveTargetDebuffs((prev) => {
+      const next = new Set(prev);
+      const myKey = `${profileRef.current?.id}_${debuffId}`;
+      next.delete(myKey);
+      return next;
+    });
+    sendWS({
+      type: "debuff_solved",
+      debuff_id: debuffId,
+      user_id: profileRef.current?.id,
+    });
+  }, [sendWS]);
+
   // ── WebSocket ─────────────────────────────────────────────────────────────
 
   const token = localStorage.getItem("access_token") ?? "";
 
   useEffect(() => {
-    if (!token || !room_code) return;
+    if (!token || !room_code || !playersLoaded) return;
 
     let ws: WebSocket | null = null;
     let unmounted = false;
@@ -308,7 +383,11 @@ export function Game() {
             roundRef.current = newRound;
             setTimeLeft(duration);
             setPhase("playing");
+            setActiveEffects(new Set());
             setUsedDebuffs(new Set());
+            setUsedProtections(new Set());
+            setActiveDebuffs({});
+            setActiveTargetDebuffs(new Set());
             roundEndSentRef.current = false;
             setOtherCursors(new Map());
             // Clear canvas
@@ -335,33 +414,51 @@ export function Game() {
               const myScore = scores.find((s) => s.user_id === me.id);
               if (myScore) setTotalScore((prev) => prev + myScore.score);
             }
-            setRoundHistory((prev) => [
-              ...prev,
-              {
-                round_number: roundNum,
-                prompt: roundRef.current?.prompt ?? "",
-                scores,
-              },
-            ]);
+            setPlayerScores((prev) => {
+              const next = { ...prev };
+              scores.forEach((s) => {
+                next[s.user_id] = (next[s.user_id] ?? 0) + s.score;
+              });
+              return next;
+            });
+            if (!roundHistoryRef.current.some((r) => r.round_number === roundNum)) {
+              roundHistoryRef.current = [
+                ...roundHistoryRef.current,
+                { round_number: roundNum, prompt: roundRef.current?.prompt ?? "", scores },
+              ];
+              setRoundHistory(roundHistoryRef.current);
+            }
             setPhase("round_results");
             setRoundResultsTimer(10);
             break;
           }
 
           case "game_over": {
-            setFinalScores((msg.final_scores as FinalScore[]) ?? []);
-            setPhase("game_over");
+            navigate("/game-over", {
+              state: {
+                finalScores: (msg.final_scores as FinalScore[]) ?? [],
+                roundHistory: roundHistoryRef.current,
+                myId: profileRef.current?.id ?? null,
+              },
+            });
             break;
           }
 
           case "debuff_received": {
-            const { debuff_id, duration, from_user_id, target_id } = msg as {
+            const { debuff_id, duration, from_user_id, target_id, round_id } = msg as {
               type: string;
               debuff_id: string;
-              duration: number;
+              duration: number | null;
               from_user_id: string;
               target_id: string;
+              round_id?: string;
             };
+
+            if (round_id && roundRef.current && roundRef.current.round_id !== round_id) {
+              console.warn("[debuff] Ignoring stale debuff from old round:", round_id);
+              break;
+            }
+
             const from = playersRef.current.find(
               (p) => p.user_id === from_user_id,
             );
@@ -371,6 +468,12 @@ export function Game() {
               setNotification(
                 `${from?.username ?? "???"} применил ${debuffName} на тебя!`,
               );
+              if (debuff_id === "palette") {
+                setColor(PALETTE[Math.floor(Math.random() * PALETTE.length)]);
+                setIsEraser(false);
+                setIsFloodFill(false);
+              }
+              applyEffect(debuff_id, duration);
             } else {
               const target = playersRef.current.find(
                 (p) => p.user_id === target_id,
@@ -381,14 +484,115 @@ export function Game() {
             }
             setTimeout(() => setNotification(null), 3000);
 
+            const LEGENDARY_DEBUFFS = new Set([
+              "questions", "exam", "weighting", "weapons", "rickroll",
+              "disco", "transparency", "brightness", "roulette", "dvd",
+            ]);
             setActiveDebuffs((prev) => ({ ...prev, [target_id]: debuff_id }));
-            setTimeout(() => {
-              setActiveDebuffs((prev) => {
-                const next = { ...prev };
-                delete next[target_id];
-                return next;
+            if (LEGENDARY_DEBUFFS.has(debuff_id)) {
+              setTimeout(() => {
+                setActiveDebuffs((prev) => {
+                  if (prev[target_id] === debuff_id) {
+                    const next = { ...prev };
+                    delete next[target_id];
+                    return next;
+                  }
+                  return prev;
+                });
+              }, 5000);
+            } else if (duration) {
+              setTimeout(() => {
+                setActiveDebuffs((prev) => {
+                  const next = { ...prev };
+                  delete next[target_id];
+                  return next;
+                });
+              }, duration * 1000);
+            }
+            const atdKey = `${target_id}_${debuff_id}`;
+            setActiveTargetDebuffs((prev) => new Set([...prev, atdKey]));
+            if (LEGENDARY_DEBUFFS.has(debuff_id)) {
+              setTimeout(() => {
+                setActiveTargetDebuffs((prev) => {
+                  const next = new Set(prev);
+                  next.delete(atdKey);
+                  return next;
+                });
+              }, 5000);
+            } else if (duration && duration > 0) {
+              setTimeout(() => {
+                setActiveTargetDebuffs((prev) => {
+                  const next = new Set(prev);
+                  next.delete(atdKey);
+                  return next;
+                });
+              }, duration * 1000);
+            }
+            break;
+          }
+
+          case "debuff_protected": {
+            const { detail } = msg as {
+              type: string;
+              detail: string;
+              debuff_id: string;
+              target_id: string;
+            };
+            setNotification(`🛡️ ${detail}`);
+            setTimeout(() => setNotification(null), 3000);
+            break;
+          }
+
+          case "debuff_blocked": {
+            const { target_id, debuff_id } = msg as {
+              type: string;
+              target_id: string;
+              debuff_id: string;
+            };
+            if (target_id === profileRef.current?.id) {
+              setUsedProtections((prev) => new Set([...prev, debuff_id]));
+            }
+            const blockedTarget = playersRef.current.find(
+              (p) => p.user_id === target_id,
+            );
+            const blockedName = DEBUFF_MAP[debuff_id]?.name ?? debuff_id;
+            setNotification(
+              `🛡️ ${blockedTarget?.username ?? "???"} заблокировал дебафф ${blockedName}!`,
+            );
+            setTimeout(() => setNotification(null), 3000);
+            break;
+          }
+
+          case "debuff_reflected": {
+            const { detail: reflectDetail } = msg as { type: string; detail: string };
+            setNotification(`🪞 ${reflectDetail}`);
+            setTimeout(() => setNotification(null), 3000);
+            break;
+          }
+
+          case "debuff_solved": {
+            const { debuff_id, user_id } = msg as {
+              type: string;
+              debuff_id: string;
+              user_id: string;
+            };
+            setActiveTargetDebuffs((prev) => {
+              const next = new Set(prev);
+              [...next].forEach((key) => {
+                if (key.startsWith(`${user_id}_`) && key.endsWith(`_${debuff_id}`)) {
+                  next.delete(key);
+                }
               });
-            }, duration * 1000);
+              return next;
+            });
+            setActiveDebuffs((prev) => {
+              if (prev[user_id] === debuff_id) {
+                const next = { ...prev };
+                delete next[user_id];
+                return next;
+              }
+              return prev;
+            });
             break;
           }
 
@@ -430,6 +634,7 @@ export function Game() {
                   coins: 0,
                   rating: 0,
                   cursor: null,
+                  canvas: null,
                   online: true,
                 },
               ];
@@ -447,6 +652,7 @@ export function Game() {
                           coins: up.coins,
                           rating: up.rating,
                           cursor: up.cursor,
+                          canvas: up.canvas,
                         }
                       : p,
                   ),
@@ -457,12 +663,55 @@ export function Game() {
           }
 
           case "player_left": {
-            const { user_id } = msg as { type: string; user_id: string };
+            const { user_id, kicked } = msg as { type: string; user_id: string; kicked?: boolean };
+            if (user_id === profileRef.current?.id && kicked) {
+              navigate("/main", {
+                state: { error: "Вы были исключены из игры за отсутствие." },
+              });
+              return;
+            }
             setPlayers((prev) =>
               prev.map((p) =>
                 p.user_id === user_id ? { ...p, online: false } : p,
               ),
             );
+            if (kicked) {
+              const kickedPlayer = playersRef.current.find((p) => p.user_id === user_id);
+              setNotification(`${kickedPlayer?.username ?? "Игрок"} исключён за отсутствие`);
+              setTimeout(() => setNotification(null), 3000);
+            }
+            break;
+          }
+
+          case "game_state_sync": {
+            const { round_id, round_number, prompt, time_left, used_debuffs, player_scores } = msg as {
+              type: string;
+              game_id: string;
+              round_id: string;
+              round_number: number;
+              prompt: string;
+              time_left: number;
+              total_rounds: number;
+              used_debuffs?: string[];
+              player_scores?: Record<string, number>;
+            };
+            const restoredRound = { round_id, round_number, prompt, duration: time_left };
+            setRound(restoredRound);
+            roundRef.current = restoredRound;
+            setTimeLeft(time_left);
+            setPhase("playing");
+            roundEndSentRef.current = false;
+            if (used_debuffs) {
+              setUsedDebuffs(new Set(used_debuffs));
+            }
+            if (player_scores) {
+              setPlayerScores(player_scores);
+            }
+            if (msg.round_history) {
+              roundHistoryRef.current = msg.round_history as RoundHistoryEntry[];
+              setRoundHistory(roundHistoryRef.current);
+            }
+            console.log("[sync] Game state restored:", { round_number, prompt, time_left });
             break;
           }
         }
@@ -472,9 +721,7 @@ export function Game() {
       ws.onclose = () => {};
 
       pingRef.current = setInterval(() => {
-        if (ws && ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: "ping", timestamp: Date.now() }));
-        }
+        sendWS({ type: "ping", timestamp: Date.now() });
       }, 10000);
     };
 
@@ -486,7 +733,7 @@ export function Game() {
       wsRef.current = null;
       if (pingRef.current) clearInterval(pingRef.current);
     };
-  }, [token, room_code, showTimerOverlay]);
+  }, [token, room_code, playersLoaded, showTimerOverlay, sendWS]);
 
   // ── Countdown timer ───────────────────────────────────────────────────────
 
@@ -514,9 +761,8 @@ export function Game() {
 
     console.log("[timer] Timer reached 0, triggering round_end");
 
-    const ws = wsRef.current;
     const r = roundRef.current;
-    if (ws?.readyState === WebSocket.OPEN && r) {
+    if (r) {
       const canvas = canvasRef.current;
       const image_base64 = canvas
         ? canvas.toDataURL("image/png").split(",")[1]
@@ -526,18 +772,16 @@ export function Game() {
         image_base64_length: image_base64.length,
         image_url: "",
       });
-      ws.send(
-        JSON.stringify({
-          type: "round_end",
-          round_id: r.round_id,
-          image_base64,
-          image_url: "",
-        }),
-      );
+      sendWS({
+        type: "round_end",
+        round_id: r.round_id,
+        image_base64,
+        image_url: "",
+      });
       console.log("[round_end] Sent successfully");
     }
     setPhase("waiting");
-  }, [timeLeft, phase]);
+  }, [timeLeft, phase, sendWS]);
 
   // ── Round results countdown ───────────────────────────────────────────────
 
@@ -561,6 +805,15 @@ export function Game() {
   const myDebuffs = profile?.cursor?.debuffs ?? [];
 
   const handleApplyDebuff = useCallback(() => {
+    const now = Date.now();
+    if (now - lastApplyTimeRef.current < 500) return;
+    lastApplyTimeRef.current = now;
+
+    if (wsRef.current?.readyState !== WebSocket.OPEN) {
+      console.warn("[debuff] WS not ready, ignoring apply");
+      return;
+    }
+
     const prof = profileRef.current;
     const allPlayers = playersRef.current;
     if (!prof) return;
@@ -573,15 +826,36 @@ export function Game() {
     const debuffId = debuffs[selectedDebuffIdx % Math.max(debuffs.length, 1)];
     if (usedDebuffs.has(debuffId)) return;
 
-    wsRef.current?.send(
-      JSON.stringify({
-        type: "debuff_apply",
-        debuff_id: debuffId,
-        target_id: target.user_id,
-      }),
+    if (timeLeftRef.current <= 5) {
+      setNotification("Нельзя применять дебаффы в последние 5 секунд раунда!");
+      setTimeout(() => setNotification(null), 2000);
+      return;
+    }
+
+    const hasActiveDebuff = [...activeTargetDebuffs].some((key) =>
+      key.startsWith(`${target.user_id}_`),
     );
+    if (hasActiveDebuff) {
+      setNotification("У игрока уже активен дебафф! Подожди.");
+      setTimeout(() => setNotification(null), 2000);
+      return;
+    }
+
+    console.log("[debuff] APPLYING:", {
+      debuffId,
+      my_id: prof.id,
+      target_id: target.user_id,
+      target_username: target.username,
+      selectedTargetIdx,
+      others: others.map((p) => ({ id: p.user_id, name: p.username })),
+    });
+    sendWS({
+      type: "debuff_apply",
+      debuff_id: debuffId,
+      target_id: target.user_id,
+    });
     setUsedDebuffs((prev) => new Set([...prev, debuffId]));
-  }, [selectedTargetIdx, selectedDebuffIdx, usedDebuffs]);
+  }, [selectedTargetIdx, selectedDebuffIdx, usedDebuffs, activeTargetDebuffs, sendWS]);
 
   useEffect(() => {
     const oLen = otherPlayers.length;
@@ -646,14 +920,37 @@ export function Game() {
 
   const onMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (phase !== "playing") return;
+    if (activeEffectsRef.current.has("captcha") || activeEffectsRef.current.has("puzzle")) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
     saveHistory();
+    const raw = getPos(e);
+    const effects = activeEffectsRef.current;
+    const last = lastDrawPosRef.current;
+    let x = raw.x;
+    let y = raw.y;
+    if (effects.has("weighting")) {
+      x = smoothPosRef.current.x;
+      y = smoothPosRef.current.y;
+    } else if (effects.has("weight")) {
+      x = smoothPosRef.current.x;
+      y = smoothPosRef.current.y;
+    } else if (effects.has("chill") && last) {
+      x = last.x + (x - last.x) * 0.3;
+      y = last.y + (y - last.y) * 0.3;
+    } else if (effects.has("quickly") && last) {
+      x = last.x + (x - last.x) * 1.5;
+      y = last.y + (y - last.y) * 1.5;
+    }
+    lastDrawPosRef.current = { x, y };
+    if (isFloodFill) {
+      floodFill(ctx, Math.floor(x), Math.floor(y), color);
+      return;
+    }
     isDrawing.current = true;
     const size = isEraser ? brushSize * 3 : brushSize;
-    const { x, y } = getPos(e);
     ctx.globalCompositeOperation = isEraser ? "destination-out" : "source-over";
     ctx.beginPath();
     ctx.arc(x, y, size / 2, 0, Math.PI * 2);
@@ -664,18 +961,45 @@ export function Game() {
   };
 
   const sendCursorMove = useCallback((x: number, y: number) => {
-    if (wsRef.current?.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify({ type: "cursor_move", x, y }));
-    }
-  }, []);
+    sendWS({ type: "cursor_move", x, y });
+  }, [sendWS]);
 
   const onCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (cursorImgRef.current) {
       cursorImgRef.current.style.left = `${e.clientX}px`;
       cursorImgRef.current.style.top = `${e.clientY}px`;
     }
-    const { x, y } = getPos(e);
+    const raw = getPos(e);
+    const effects = activeEffectsRef.current;
+    const last = lastDrawPosRef.current;
+    let x = raw.x;
+    let y = raw.y;
+    if (effects.has("weighting")) {
+      smoothPosRef.current = { x: lerp(smoothPosRef.current.x, raw.x, 0.1), y: lerp(smoothPosRef.current.y, raw.y, 0.1) };
+      x = smoothPosRef.current.x;
+      y = smoothPosRef.current.y;
+    } else if (effects.has("weight")) {
+      smoothPosRef.current = { x: lerp(smoothPosRef.current.x, raw.x, 0.15), y: lerp(smoothPosRef.current.y, raw.y, 0.15) };
+      x = smoothPosRef.current.x;
+      y = smoothPosRef.current.y;
+    } else if (effects.has("chill") && last) {
+      x = last.x + (x - last.x) * 0.3;
+      y = last.y + (y - last.y) * 0.3;
+    } else if (effects.has("quickly") && last) {
+      x = last.x + (x - last.x) * 1.5;
+      y = last.y + (y - last.y) * 1.5;
+    }
+    lastDrawPosRef.current = { x, y };
     sendCursorMove(Math.round(x), Math.round(y));
+
+    if (effects.has("brightness")) {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const rect = canvas.getBoundingClientRect();
+        const relY = (e.clientY - rect.top) / rect.height;
+        document.body.style.filter = `brightness(${Math.max(0.1, 1 - relY)})`;
+      }
+    }
 
     if (!isDrawing.current) return;
     const canvas = canvasRef.current;
@@ -734,18 +1058,59 @@ export function Game() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }, [profile]);
 
+  // ── Palette ───────────────────────────────────────────────────────────────
+
+  const hasPalette = activeEffects.has("palette");
+  useEffect(() => {
+    if (!hasPalette) return;
+    const interval = setInterval(() => {
+      setColor(PALETTE[Math.floor(Math.random() * PALETTE.length)]);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [hasPalette]);
+
+  // ── Disco ─────────────────────────────────────────────────────────────────
+
+  const hasDisco = activeEffects.has("disco");
+  useEffect(() => {
+    if (!hasDisco) return;
+    const colors = ["#ff6b6b", "#ffd93d", "#6bcb77", "#4d96ff", "#ff6bff", "#ff9f43", "#48dbfb", "#ff6b81"];
+    let i = 0;
+    const interval = setInterval(() => {
+      if (canvasRef.current) canvasRef.current.style.backgroundColor = colors[i % colors.length];
+      i++;
+    }, 500);
+    return () => {
+      clearInterval(interval);
+      if (canvasRef.current) canvasRef.current.style.backgroundColor = "#ffffff";
+    };
+  }, [hasDisco]);
+
+  // ── Transparency ──────────────────────────────────────────────────────────
+
+  const hasTransparency = activeEffects.has("transparency");
+  useEffect(() => {
+    if (!hasTransparency) return;
+    const interval = setInterval(() => {
+      if (canvasRef.current)
+        canvasRef.current.style.opacity = String(0.3 + Math.random() * 0.7);
+    }, 800);
+    return () => {
+      clearInterval(interval);
+      if (canvasRef.current) canvasRef.current.style.opacity = "1";
+    };
+  }, [hasTransparency]);
+
+  // ── Brightness cleanup ────────────────────────────────────────────────────
+
+  const hasBrightness = activeEffects.has("brightness");
+  useEffect(() => {
+    if (!hasBrightness) document.body.style.filter = "";
+    return () => { document.body.style.filter = ""; };
+  }, [hasBrightness]);
+
   // ─── Render ───────────────────────────────────────────────────────────────
 
-  if (phase === "game_over") {
-    return (
-      <GameOverOverlay
-        finalScores={finalScores}
-        roundHistory={roundHistory}
-        myId={profile?.id ?? null}
-        onHome={() => navigate("/main")}
-      />
-    );
-  }
 
   const sortedResults = [...roundResults].sort((a, b) => b.score - a.score);
   const myRankInRound = profile
@@ -808,7 +1173,13 @@ export function Game() {
 
       {/* ── Top: player cards ── */}
       <div className="game-players">
-        {players.map((player) => {
+        {(() => {
+          const sorted = [...players]
+            .filter((p) => p.user_id && playerScores[p.user_id] !== undefined)
+            .sort((a, b) => (playerScores[b.user_id!] ?? 0) - (playerScores[a.user_id!] ?? 0));
+          const rankMap: Record<string, number> = {};
+          sorted.forEach((p, i) => { if (p.user_id) rankMap[p.user_id] = i + 1; });
+          return players.map((player) => {
           const isMe = player.user_id === profile?.id;
           const otherIdx = otherPlayers.indexOf(player);
           const isSelected =
@@ -834,6 +1205,7 @@ export function Game() {
                 if (!isMe && otherIdx >= 0) setSelectedTargetIdx(otherIdx);
               }}
             >
+              <div className="game-player-card-content">
               <div
                 className={`game-player-online-dot${player.online ? " game-player-online-dot--on" : ""}`}
               />
@@ -850,6 +1222,8 @@ export function Game() {
                 >
                   {DEBUFF_MAP[debuffId]?.name ?? debuffId}
                 </div>
+              ) : !isMe && activeEffects.has("anonim") ? (
+                <div className="game-player-cursor-placeholder" />
               ) : player.cursor?.image_url ? (
                 <img
                   src={player.cursor.image_url}
@@ -861,16 +1235,32 @@ export function Game() {
               )}
 
               <div className="game-player-username">
-                {player.username}
+                {!isMe && activeEffects.has("anonim")
+                  ? "???"
+                  : player.username}
                 {isMe ? " (я)" : ""}
               </div>
               <div className="game-player-stats">
-                <span>{player.coins} ₡</span>
-                <span>{player.rating} ★</span>
+                {player.user_id && playerScores[player.user_id] !== undefined ? (
+                  <>
+                    <span className="game-player-score">
+                      {playerScores[player.user_id].toFixed(1)}
+                    </span>
+                    {rankMap[player.user_id] && (
+                      <span className="game-player-rank">
+                        #{rankMap[player.user_id]}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="game-player-waiting">—</span>
+                )}
+              </div>
               </div>
             </div>
           );
-        })}
+        });
+        })()}
       </div>
 
       {/* ── Main area ── */}
@@ -881,46 +1271,61 @@ export function Game() {
           {myDebuffs.length === 0 && (
             <p className="game-debuffs-empty">Нет дебаффов</p>
           )}
-          {myDebuffs.map((id, idx) => {
-            const info = DEBUFF_MAP[id];
-            const isSelected =
-              idx === selectedDebuffIdx % Math.max(myDebuffs.length, 1);
-            const isUsed = usedDebuffs.has(id);
-            return (
-              <div
-                key={id}
-                className={[
-                  "game-debuff-item",
-                  isSelected ? "game-debuff-item--selected" : "",
-                  isUsed ? "game-debuff-item--used" : "",
-                ]
-                  .join(" ")
-                  .trim()}
-                onClick={() => setSelectedDebuffIdx(idx)}
-              >
-                <span
-                  className="game-debuff-name"
-                  style={{
-                    color: isUsed
-                      ? "#444"
-                      : DEBUFF_RARITY_COLOR[info?.rarity ?? "COMMON"],
-                  }}
+          {(() => {
+            const currentTarget =
+              otherPlayers[selectedTargetIdx % Math.max(otherPlayers.length, 1)];
+            const currentTargetId = currentTarget?.user_id;
+            const targetHasActiveDebuff = currentTargetId
+              ? [...activeTargetDebuffs].some((key) =>
+                  key.startsWith(`${currentTargetId}_`),
+                )
+              : false;
+            return myDebuffs.map((id, idx) => {
+              const info = DEBUFF_MAP[id];
+              const isSelected =
+                idx === selectedDebuffIdx % Math.max(myDebuffs.length, 1);
+              const isUsed = usedDebuffs.has(id);
+              return (
+                <div
+                  key={id}
+                  className={[
+                    "game-debuff-item",
+                    isSelected ? "game-debuff-item--selected" : "",
+                    isUsed ? "game-debuff-item--used" : "",
+                  ]
+                    .join(" ")
+                    .trim()}
+                  onClick={() => setSelectedDebuffIdx(idx)}
                 >
-                  {info?.name ?? id}
-                </span>
-                <span
-                  className="game-debuff-rarity"
-                  style={{
-                    color: isUsed
-                      ? "#444"
-                      : DEBUFF_RARITY_COLOR[info?.rarity ?? "COMMON"],
-                  }}
-                >
-                  {info?.rarity ?? ""}
-                </span>
-              </div>
-            );
-          })}
+                  <span
+                    className="game-debuff-name"
+                    style={{
+                      color: isUsed
+                        ? "#444"
+                        : DEBUFF_RARITY_COLOR[info?.rarity ?? "COMMON"],
+                    }}
+                  >
+                    {info?.name ?? id}
+                    {targetHasActiveDebuff && (
+                      <span className="game-debuff-locked" title="У цели уже активен дебафф">
+                        {" "}🔒
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    className="game-debuff-rarity"
+                    style={{
+                      color: isUsed
+                        ? "#444"
+                        : DEBUFF_RARITY_COLOR[info?.rarity ?? "COMMON"],
+                    }}
+                  >
+                    {info?.rarity ?? ""}
+                  </span>
+                </div>
+              );
+            });
+          })()}
           {myDebuffs.length > 0 && (
             <button
               className="game-debuff-apply-btn"
@@ -935,6 +1340,23 @@ export function Game() {
             <span>A/D — цель</span>
             <span>W/S — дебафф</span>
           </div>
+
+          {myProtections.length > 0 && (
+            <div className="game-protections">
+              <p className="game-section-label">// Защиты</p>
+              {myProtections.map((id) => {
+                const isUsed = usedProtections.has(id);
+                return (
+                  <div
+                    key={id}
+                    className={`game-protection-item${isUsed ? " game-protection-item--used" : ""}`}
+                  >
+                    <span>🛡️ {DEBUFF_MAP[id]?.name ?? id}</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </aside>
 
         {/* Center: canvas */}
@@ -964,12 +1386,24 @@ export function Game() {
               className="game-drawing-canvas"
               width={570}
               height={560}
+              style={getCanvasStyle(activeEffects)}
               onMouseDown={onMouseDown}
               onMouseMove={onCanvasMouseMove}
               onMouseUp={onMouseUp}
               onMouseEnter={onCanvasEnter}
               onMouseLeave={onCanvasLeave}
             />
+            <DebuffOverlay
+              activeEffects={activeEffects}
+              onEffectComplete={removeEffect}
+              canvasRef={canvasRef}
+            />
+            {phase === "waiting" && roundEndSentRef.current && (
+              <div className="game-waiting-overlay">
+                <div className="game-waiting-spinner" />
+                <p className="game-waiting-text">Ожидание результатов...</p>
+              </div>
+            )}
           </div>
           {/* Custom cursor */}
           {profile?.cursor?.image_url && (
@@ -989,21 +1423,45 @@ export function Game() {
             {PALETTE.map((c) => (
               <button
                 key={c}
-                className={`game-swatch${c === color && !isEraser ? " game-swatch--active" : ""}`}
+                className={`game-swatch${c === color && !isEraser && !isFloodFill ? " game-swatch--active" : ""}`}
                 style={{ background: c }}
                 onClick={() => {
                   setColor(c);
                   setIsEraser(false);
+                  setIsFloodFill(false);
                 }}
                 title={c}
               />
             ))}
           </div>
+          <div
+            className="game-color-preview"
+            style={{ background: color }}
+            onClick={() => setShowColorPicker((v) => !v)}
+          />
+          {showColorPicker && (
+            <div className="game-color-picker-popup">
+              <HexColorPicker
+                color={color}
+                onChange={(c) => {
+                  setColor(c);
+                  setIsEraser(false);
+                  setIsFloodFill(false);
+                }}
+              />
+            </div>
+          )}
           <button
             className={`game-eraser-btn${isEraser ? " game-eraser-btn--active" : ""}`}
-            onClick={() => setIsEraser((v) => !v)}
+            onClick={() => { setIsEraser((v) => !v); setIsFloodFill(false); }}
           >
             ◈ Ластик
+          </button>
+          <button
+            className={`game-eraser-btn${isFloodFill ? " game-eraser-btn--active" : ""}`}
+            onClick={() => { setIsFloodFill((v) => !v); setIsEraser(false); }}
+          >
+            ◈ Заливка
           </button>
           <div className="game-brush-row">
             <div className="game-brush-header">
@@ -1079,146 +1537,3 @@ function RoundResultsOverlay({
   );
 }
 
-// ─── Game Over Overlay ────────────────────────────────────────────────────────
-
-function GameOverOverlay({
-  finalScores,
-  roundHistory,
-  myId,
-  onHome,
-}: {
-  finalScores: FinalScore[];
-  roundHistory: RoundHistoryEntry[];
-  myId: string | null;
-  onHome: () => void;
-}) {
-  const sorted = [...finalScores].sort((a, b) => b.total_score - a.total_score);
-  const myEntry = sorted.find((s) => s.user_id === myId);
-  const myRank = myEntry ? sorted.indexOf(myEntry) + 1 : null;
-  const winnerId = sorted[0]?.user_id ?? null;
-  const iAmWinner = myId !== null && myId === winnerId;
-
-  return (
-    <div className="game-overlay game-overlay--final">
-      <div className="game-overlay-inner">
-        <h2 className="game-over-title">Игра завершена</h2>
-        {myRank !== null && (
-          <p className="game-over-my-rank">
-            Ваше место: <strong>#{myRank}</strong>
-            <span className="game-over-sep">·</span>
-            Очки: {myEntry?.total_score.toFixed(1)}
-            <span className="game-over-sep">·</span>
-            <span className="game-over-coins">+{myEntry?.total_coins} ₡</span>
-            {iAmWinner && (
-              <span className="game-over-winner-badge">+1 ★ Рейтинг</span>
-            )}
-          </p>
-        )}
-
-        {/* Итоговая таблица */}
-        <div className="game-final-list">
-          {sorted.map((s, i) => {
-            const isWinner = s.user_id === winnerId;
-            const isMe = s.user_id === myId;
-            const classes = [
-              "game-final-row",
-              isWinner ? "game-final-row--winner" : "",
-              isMe ? "game-final-row--me" : "",
-            ]
-              .filter(Boolean)
-              .join(" ");
-            return (
-              <div key={s.user_id} className={classes}>
-                <span
-                  className={`game-final-rank${isWinner ? " game-final-rank--winner" : ""}`}
-                >
-                  #{i + 1}
-                </span>
-                <span className="game-final-username">{s.username}</span>
-                <span className="game-final-score">
-                  {s.total_score.toFixed(1)} pts
-                </span>
-                <span className="game-final-coins">+{s.total_coins} ₡</span>
-                {isWinner && (
-                  <span className="game-final-rating-badge">+1 ★</span>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* История раундов */}
-        {roundHistory.length > 0 && (
-          <div className="game-round-history">
-            <h3 className="game-round-history-title">История раундов</h3>
-            {roundHistory.map((entry) => {
-              const sortedScores = [...entry.scores].sort(
-                (a, b) => b.score - a.score,
-              );
-              return (
-                <div key={entry.round_number} className="game-round-section">
-                  <div className="game-round-section-header">
-                    <span className="game-round-section-num">
-                      Раунд {entry.round_number}
-                    </span>
-                    {entry.prompt && (
-                      <span className="game-round-section-prompt">
-                        {entry.prompt}
-                      </span>
-                    )}
-                  </div>
-                  <div className="game-round-cards">
-                    {sortedScores.map((s, i) => (
-                      <div
-                        key={s.user_id}
-                        className={`game-round-card${s.user_id === myId ? " game-round-card--me" : ""}`}
-                      >
-                        <span className="game-round-card-rank">#{i + 1}</span>
-                        {s.image_url ? (
-                          <img
-                            src={s.image_url}
-                            alt={s.username}
-                            className="game-round-card-img"
-                          />
-                        ) : (
-                          <div className="game-round-card-img-placeholder" />
-                        )}
-                        <span className="game-round-card-username">
-                          {s.username}
-                        </span>
-                        <span className="game-round-card-score">
-                          {s.score.toFixed(1)}
-                        </span>
-                        {s.coins_earned !== undefined && (
-                          <span className="game-round-card-coins">
-                            +{s.coins_earned} ₡
-                          </span>
-                        )}
-                        {s.comment && (
-                          <p className="game-round-card-comment">{s.comment}</p>
-                        )}
-                        {s.user_id === myId && s.image_url && (
-                          <a
-                            href={s.image_url}
-                            download
-                            className="game-round-card-download"
-                          >
-                            Скачать
-                          </a>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <button className="game-home-btn" onClick={onHome}>
-          На главную
-        </button>
-      </div>
-    </div>
-  );
-}

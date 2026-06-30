@@ -8,6 +8,7 @@ export const DEBUFF_MAP: Record<string, DebuffInfo> = {
   chill:        { name: "Chill",        rarity: "COMMON",    description: "Замедляет скорость движения курсора на 20%" },
   blur:         { name: "Blur",         rarity: "COMMON",    description: "Слегка размывает интерфейс холста" },
   fog:          { name: "Fog",          rarity: "COMMON",    description: "Во весь экран появляется туман" },
+  tar:          { name: "Tar",          rarity: "COMMON",    description: "Тёмный туман по всему холсту" },
   smudge:       { name: "Smudge",       rarity: "COMMON",    description: "Закрывает центр экрана чернильной кляксой" },
   weight:       { name: "Weight",       rarity: "COMMON",    description: "Увеличивает инерцию курсора — медленнее разгоняется и останавливается" },
   static:       { name: "Static",       rarity: "COMMON",    description: "По экрану холста начинают идти мелкие серые полосы" },

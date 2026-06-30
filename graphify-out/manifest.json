@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "backend/ai/config.py": {
-    "mtime": 1782131788.867866,
-    "ast_hash": "8c5e27ca890bbd76ecf207340bb728ad",
+    "mtime": 1782584116.274774,
+    "ast_hash": "04b878f74d98b4982e7d971891cde540",
     "semantic_hash": ""
   },
   "backend/ai/migrations/__init__.py": {
@@ -35,13 +35,13 @@
     "semantic_hash": ""
   },
   "backend/ai/services.py": {
-    "mtime": 1782292642.5699363,
-    "ast_hash": "c0c683c70456f88c1a0734a9b6b3a9a0",
+    "mtime": 1782583742.330318,
+    "ast_hash": "850509c3d6e54e4029cdfbaa59d3d4d7",
     "semantic_hash": ""
   },
   "backend/ai/tasks.py": {
-    "mtime": 1782297436.7454443,
-    "ast_hash": "675d5e4e1122bf8025e5b04e28a7c514",
+    "mtime": 1782586779.7456129,
+    "ast_hash": "1e1da0b3c325409e43b5de47a8dd6f21",
     "semantic_hash": ""
   },
   "backend/assets/images/metadata.json": {
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "backend/game/services.py": {
-    "mtime": 1782292841.5169342,
-    "ast_hash": "f60e5259ac558fae81ae341dbd0e72a1",
+    "mtime": 1782585417.7218409,
+    "ast_hash": "39085193c2da935475435a93cdd0038f",
     "semantic_hash": ""
   },
   "backend/game/urls.py": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "backend/servers/consumers.py": {
-    "mtime": 1782291848.791766,
-    "ast_hash": "f1a1cabdbf098608981afc1b8f15cb25",
+    "mtime": 1782583293.2815654,
+    "ast_hash": "413a33625db3ac4b1251b6aef7b9e405",
     "semantic_hash": ""
   },
   "backend/servers/middleware.py": {
@@ -305,8 +305,8 @@
     "semantic_hash": ""
   },
   "backend/servers/serializers.py": {
-    "mtime": 1781511599.4936779,
-    "ast_hash": "83ac12fa3182bc4dd9068223676f7fdf",
+    "mtime": 1782579810.713272,
+    "ast_hash": "24c84d5f9925fc5daedcc8ac8c763fdc",
     "semantic_hash": ""
   },
   "backend/servers/services.py": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "backend/servers/views.py": {
-    "mtime": 1782296065.807968,
-    "ast_hash": "a25d6819c88b0ce7345767966bcbdf94",
+    "mtime": 1782580600.0489702,
+    "ast_hash": "79d8c9420dc2db11dc00adea0f70dcd1",
     "semantic_hash": ""
   },
   "backend/staticfiles/admin/js/SelectBox.js": {
@@ -960,8 +960,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1782327036.2629428,
-    "ast_hash": "f5d072c5d9a23c12837bc74f1956a4e7",
+    "mtime": 1782581095.3935666,
+    "ast_hash": "b952158f66e9e1202d2f437052c46d08",
     "semantic_hash": ""
   },
   "frontend/src/assets/cloudinary-images.json": {
@@ -1070,8 +1070,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/api.tsx": {
-    "mtime": 1782376831.1858852,
-    "ast_hash": "6ee3c492c056046d5abce3680f931eda",
+    "mtime": 1782581977.264845,
+    "ast_hash": "9f3632aa6eb811376a0d9058b17a2393",
     "semantic_hash": ""
   },
   "frontend/src/services/user/user_api.tsx": {
@@ -2390,8 +2390,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/Lobby/Lobby.tsx": {
-    "mtime": 1782319619.113932,
-    "ast_hash": "9a5826993504f1f2967407a160441312",
+    "mtime": 1782580076.7388887,
+    "ast_hash": "d581e7783a6e08ad786b64a83ee376dc",
     "semantic_hash": ""
   },
   "Obsidian/battle-cursor/logs/2026-06-24-lobby-auth-refresh-fixes.md": {
@@ -2410,8 +2410,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/CustomCursor/CustomCursor.tsx": {
-    "mtime": 1782380557.9801629,
-    "ast_hash": "6cf9dc556c666eef8e316c768a94bf05",
+    "mtime": 1782499556.784577,
+    "ast_hash": "e5e980f98e9ed609d2354e87bda7eeae",
     "semantic_hash": ""
   },
   "Obsidian/battle-cursor/logs/2026-06-25-profile-canvas-cursor-orig.md": {
@@ -3922,6 +3922,21 @@
   "docker-compose.yml": {
     "mtime": 1782469196.7894619,
     "ast_hash": "05ddec4c871257568e9250ae806ae754",
+    "semantic_hash": ""
+  },
+  "backend/servers/tasks.py": {
+    "mtime": 1782580047.2803774,
+    "ast_hash": "ab2b74ce26c9db86c90dc29038287593",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/Game/Game.tsx": {
+    "mtime": 1782587251.2188628,
+    "ast_hash": "32673b1408748d57ee5a1d7fc513bed2",
+    "semantic_hash": ""
+  },
+  "Diagrams/Battle-cursor.pdf": {
+    "mtime": 1782497048.4974828,
+    "ast_hash": "e55d0b7ffded8edf5539d5ce2b834d5f",
     "semantic_hash": ""
   }
 }

@@ -206,6 +206,50 @@ class ProfileUpdateView(APIView):
         return Response(UserProfileSerializer(user).data)
 
 
+class ProfileDrawingView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        import cloudinary.uploader
+        import cloudinary.api
+
+        user = request.user
+
+        if request.data.get("delete"):
+            if user.profile_drawing:
+                try:
+                    cloudinary.api.delete_resources([f"profile_drawings/profile_{user.id}"])
+                except Exception:
+                    pass
+            user.profile_drawing = None
+            user.save(update_fields=["profile_drawing"])
+            return Response({"image_url": None})
+
+        image_base64 = request.data.get("image_base64")
+        if not image_base64:
+            return Response(
+                {"detail": "image_base64 обязателен."}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            result = cloudinary.uploader.upload(
+                f"data:image/png;base64,{image_base64}",
+                folder="profile_drawings",
+                public_id=f"profile_{user.id}",
+                overwrite=True,
+                resource_type="image",
+            )
+            image_url = result.get("secure_url", "")
+        except Exception as e:
+            return Response(
+                {"detail": f"Ошибка загрузки: {e}"}, status=status.HTTP_502_BAD_GATEWAY
+            )
+
+        user.profile_drawing = image_url
+        user.save(update_fields=["profile_drawing"])
+        return Response({"image_url": image_url})
+
+
 # for tests
 
 

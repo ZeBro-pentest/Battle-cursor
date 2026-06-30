@@ -73,6 +73,7 @@ class User(AbstractUser):
     canvas = models.ForeignKey(
         Canvas, on_delete=models.SET_NULL, null=True, blank=True, related_name="users"
     )
+    profile_drawing = models.URLField(blank=True, null=True)
 
     username = models.CharField(
         max_length=24,

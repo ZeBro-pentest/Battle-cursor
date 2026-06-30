@@ -18,6 +18,7 @@ import { ShopItemDetail } from "./pages/Shop/ShopItemDetail";
 import { Inventory } from "./pages/Inventory/Inventory";
 import { Purchases } from "./pages/Purchases/Purchases";
 import { Game } from "./pages/Game/Game";
+import { GameOver } from "./pages/GameOver/GameOver";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "./store/store";
 import { setAccessToken, clearAuth } from "./store/authSlice";
@@ -92,17 +93,18 @@ function RequireAuth() {
 function App() {
   useProactiveRefresh();
   return (
-    <MobileGuard>
     <Router>
+    <MobileGuard>
       <Routes>
         {/* Страницы авторизации (без хедера) */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
 
-        {/* Игровой экран — без MainLayout (у него свой game-header) */}
+        {/* Игровой экран и итоги — без MainLayout */}
         <Route element={<RequireAuth />}>
           <Route path="/game/:room_code" element={<Game />} />
+          <Route path="/game-over" element={<GameOver />} />
         </Route>
 
         {/* Все страницы с хедером */}
@@ -136,8 +138,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </Router>
-  </MobileGuard>
+    </MobileGuard>
+  </Router>
   );
 }
 

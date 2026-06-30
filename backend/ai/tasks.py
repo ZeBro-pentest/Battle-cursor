@@ -29,9 +29,8 @@ def _push(room_group: str, payload: dict):
 
 def _collect_drawings(round_id: str) -> dict:
     """Собирает все рисунки раунда из Redis. {user_id: {image_base64, image_url}}"""
-    keys = cache.keys(f"round:{round_id}:drawing:*")
     drawings = {}
-    for key in keys:
+    for key in cache.iter_keys(f"round:{round_id}:drawing:*"):
         user_id = key.split(":")[-1]
         data = cache.get(key)
         if data:
@@ -41,7 +40,7 @@ def _collect_drawings(round_id: str) -> dict:
 
 def _cleanup_round(round_id: str):
     """Удаляет рисунки и task_id раунда из Redis."""
-    keys = cache.keys(f"round:{round_id}:drawing:*")
+    keys = list(cache.iter_keys(f"round:{round_id}:drawing:*"))
     if keys:
         cache.delete_many(keys)
     cache.delete(f"round:{round_id}:task_id")
@@ -78,6 +77,17 @@ def start_round(round_id: str, game_id: str, room_group: str):
     )
     cache.set(f"round:{round_id}:task_id", task.id, timeout=120)
 
+    # Чистим активные дебаффы и использованные дебаффы перед новым раундом
+    try:
+        game_obj = Game.objects.select_related("server").prefetch_related("server__players").get(id=game_id)
+        for player in game_obj.server.players.all():
+            cache.delete(f"game:{game_id}:debuff_active:{player.id}")
+        used_keys = list(cache.iter_keys(f"game:{game_id}:used_debuff:*"))
+        if used_keys:
+            cache.delete_many(used_keys)
+    except Exception:
+        pass
+
     _push(
         room_group,
         {
@@ -110,9 +120,17 @@ def grade_round(self, round_id: str, room_group: str):
         logger.warning("grade_round: Round %s already finished", round_id)
         return
 
+    # Redis lock предотвращает двойной запуск (race между grade_round и force_grade_round)
+    lock_key = f"round:{round_id}:grading_lock"
+    if cache.get(lock_key):
+        logger.warning("grade_round: Round %s already being graded, skipping", round_id)
+        return
+    cache.set(lock_key, 1, timeout=120)
+
     drawings = _collect_drawings(round_id)
     if not drawings:
-        logger.warning("grade_round: No drawings for round %s", round_id)
+        logger.warning("grade_round: No drawings for round %s, skipping grading", round_id)
+        return
 
     # Фаза 1: HTTP-запросы к Groq — до транзакции
     prompt = round_obj.prompt
@@ -167,6 +185,8 @@ def grade_round(self, round_id: str, room_group: str):
     # Фаза 2: атомарная запись в БД + dispatch следующей задачи через on_commit
     game = round_obj.game
 
+    game_id_str = str(game.id)
+
     with transaction.atomic():
         for s in db_scores:
             Score.objects.update_or_create(
@@ -181,27 +201,25 @@ def grade_round(self, round_id: str, room_group: str):
             )
         RoundService.finish(round_obj)
 
+        # Фаза 3: накапливаем монеты в Redis внутри транзакции — атомарно с записью Score
+        for s in db_scores:
+            coin_key = f"game:{game_id_str}:coins:{s['user'].id}"
+            current = cache.get(coin_key, 0.0)
+            cache.set(coin_key, current + s["coins_earned"], timeout=3600)
+
         next_round = Round.objects.filter(
             game=game, number=round_obj.number + 1, is_finished=False
         ).first()
 
         if next_round:
-            next_id, game_id = str(next_round.id), str(game.id)
+            next_id, game_id = str(next_round.id), game_id_str
             transaction.on_commit(
-                lambda nid=next_id, gid=game_id: start_round.apply_async(args=[nid, gid, room_group], countdown=5)
+                lambda nid=next_id, gid=game_id: start_round.apply_async(args=[nid, gid, room_group], countdown=10)
             )
         else:
-            game_id = str(game.id)
             transaction.on_commit(
-                lambda gid=game_id: game_over.apply_async(args=[gid, room_group], countdown=5)
+                lambda gid=game_id_str: game_over.apply_async(args=[gid, room_group], countdown=10)
             )
-
-    # Фаза 3: накапливаем монеты в Redis для финального синка в game_over
-    game_id_str = str(game.id)
-    for s in db_scores:
-        coin_key = f"game:{game_id_str}:coins:{s['user'].id}"
-        current = cache.get(coin_key, 0.0)
-        cache.set(coin_key, current + s["coins_earned"], timeout=3600)
 
     _cleanup_round(round_id)
 
@@ -291,12 +309,12 @@ def game_over(game_id: str, room_group: str):
 
         # Удаляем Game через 10 минут — только после коммита
         transaction.on_commit(
-            lambda: delete_game.apply_async(args=[game_id], countdown=600)
+            lambda: delete_game.apply_async(args=[game_id], countdown=60)
         )
 
     # Чистим Redis
     cache.delete(f"game:{game_id}:players_count")
-    debuff_keys = cache.keys(f"game:{game_id}:debuff_active:*")
+    debuff_keys = list(cache.iter_keys(f"game:{game_id}:debuff_active:*"))
     if debuff_keys:
         cache.delete_many(debuff_keys)
 
@@ -309,11 +327,42 @@ def game_over(game_id: str, room_group: str):
         },
     )
 
+    cleanup_drawings.apply_async(args=[game_id], countdown=60)
+
     logger.info(
         "Game %s over. Winner: %s",
         game_id,
         final_scores[0]["username"] if final_scores else "?",
     )
+
+
+@shared_task
+def kick_offline_player(game_id: str, room_group: str, user_id: str, room_code: str):
+    """Кикает игрока если он не переподключился за 30 сек во время игры."""
+    if not cache.get(f"game:{game_id}:offline:{user_id}"):
+        logger.info("kick_offline_player: player %s reconnected, skip kick", user_id)
+        return
+
+    from servers.models import Server
+
+    try:
+        server = Server.objects.get(room_code=room_code)
+        user = User.objects.get(id=user_id)
+        server.players.remove(user)
+        logger.info("kick_offline_player: player %s kicked from game %s (offline 30s)", user_id, game_id)
+    except Exception as e:
+        logger.error("kick_offline_player error: %s", e)
+        return
+
+    _push(
+        room_group,
+        {
+            "type": "player_left",
+            "user_id": user_id,
+            "kicked": True,
+        },
+    )
+    cache.delete(f"game:{game_id}:offline:{user_id}")
 
 
 @shared_task
@@ -328,8 +377,25 @@ def delete_game(game_id: str):
 
 
 @shared_task
+def cleanup_drawings(game_id: str):
+    """Удаляет рисунки из Cloudinary для всех раундов игры (вызывается через 10 мин после game_over)."""
+    logger.info("cleanup_drawings called for game_id=%s", game_id)
+    try:
+        rounds = Round.objects.filter(game_id=game_id)
+        for round_obj in rounds:
+            try:
+                cloudinary.api.delete_resources_by_prefix(f"drawings/{round_obj.id}_")
+            except Exception as e:
+                logger.warning("cleanup_drawings: Cloudinary failed for round %s: %s", round_obj.id, e)
+        logger.info("cleanup_drawings: done for game %s", game_id)
+    except Exception as e:
+        logger.error("cleanup_drawings: error for game %s: %s", game_id, e)
+
+
+@shared_task
 def cleanup_game(game_id: str, room_code: str):
     """Вызывается когда все игроки отключились после завершённой игры."""
+    logger.info("cleanup_game called for game_id=%s", game_id)
     from servers.models import Server
 
     # Удаляем рисунки из Cloudinary для всех раундов игры
@@ -346,7 +412,7 @@ def cleanup_game(game_id: str, room_code: str):
     except Exception as e:
         logger.error("cleanup_game drawings error: %s", e)
 
-    keys = cache.keys(f"game:{game_id}:*")
+    keys = list(cache.iter_keys(f"game:{game_id}:*"))
     if keys:
         cache.delete_many(keys)
 

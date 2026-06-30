@@ -109,6 +109,10 @@ export const userAPI = {
   getProfileById: (userId: string) => api.get(`api/profile/${userId}/`),
   updateProfile: (data: { cursor?: string | null; canvas?: string | null }) =>
     api.patch("api/profile/update/", data),
+  saveDrawing: (image_base64: string) =>
+    api.patch("api/profile/drawing/", { image_base64 }),
+  deleteDrawing: () =>
+    api.patch("api/profile/drawing/", { delete: true }),
 };
 
 export const serversAPI = {

@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { HexColorPicker } from "react-colorful";
 import { userAPI } from "../../services/api";
+import { floodFill } from "../../utils/floodFill";
 import type { UserProfile } from "../../types/user";
 import "./Profile.css";
 
@@ -51,6 +52,9 @@ export function Profile() {
   const [color, setColor] = useState("#000000");
   const [brushSize, setBrushSize] = useState(4);
   const [isEraser, setIsEraser] = useState(false);
+  const [isFloodFill, setIsFloodFill] = useState(false);
+  const [modalType, setModalType] = useState<"save" | "redraw" | null>(null);
+  const [drawingSaving, setDrawingSaving] = useState(false);
 
   useEffect(() => {
     userAPI
@@ -67,6 +71,12 @@ export function Profile() {
     if (!ctx) return;
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (profile.profile_drawing_url) {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      img.src = profile.profile_drawing_url;
+    }
   }, [profile]);
 
   useEffect(() => {
@@ -122,9 +132,13 @@ export function Profile() {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
     saveHistory();
+    const { x, y } = getPos(e);
+    if (isFloodFill) {
+      floodFill(ctx, Math.floor(x), Math.floor(y), color);
+      return;
+    }
     isDrawing.current = true;
     const size = isEraser ? brushSize * 3 : brushSize;
-    const { x, y } = getPos(e);
     ctx.globalCompositeOperation = isEraser ? "destination-out" : "source-over";
     ctx.beginPath();
     ctx.arc(x, y, size / 2, 0, Math.PI * 2);
@@ -187,6 +201,34 @@ export function Profile() {
     saveHistory();
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+  };
+
+  const handleConfirmSave = async () => {
+    console.log("[profile] handleConfirmSave called");
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dataUrl = canvas.toDataURL("image/png");
+    const base64 = dataUrl.replace(/^data:image\/png;base64,/, "");
+    setDrawingSaving(true);
+    try {
+      const res = await userAPI.saveDrawing(base64);
+      setProfile((p) => p ? { ...p, profile_drawing_url: res.data.image_url } : p);
+    } finally {
+      setDrawingSaving(false);
+      setModalType(null);
+    }
+  };
+
+  const handleConfirmRedraw = async () => {
+    setDrawingSaving(true);
+    try {
+      await userAPI.deleteDrawing();
+      setProfile((p) => p ? { ...p, profile_drawing_url: null } : p);
+      handleClear();
+    } finally {
+      setDrawingSaving(false);
+      setModalType(null);
+    }
   };
 
   if (loading) return <div className="profile-loading">Загрузка...</div>;
@@ -278,6 +320,19 @@ export function Profile() {
               />
             )}
           </div>
+          <div className="profile-drawing-actions">
+            <button
+              className="profile-drawing-btn"
+              onClick={() => {
+                console.log("[profile] Save button clicked");
+                const type = profile.profile_drawing_url ? "redraw" : "save";
+                setModalType(type);
+                console.log("[profile] modalType set to", type);
+              }}
+            >
+              {profile.profile_drawing_url ? "Перерисовать" : "Сохранить рисунок"}
+            </button>
+          </div>
         </main>
 
         {/* ── Right: Tools ── */}
@@ -287,11 +342,12 @@ export function Profile() {
             {PALETTE.map((c) => (
               <button
                 key={c}
-                className={`drawing-swatch${c === color && !isEraser ? " drawing-swatch--active" : ""}`}
+                className={`drawing-swatch${c === color && !isEraser && !isFloodFill ? " drawing-swatch--active" : ""}`}
                 style={{ background: c }}
                 onClick={() => {
                   setColor(c);
                   setIsEraser(false);
+                  setIsFloodFill(false);
                 }}
                 title={c}
               />
@@ -299,9 +355,15 @@ export function Profile() {
           </div>
           <button
             className={`drawing-eraser-btn${isEraser ? " drawing-eraser-btn--active" : ""}`}
-            onClick={() => setIsEraser((v) => !v)}
+            onClick={() => { setIsEraser((v) => !v); setIsFloodFill(false); }}
           >
-            {isEraser ? "◈ Ластик" : "◈ Ластик"}
+            ◈ Ластик
+          </button>
+          <button
+            className={`drawing-eraser-btn${isFloodFill ? " drawing-eraser-btn--active" : ""}`}
+            onClick={() => { setIsFloodFill((v) => !v); setIsEraser(false); }}
+          >
+            ◈ Заливка
           </button>
           <div ref={colorPreviewRef}>
             <div
@@ -321,7 +383,7 @@ export function Profile() {
             <div ref={colorPickerPopupRef} className="color-picker-popup" style={{ top: pickerPos.top, left: pickerPos.left }}>
               <HexColorPicker
                 color={color}
-                onChange={(c) => { setColor(c); setIsEraser(false); }}
+                onChange={(c) => { setColor(c); setIsEraser(false); setIsFloodFill(false); }}
               />
             </div>,
             document.body
@@ -346,6 +408,37 @@ export function Profile() {
           <p className="drawing-undo-hint">Ctrl+Z — отменить</p>
         </aside>
       </div>
+
+      {modalType && createPortal(
+        <div className="profile-modal-overlay" onClick={() => setModalType(null)}>
+          <div className="profile-modal" onClick={(e) => e.stopPropagation()}>
+            <p className="profile-modal-text">
+              {modalType === "save"
+                ? "Сохранить текущий рисунок как рисунок профиля?"
+                : "Удалить сохранённый рисунок и очистить холст?"}
+            </p>
+            <div className="profile-modal-actions">
+              <button
+                className="profile-modal-btn profile-modal-btn--confirm"
+                onClick={() => {
+                  console.log("[profile] Modal confirm clicked, type:", modalType);
+                  modalType === "save" ? handleConfirmSave() : handleConfirmRedraw();
+                }}
+                disabled={drawingSaving}
+              >
+                {drawingSaving ? "..." : "Да"}
+              </button>
+              <button
+                className="profile-modal-btn profile-modal-btn--cancel"
+                onClick={() => setModalType(null)}
+              >
+                Отмена
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

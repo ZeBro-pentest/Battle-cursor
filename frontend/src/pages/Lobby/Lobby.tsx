@@ -25,6 +25,7 @@ export function Lobby() {
   const [wsError, setWsError] = useState(false);
   const [joinError, setJoinError] = useState<string | null>(null);
   const [joined, setJoined] = useState(false);
+  const [starting, setStarting] = useState(false);
 
   const wsRef = useRef<WebSocket | null>(null);
   const gameIdRef = useRef<string | null>(null);
@@ -209,6 +210,7 @@ export function Lobby() {
           {sortedPlayers.map((p) => (
             <PlayerCard
               key={p.username}
+              userId={p.id ?? undefined}
               username={p.username}
               cursor={p.cursor}
               canvas={p.canvas}
@@ -225,10 +227,17 @@ export function Lobby() {
           {isHost ? (
             <button
               className="lobby-start-btn"
-              onClick={handleStart}
-              disabled={players.length < 2}
+              disabled={starting || players.length < 2}
+              onClick={async () => {
+                setStarting(true);
+                try {
+                  await handleStart();
+                } catch {
+                  setStarting(false);
+                }
+              }}
             >
-              {players.length < 2 ? "Ожидание игроков..." : "Начать игру"}
+              {starting ? "Запуск..." : players.length < 2 ? "Ожидание игроков..." : "Начать игру"}
             </button>
           ) : (
             <p className="lobby-waiting">Ожидаем хоста...</p>

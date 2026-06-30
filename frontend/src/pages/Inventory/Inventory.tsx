@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { marketAPI, userAPI } from "../../services/api";
 import type { Inventory as InventoryType, UserProfile } from "../../types/user";
 import "./Inventory.css";
@@ -7,6 +7,7 @@ import "./Inventory.css";
 type Tab = "cursors" | "canvases";
 
 export function Inventory() {
+  const navigate = useNavigate();
   const [inventory, setInventory] = useState<InventoryType | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [tab, setTab] = useState<Tab>("cursors");
@@ -97,8 +98,10 @@ export function Inventory() {
                   <NoneCard selected={selectedCursor === null} onClick={() => setSelectedCursor(null)} />
                   {cursors.map((c) => (
                     <InvCard
-                      key={c.id} name={c.name} imageUrl={c.image_url}
-                      equipped={selectedCursor === c.id} onClick={() => setSelectedCursor(c.id)}
+                      key={c.id} name={c.name} imageUrl={c.image_url} rarity={c.rarity}
+                      equipped={selectedCursor === c.id}
+                      onEquip={() => setSelectedCursor(c.id)}
+                      onNavigate={() => navigate(`/shop/cursors/${c.id}`)}
                     />
                   ))}
                 </div>
@@ -115,8 +118,10 @@ export function Inventory() {
                   <NoneCard selected={selectedCanvas === null} onClick={() => setSelectedCanvas(null)} />
                   {canvases.map((c) => (
                     <InvCard
-                      key={c.id} name={c.name} imageUrl={c.image_url}
-                      equipped={selectedCanvas === c.id} onClick={() => setSelectedCanvas(c.id)}
+                      key={c.id} name={c.name} imageUrl={c.image_url} rarity={c.rarity}
+                      equipped={selectedCanvas === c.id}
+                      onEquip={() => setSelectedCanvas(c.id)}
+                      onNavigate={() => navigate(`/shop/canvases/${c.id}`)}
                     />
                   ))}
                 </div>
@@ -141,19 +146,52 @@ function NoneCard({ selected, onClick }: { selected: boolean; onClick: () => voi
   );
 }
 
-function InvCard({ name, imageUrl, equipped, onClick }: {
-  name: string; imageUrl: string | null; equipped: boolean; onClick: () => void;
+const RARITY_BORDER: Record<string, string> = {
+  common:    "#555",
+  rare:      "#4488ff",
+  epic:      "#aa44ee",
+  mythic:    "#FF0606",
+  legendary: "#ffcc00",
+};
+
+function InvCard({ name, imageUrl, rarity, equipped, onEquip, onNavigate }: {
+  name: string;
+  imageUrl: string | null;
+  rarity?: string;
+  equipped: boolean;
+  onEquip: () => void;
+  onNavigate: () => void;
 }) {
+  const borderColor = rarity ? (RARITY_BORDER[rarity.toLowerCase()] ?? "#333") : "#333";
+
   return (
-    <div className={`inv-card${equipped ? " equipped" : ""}`} onClick={onClick}>
+    <div
+      className={`inv-card inv-card--clickable${equipped ? " equipped" : ""}`}
+      style={{ borderColor, boxShadow: `0 0 8px ${borderColor}33` }}
+      onClick={onEquip}
+    >
+      <button
+        className="inventory-card-info-btn"
+        onClick={(e) => { e.stopPropagation(); onNavigate(); }}
+      >
+        ?
+      </button>
       {imageUrl
         ? <img src={imageUrl} alt={name} className="inv-card-img" />
         : <div className="inv-card-img-placeholder" />
       }
       <p className="inv-card-name">{name}</p>
-      <span className={`inv-card-badge${equipped ? " on" : " off"}`}>
+      {rarity && (
+        <p className="inventory-card-rarity" style={{ color: borderColor }}>
+          {rarity}
+        </p>
+      )}
+      <button
+        className={`inv-card-badge inv-card-equip-btn${equipped ? " on" : " off"}`}
+        onClick={(e) => { e.stopPropagation(); onEquip(); }}
+      >
         {equipped ? "Надет" : "Надеть"}
-      </span>
+      </button>
     </div>
   );
 }

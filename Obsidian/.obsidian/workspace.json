@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "battle-cursor/logs/2026-06-22-frontend-static-cloudinary.md",
+                "file": "battle-cursor/logs/2026-06-29-puzzle-debuffs-offline-kick.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-06-22-frontend-static-cloudinary"
+              "title": "2026-06-29-puzzle-debuffs-offline-kick"
             }
           }
         ]
@@ -183,11 +183,11 @@
   "active": "f1b3b31cd5b3c898",
   "lastOpenFiles": [
     "frontend/src/assets/cloudinary-images.json.md",
+    "battle-cursor/logs/2026-06-22-frontend-static-cloudinary.md",
     "battle-cursor/features/game-cycle.md",
     "battle-cursor/features/debuffs.md",
     "battle-cursor/features/market.md",
     "battle-cursor/features/groq-scoring.md",
-    "battle-cursor/logs/2026-06-22-frontend-static-cloudinary.md",
     "battle-cursor/features/testing.md",
     "battle-cursor/data/models-users.md",
     "battle-cursor/data/models-server.md",

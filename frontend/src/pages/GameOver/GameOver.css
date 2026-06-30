@@ -1,0 +1,355 @@
+/* ── Page ──────────────────────────────────────────────────────────────────── */
+
+.gameover-page {
+  min-height: 100vh;
+  background: #0b0b0b;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+
+.gameover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+  background: #0b0b0b;
+  border-bottom: 1px solid #1a1a1a;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.gameover-logo {
+  height: 26px;
+  object-fit: contain;
+}
+
+.gameover-header-title {
+  font-family: var(--font-benzin);
+  font-size: 12px;
+  color: #444;
+  letter-spacing: 4px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.gameover-header-spacer {
+  width: 26px;
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────────── */
+
+.gameover-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 64px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Title ───────────────────────────────────────────────────────────────────── */
+
+.gameover-title {
+  font-family: var(--font-benzin);
+  font-size: 52px;
+  margin: 0;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* ── My result row ───────────────────────────────────────────────────────────── */
+
+.gameover-my-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: #777;
+  flex-wrap: wrap;
+}
+
+.gameover-sep {
+  color: #2a2a2a;
+}
+
+.gameover-accent {
+  color: #fff;
+  font-weight: normal;
+}
+
+.gameover-coins {
+  color: #ffcc00;
+  font-family: var(--font-benzin);
+  font-size: 14px;
+}
+
+.gameover-rating-badge {
+  background: rgba(255, 6, 6, 0.1);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-benzin);
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.gameover-rating-badge--sm {
+  font-size: 10px;
+  padding: 2px 7px;
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────────── */
+
+.gameover-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gameover-section-title {
+  font-family: var(--font-benzin);
+  font-size: 11px;
+  color: #444;
+  letter-spacing: 4px;
+  margin: 0;
+  text-transform: uppercase;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+/* ── Scores table ────────────────────────────────────────────────────────────── */
+
+.gameover-scores-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gameover-score-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 6px;
+  transition: border-color 0.15s;
+}
+
+.gameover-score-row--winner {
+  border-color: rgba(255, 6, 6, 0.4);
+  background: rgba(255, 6, 6, 0.04);
+}
+
+.gameover-score-row--me {
+  border-color: #2a2a2a;
+}
+
+.gameover-score-rank {
+  font-family: var(--font-benzin);
+  font-size: 12px;
+  color: #444;
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.gameover-score-rank--winner {
+  color: var(--accent);
+}
+
+.gameover-score-name {
+  flex: 1;
+  font-size: 15px;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gameover-me-tag {
+  font-family: var(--font-benzin);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.gameover-score-pts {
+  font-family: var(--font-benzin);
+  font-size: 13px;
+  color: #fff;
+}
+
+.gameover-score-coins {
+  font-family: var(--font-benzin);
+  font-size: 12px;
+  color: #ffcc00;
+  width: 72px;
+  text-align: right;
+}
+
+/* ── Round history ───────────────────────────────────────────────────────────── */
+
+.gameover-round {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #141414;
+}
+
+.gameover-round:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.gameover-round-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.gameover-round-num {
+  font-family: var(--font-benzin);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 3px;
+}
+
+.gameover-round-prompt {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+.gameover-round-cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── Drawing card ────────────────────────────────────────────────────────────── */
+
+.gameover-card {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 170px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.gameover-card--me {
+  border-color: #2a2a2a;
+}
+
+.gameover-card-rank {
+  font-family: var(--font-benzin);
+  font-size: 10px;
+  color: #444;
+  position: absolute;
+  top: 8px;
+  left: 10px;
+}
+
+.gameover-card-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #1a1a1a;
+}
+
+.gameover-card-img-placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #161616;
+  border-radius: 4px;
+  border: 1px solid #1a1a1a;
+}
+
+.gameover-card-username {
+  font-size: 11px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gameover-card-score {
+  font-family: var(--font-benzin);
+  font-size: 22px;
+  color: #fff;
+  line-height: 1;
+}
+
+.gameover-card-coins {
+  font-family: var(--font-benzin);
+  font-size: 11px;
+  color: #ffcc00;
+}
+
+.gameover-card-comment {
+  font-size: 11px;
+  color: #555;
+  line-height: 1.55;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gameover-download-btn {
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #555;
+  font-size: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: border-color 0.15s, color 0.15s;
+  align-self: flex-start;
+  letter-spacing: 0.5px;
+}
+
+.gameover-download-btn:hover {
+  border-color: #555;
+  color: #ccc;
+}
+
+/* ── Home button ─────────────────────────────────────────────────────────────── */
+
+.gameover-home-btn {
+  padding: 12px 32px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-benzin);
+  font-size: 13px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+  align-self: flex-start;
+}
+
+.gameover-home-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}

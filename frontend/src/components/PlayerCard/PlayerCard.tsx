@@ -10,6 +10,7 @@ const RARITY_COLOR: Record<string, string> = {
 };
 
 interface Props {
+  userId?: string;
   username: string;
   cursor: Cursor | null;
   canvas: Canvas | null;
@@ -17,12 +18,15 @@ interface Props {
   isCurrentUser: boolean;
 }
 
-export function PlayerCard({ username, cursor, canvas, isHost, isCurrentUser }: Props) {
+export function PlayerCard({ userId, username, cursor, canvas, isHost, isCurrentUser }: Props) {
   const hasFrame = !!canvas?.image_url;
   const color = (!hasFrame && canvas) ? (RARITY_COLOR[canvas.rarity] ?? "#aaa") : "#2a2a2a";
 
   return (
-    <div className="pcard">
+    <div
+      className="pcard"
+      onClick={() => { if (userId) window.open(`/profile/${userId}`, "_blank"); }}
+    >
       <div
         className={`pcard-avatar${hasFrame ? " pcard-avatar--framed" : ""}`}
         style={{ "--pcard-color": color } as React.CSSProperties}

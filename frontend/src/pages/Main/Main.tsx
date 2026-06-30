@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { userAPI, serversAPI } from "../../services/api";
 import type { UserProfile } from "../../types/user";
 import "./Main.css";
@@ -38,6 +38,10 @@ const FEATURES = [
 
 export function Main() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [errorMsg, setErrorMsg] = useState<string | null>(
+    (location.state as { error?: string } | null)?.error ?? null,
+  );
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [servers, setServers] = useState<Server[]>([]);
   const [maxPlayers, setMaxPlayers] = useState(4);
@@ -75,12 +79,6 @@ export function Main() {
     setCountdown(10);
   };
 
-  const handleDeleteServer = async (room_code: string) => {
-    try {
-      await serversAPI.deleteServer(room_code);
-      fetchServers();
-    } catch {}
-  };
 
   const handleCreate = async () => {
     setCreating(true);
@@ -108,6 +106,11 @@ export function Main() {
 
   return (
     <div className="main-page">
+      {errorMsg && (
+        <div className="main-error-notification" onClick={() => setErrorMsg(null)}>
+          {errorMsg}
+        </div>
+      )}
       <div className="main-grid">
         {/* ── Левая колонка: Профиль ── */}
         <aside className="main-col main-col--profile">
@@ -287,7 +290,6 @@ export function Main() {
                   )
                   .map((s) => {
                   const full = s.players_count >= s.max_players;
-                  const isOwn = s.host === profile?.username;
                   const slots = Array.from(
                     { length: s.max_players },
                     (_, i) => i < s.players_count,
@@ -311,17 +313,6 @@ export function Main() {
                           >
                             {full ? "FULL" : "PLAY"}
                           </span>
-                          {isOwn && (
-                            <button
-                              className="ml-server-delete"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeleteServer(s.room_code);
-                              }}
-                            >
-                              ✕
-                            </button>
-                          )}
                         </div>
                       </div>
                       <div className="ml-server-bottom">

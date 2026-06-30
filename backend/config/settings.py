@@ -164,7 +164,7 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": config("CACHE_URL", default="redis://127.0.0.1:6379/1"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
@@ -177,6 +177,10 @@ CELERY_BEAT_SCHEDULE = {
     "flush-expired-tokens": {
         "task": "users.tasks.flush_expired_tokens",
         "schedule": crontab(hour=3, minute=0),
+    },
+    "cleanup-offline-waiting-players": {
+        "task": "servers.tasks.cleanup_offline_waiting_players",
+        "schedule": 30.0,
     },
 }
 
@@ -231,7 +235,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [
                 {
-                    "host": "127.0.0.1",
+                    "host": config("REDIS_HOST", default="127.0.0.1"),
                     "port": 6379,
                     "socket_keepalive": True,
                 }
