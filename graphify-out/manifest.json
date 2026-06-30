@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "backend/ai/config.py": {
-    "mtime": 1782131788.867866,
-    "ast_hash": "8c5e27ca890bbd76ecf207340bb728ad",
+    "mtime": 1782584116.274774,
+    "ast_hash": "04b878f74d98b4982e7d971891cde540",
     "semantic_hash": ""
   },
   "backend/ai/migrations/__init__.py": {
@@ -35,13 +35,13 @@
     "semantic_hash": ""
   },
   "backend/ai/services.py": {
-    "mtime": 1782292642.5699363,
-    "ast_hash": "c0c683c70456f88c1a0734a9b6b3a9a0",
+    "mtime": 1782583742.330318,
+    "ast_hash": "850509c3d6e54e4029cdfbaa59d3d4d7",
     "semantic_hash": ""
   },
   "backend/ai/tasks.py": {
-    "mtime": 1782297436.7454443,
-    "ast_hash": "675d5e4e1122bf8025e5b04e28a7c514",
+    "mtime": 1782586779.7456129,
+    "ast_hash": "1e1da0b3c325409e43b5de47a8dd6f21",
     "semantic_hash": ""
   },
   "backend/assets/images/metadata.json": {
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "backend/game/services.py": {
-    "mtime": 1782292841.5169342,
-    "ast_hash": "f60e5259ac558fae81ae341dbd0e72a1",
+    "mtime": 1782585417.7218409,
+    "ast_hash": "39085193c2da935475435a93cdd0038f",
     "semantic_hash": ""
   },
   "backend/game/urls.py": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "backend/servers/consumers.py": {
-    "mtime": 1782291848.791766,
-    "ast_hash": "f1a1cabdbf098608981afc1b8f15cb25",
+    "mtime": 1782583293.2815654,
+    "ast_hash": "413a33625db3ac4b1251b6aef7b9e405",
     "semantic_hash": ""
   },
   "backend/servers/middleware.py": {
@@ -305,8 +305,8 @@
     "semantic_hash": ""
   },
   "backend/servers/serializers.py": {
-    "mtime": 1781511599.4936779,
-    "ast_hash": "83ac12fa3182bc4dd9068223676f7fdf",
+    "mtime": 1782579810.713272,
+    "ast_hash": "24c84d5f9925fc5daedcc8ac8c763fdc",
     "semantic_hash": ""
   },
   "backend/servers/services.py": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "backend/servers/views.py": {
-    "mtime": 1782296065.807968,
-    "ast_hash": "a25d6819c88b0ce7345767966bcbdf94",
+    "mtime": 1782580600.0489702,
+    "ast_hash": "79d8c9420dc2db11dc00adea0f70dcd1",
     "semantic_hash": ""
   },
   "backend/staticfiles/admin/js/SelectBox.js": {
@@ -960,8 +960,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1782327036.2629428,
-    "ast_hash": "f5d072c5d9a23c12837bc74f1956a4e7",
+    "mtime": 1782581095.3935666,
+    "ast_hash": "b952158f66e9e1202d2f437052c46d08",
     "semantic_hash": ""
   },
   "frontend/src/assets/cloudinary-images.json": {
@@ -1070,8 +1070,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/api.tsx": {
-    "mtime": 1782376831.1858852,
-    "ast_hash": "6ee3c492c056046d5abce3680f931eda",
+    "mtime": 1782581977.264845,
+    "ast_hash": "9f3632aa6eb811376a0d9058b17a2393",
     "semantic_hash": ""
   },
   "frontend/src/services/user/user_api.tsx": {
@@ -1340,8 +1340,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1781860581.821731,
-    "ast_hash": "7a4d1d3b0e6e9ed5ec87a77c1df1c24a",
+    "mtime": 1782469564.3259106,
+    "ast_hash": "d926214e4b199c579caae52b915b3832",
     "semantic_hash": ""
   },
   "backend/requirements.txt": {
@@ -1380,8 +1380,8 @@
     "semantic_hash": ""
   },
   "backend/staticfiles/index.html": {
-    "mtime": 1782380568.122761,
-    "ast_hash": "c22d171bde0d03469b6bb1999164615f",
+    "mtime": 1782466462.8358607,
+    "ast_hash": "7ed8a8811413a5b0427a8e8f2e0a273d",
     "semantic_hash": ""
   },
   "backend/templates/emails/verification.html": {
@@ -1810,257 +1810,257 @@
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Absolute_canvas.svg": {
-    "mtime": 1782380568.1230032,
+    "mtime": 1782466462.836098,
     "ast_hash": "53bf7b1988251dfb4079f126da1e31b6",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Arrow_canvas.svg": {
-    "mtime": 1782380568.1235335,
+    "mtime": 1782466462.836591,
     "ast_hash": "cfc39cc30924c482ddcf1b21a07eb342",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Blot_canvas.svg": {
-    "mtime": 1782380568.123734,
+    "mtime": 1782466462.8367805,
     "ast_hash": "d888f5eb33e69c20b24b10c4c670a6ec",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Breach_canvas.svg": {
-    "mtime": 1782380568.123924,
+    "mtime": 1782466462.836965,
     "ast_hash": "28da9496f40a73b3f2c4e77c9207c1c4",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Chaos_canvas.svg": {
-    "mtime": 1782380568.1241198,
+    "mtime": 1782466462.8371522,
     "ast_hash": "9a581f634e21d0b7a96c33b0195eb27d",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Collapse_canvas.svg": {
-    "mtime": 1782380568.1243076,
+    "mtime": 1782466462.8373454,
     "ast_hash": "116a7e7d4bbad49ae92d5e3b2615125a",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Dictator_canvas.svg": {
-    "mtime": 1782380568.1246758,
+    "mtime": 1782466462.8378031,
     "ast_hash": "65615beb2b3ef45e1ea063d701dfab4e",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Eraser_canvas.svg": {
-    "mtime": 1782380568.1248605,
+    "mtime": 1782466462.8379974,
     "ast_hash": "35cea3205c387a51ab9bfb1006871a11",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Hybrid_canvas.svg": {
-    "mtime": 1782380568.1250422,
+    "mtime": 1782466462.8381863,
     "ast_hash": "08a2fd169d442ed83b8b46e9b785e065",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Judge_canvas.svg": {
-    "mtime": 1782380568.125241,
+    "mtime": 1782466462.8383749,
     "ast_hash": "3765c49361a68082bcabd8a06aa44d26",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Mutant_canvas.svg": {
-    "mtime": 1782380568.1256034,
+    "mtime": 1782466462.8388581,
     "ast_hash": "6d681e385aeec13e9abab880b9bb9dda",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Overlord_canvas.svg": {
-    "mtime": 1782380568.125795,
+    "mtime": 1782466462.8390443,
     "ast_hash": "55b03cb3dea81ca220b54f19dd7d4d4b",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Parasite_canvas.svg": {
-    "mtime": 1782380568.1263087,
+    "mtime": 1782466462.8394175,
     "ast_hash": "71503488af14ce554882b362a51243db",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Pencil_canvas.svg": {
-    "mtime": 1782380568.1264913,
+    "mtime": 1782466462.839601,
     "ast_hash": "c66dbb52ef961bb7390f8d6a8891ba88",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Phantom_canvas.svg": {
-    "mtime": 1782380568.1266887,
+    "mtime": 1782466462.8397815,
     "ast_hash": "1a970d57936880fd5fd4edab64827e2f",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Quill_canvas.svg": {
-    "mtime": 1782380568.1268733,
+    "mtime": 1782466462.8399596,
     "ast_hash": "9b5da5e4fffda251bdf9174f7ecb8e2b",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Spark_canvas.svg": {
-    "mtime": 1782380568.127055,
+    "mtime": 1782466462.8401434,
     "ast_hash": "d6cda15c2d9ea3e6b14eec1030170b7f",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Stroke_canvas.svg": {
-    "mtime": 1782380568.1272368,
+    "mtime": 1782466462.8403265,
     "ast_hash": "b9d4fba8755ea60627ebb5162869d568",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Stylus_canvas.svg": {
-    "mtime": 1782380568.1274168,
+    "mtime": 1782466462.8405032,
     "ast_hash": "ed2a4efac81e7838f3f2ee07a9b83717",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Tornado_canvas.svg": {
-    "mtime": 1782380568.1276019,
+    "mtime": 1782466462.8406823,
     "ast_hash": "4efc165803da6f563b264af9bc918996",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Trap_canvas.svg": {
-    "mtime": 1782380568.1277905,
+    "mtime": 1782466462.840875,
     "ast_hash": "7099b5e337bcbb2665ead37120071eaf",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Vector_canvas.svg": {
-    "mtime": 1782380568.1279712,
+    "mtime": 1782466462.8410537,
     "ast_hash": "2fcdf6b541b52a511107fc4e15ba4d9d",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Virus_canvas.svg": {
-    "mtime": 1782380568.1281905,
+    "mtime": 1782466462.841251,
     "ast_hash": "5159e3e338da284ccf999c422ccfccb2",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Warper_canvas.svg": {
-    "mtime": 1782380568.1283884,
+    "mtime": 1782466462.841432,
     "ast_hash": "568b266eea8d9c182778c1b58ffa5162",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/canvas/Wraith_canvas.svg": {
-    "mtime": 1782380568.128575,
+    "mtime": 1782466462.841616,
     "ast_hash": "dacf6453884b450e69c0e3bb6465deb9",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Absolute_cursor.png": {
-    "mtime": 1782380568.1288118,
+    "mtime": 1782466462.841848,
     "ast_hash": "de06983502975b3a19fbcb0f18b17978",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Arrow_cursor.png": {
-    "mtime": 1782380568.1294756,
+    "mtime": 1782466462.8424385,
     "ast_hash": "b8326fabb76a5276b92b2b9ead8a4e3c",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Blot_cursor.png": {
-    "mtime": 1782380568.129965,
+    "mtime": 1782466462.842854,
     "ast_hash": "08fb93ee853e92674a4a0dbd5be7fb9c",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Breach_cursor.png": {
-    "mtime": 1782380568.1305366,
+    "mtime": 1782466462.8433146,
     "ast_hash": "e690da2d674c454d8f844c03136cb8bd",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Chaos_cursor.png": {
-    "mtime": 1782380568.1311145,
+    "mtime": 1782466462.8439128,
     "ast_hash": "396fcc2e99544521aca215ffcafbe890",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Collapse_cursor.png": {
-    "mtime": 1782380568.1317089,
+    "mtime": 1782466462.8444836,
     "ast_hash": "3adbaf3c9123c715003f7311cf3b5ba2",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Dictator_cursor.png": {
-    "mtime": 1782380568.1322827,
+    "mtime": 1782466462.8450866,
     "ast_hash": "6afc4a7606bcfec4c38400dcba4e8d32",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Eraser_cursor.png": {
-    "mtime": 1782380568.1327107,
+    "mtime": 1782466462.8456576,
     "ast_hash": "2a638c73f2b0d591a2978a037a126a52",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Hybrid_cursor.png": {
-    "mtime": 1782380568.1333308,
+    "mtime": 1782466462.8466456,
     "ast_hash": "cdaeda7004dfef1d40b21b1a9371cf5f",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Judge_cursor.png": {
-    "mtime": 1782380568.133759,
+    "mtime": 1782466462.846811,
     "ast_hash": "770fabe33b47af6a212c3c5eeb6757ac",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Mutant_cursor.png": {
-    "mtime": 1782380568.1343408,
+    "mtime": 1782466462.8474255,
     "ast_hash": "e0e4c887318a7ea9f9c35150ad994887",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Overlord_cursor.png": {
-    "mtime": 1782380568.1347802,
+    "mtime": 1782466462.848028,
     "ast_hash": "67ab2ae967f57c396884605c714bbaea",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Parasite_cursor.png": {
-    "mtime": 1782380568.1353085,
+    "mtime": 1782466462.8485768,
     "ast_hash": "6a5b985e24bd511c22f0d773d7b45fb8",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Pencil_cursor.png": {
-    "mtime": 1782380568.1357307,
+    "mtime": 1782466462.849027,
     "ast_hash": "ddbb3e89fd1aa53d1ca9c68a3ece5310",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Phantom_cursor.png": {
-    "mtime": 1782380568.136204,
+    "mtime": 1782466462.849476,
     "ast_hash": "fe055976b63c6e99c766360f743bf141",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Quill_cursor.png": {
-    "mtime": 1782380568.1367555,
+    "mtime": 1782466462.8499799,
     "ast_hash": "b61f700f33d11110a5fd48848d9a9805",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Spark_cursor.png": {
-    "mtime": 1782380568.1371677,
+    "mtime": 1782466462.8504567,
     "ast_hash": "5a5f8acde4b5462768bca0d81e7f424e",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Stroke_cursor.png": {
-    "mtime": 1782380568.1375577,
+    "mtime": 1782466462.8509371,
     "ast_hash": "6413dfa86019ccad9c0c57fd1b171073",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Stylus_cursor.png": {
-    "mtime": 1782380568.1379282,
+    "mtime": 1782466462.8514118,
     "ast_hash": "987718ce5120214990949c1ef72cfb22",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Tornado_cursor.png": {
-    "mtime": 1782380568.1384459,
+    "mtime": 1782466462.8518226,
     "ast_hash": "4053b4a446a1cd4ed1c81ee7aa9e3989",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Trap_cursor.png": {
-    "mtime": 1782380568.1388817,
+    "mtime": 1782466462.8522437,
     "ast_hash": "24d6ceb20dd324d9df2124e8e8329d35",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Vector_cursor.png": {
-    "mtime": 1782380568.1394513,
+    "mtime": 1782466462.8526685,
     "ast_hash": "0303ac412ddd21beb56b3f253e08fe16",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Virus_cursor.png": {
-    "mtime": 1782380568.1399696,
+    "mtime": 1782466462.8531163,
     "ast_hash": "f9423a7a715ae038a4faa73c5ebc8397",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Warper_cursor.png": {
-    "mtime": 1782380568.1404972,
+    "mtime": 1782466462.853559,
     "ast_hash": "32e465f8490889e8fe0cbd6f2296225c",
     "semantic_hash": ""
   },
   "backend/staticfiles/images/cursors/Wraith_cursor.png": {
-    "mtime": 1782380568.1411445,
+    "mtime": 1782466462.8540816,
     "ast_hash": "e6930e5360dd827caa5758c3a05cb16d",
     "semantic_hash": ""
   },
   "backend/staticfiles/logo.png": {
-    "mtime": 1782380568.122128,
+    "mtime": 1782466462.835657,
     "ast_hash": "c1e34ff9635fcc714b4065dec4e3d91b",
     "semantic_hash": ""
   },
@@ -2390,8 +2390,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/Lobby/Lobby.tsx": {
-    "mtime": 1782319619.113932,
-    "ast_hash": "9a5826993504f1f2967407a160441312",
+    "mtime": 1782580076.7388887,
+    "ast_hash": "d581e7783a6e08ad786b64a83ee376dc",
     "semantic_hash": ""
   },
   "Obsidian/battle-cursor/logs/2026-06-24-lobby-auth-refresh-fixes.md": {
@@ -2410,8 +2410,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/CustomCursor/CustomCursor.tsx": {
-    "mtime": 1782380557.9801629,
-    "ast_hash": "6cf9dc556c666eef8e316c768a94bf05",
+    "mtime": 1782499556.784577,
+    "ast_hash": "e5e980f98e9ed609d2354e87bda7eeae",
     "semantic_hash": ""
   },
   "Obsidian/battle-cursor/logs/2026-06-25-profile-canvas-cursor-orig.md": {
@@ -2424,13 +2424,8 @@
     "ast_hash": "c52b4a812a81649c4e98e4919718bcdf",
     "semantic_hash": ""
   },
-  "frontend/public/images/cursors_orig/Overlord_cursor_orig.png": {
-    "mtime": 1782324339.4294188,
-    "ast_hash": "c52b4a812a81649c4e98e4919718bcdf",
-    "semantic_hash": ""
-  },
   "backend/staticfiles/assets/index-BWkJxpal.js": {
-    "mtime": 1782380568.1418285,
+    "mtime": 1782466192.0632534,
     "ast_hash": "215f80dff9d6030604072c7c3eb305ab",
     "semantic_hash": ""
   },
@@ -3897,6 +3892,51 @@
   "tests/frontend/allure-results/a3564298-3477-43c8-a753-4396ac88b7d6-attachment.png": {
     "mtime": 1782371406.4290576,
     "ast_hash": "070176a6ad2af41f6fead948bd0be6ae",
+    "semantic_hash": ""
+  },
+  "backend/staticfiles/assets/index-C5KQmzpq.js": {
+    "mtime": 1782466462.854597,
+    "ast_hash": "afa86ec2e9c3b911550a02254ea7718b",
+    "semantic_hash": ""
+  },
+  "Obsidian/battle-cursor/logs/2026-06-26-docker-config-polish.md": {
+    "mtime": 1782469629.568758,
+    "ast_hash": "ab28f2e2d0375a90109a8801272b1a60",
+    "semantic_hash": ""
+  },
+  "Obsidian/battle-cursor/logs/2026-06-26-docker-setup.md": {
+    "mtime": 1782468412.2895527,
+    "ast_hash": "b2e50a0b1c8e19acc8af8c20ebd64a49",
+    "semantic_hash": ""
+  },
+  "Obsidian/battle-cursor/logs/2026-06-26-ngrok-env-fix.md": {
+    "mtime": 1782467025.4489436,
+    "ast_hash": "d16756890a4ca26c97d454836972fdfd",
+    "semantic_hash": ""
+  },
+  "Obsidian/battle-cursor/logs/2026-06-26-readme-update.md": {
+    "mtime": 1782463718.1385903,
+    "ast_hash": "e2320de25b5e83ef158bc4651d2e1a63",
+    "semantic_hash": ""
+  },
+  "docker-compose.yml": {
+    "mtime": 1782469196.7894619,
+    "ast_hash": "05ddec4c871257568e9250ae806ae754",
+    "semantic_hash": ""
+  },
+  "backend/servers/tasks.py": {
+    "mtime": 1782580047.2803774,
+    "ast_hash": "ab2b74ce26c9db86c90dc29038287593",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/Game/Game.tsx": {
+    "mtime": 1782587251.2188628,
+    "ast_hash": "32673b1408748d57ee5a1d7fc513bed2",
+    "semantic_hash": ""
+  },
+  "Diagrams/Battle-cursor.pdf": {
+    "mtime": 1782497048.4974828,
+    "ast_hash": "e55d0b7ffded8edf5539d5ce2b834d5f",
     "semantic_hash": ""
   }
 }

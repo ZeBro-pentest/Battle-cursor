@@ -25,6 +25,7 @@ export interface UserProfile {
   cursor: Cursor | null;
   canvas: Canvas | null;
   is_verified: boolean;
+  profile_drawing_url: string | null;
 }
 
 export interface Inventory {

@@ -1,11 +1,13 @@
 import json
 import logging
+import random
+import time
 
 import requests
 from django.conf import settings
 
 from .config import (
-    GRADING_PROMPT,
+    GRADING_PROMPTS,
     GROQ_API_URL,
     GROQ_MAX_TOKENS,
     GROQ_MODEL,
@@ -58,7 +60,7 @@ _FALLBACK_PROMPTS = [
 
 
 def _groq_text_request(
-    prompt_text: str, max_tokens: int = GROQ_MAX_TOKENS
+    prompt_text: str, max_tokens: int = GROQ_MAX_TOKENS, temperature: float = GROQ_TEMPERATURE
 ) -> str | None:
     """Базовый текстовый запрос к Groq без изображения."""
     headers = {
@@ -68,7 +70,7 @@ def _groq_text_request(
     payload = {
         "model": GROQ_MODEL,
         "max_completion_tokens": max_tokens,
-        "temperature": GROQ_TEMPERATURE,
+        "temperature": temperature,
         "messages": [{"role": "user", "content": prompt_text}],
     }
     try:
@@ -112,28 +114,38 @@ def grade_drawing(image_base64: str, prompt: str) -> dict:
                     },
                     {
                         "type": "text",
-                        "text": GRADING_PROMPT.format(prompt=prompt),
+                        "text": random.choices(GRADING_PROMPTS, weights=[50, 10, 20, 10, 10], k=1)[0].format(prompt=prompt),
                     },
                 ],
             }
         ],
     }
-    try:
-        response = requests.post(
-            GROQ_API_URL, json=payload, headers=headers, timeout=30
-        )
-        response.raise_for_status()
-        content = response.json()["choices"][0]["message"]["content"].strip()
-        result = json.loads(content)
-        score = float(result["score"])
-        score = max(0.1, min(5.0, score))
-        return {"score": score, "comment": result["comment"]}
-    except requests.RequestException as e:
-        logger.error("Groq request failed: %s", e)
-        return {"score": 0.1, "comment": "Evaluation failed."}
-    except (KeyError, json.JSONDecodeError, ValueError) as e:
-        logger.error("Groq response parse error: %s", e)
-        return {"score": 0.1, "comment": "Evaluation failed."}
+    for attempt in range(3):
+        try:
+            response = requests.post(
+                GROQ_API_URL, json=payload, headers=headers, timeout=30
+            )
+            if response.status_code == 429:
+                wait = 2 ** attempt
+                logger.warning("Groq 429, retry %d after %ds", attempt + 1, wait)
+                time.sleep(wait)
+                continue
+            response.raise_for_status()
+            content = response.json()["choices"][0]["message"]["content"].strip()
+            result = json.loads(content)
+            score = float(result["score"])
+            score = max(0.1, min(5.0, score))
+            return {"score": score, "comment": result["comment"]}
+        except requests.RequestException as e:
+            if attempt == 2:
+                logger.error("Groq request failed after 3 attempts: %s", e)
+                return {"score": 0.1, "comment": "Ошибка оценки."}
+            time.sleep(2 ** attempt)
+        except (KeyError, json.JSONDecodeError, ValueError) as e:
+            logger.error("Groq response parse error: %s", e)
+            return {"score": 0.1, "comment": "Ошибка оценки."}
+
+    return {"score": 0.1, "comment": "Ошибка оценки."}
 
 
 def generate_prompts(count: int) -> list[str]:
@@ -146,8 +158,10 @@ def generate_prompts(count: int) -> list[str]:
     """
     text = _groq_text_request(
         PROMPT_GENERATION_PROMPT.format(count=count),
-        max_tokens=300,
+        max_tokens=500,
+        temperature=1.0,
     )
+    logger.info("Groq prompts response: %s", text)
     if text:
         try:
             prompts = json.loads(text)

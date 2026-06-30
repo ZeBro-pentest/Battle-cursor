@@ -3,6 +3,11 @@ from rest_framework import serializers
 from servers.models import Server
 
 
+class PlayerBriefSerializer(serializers.Serializer):
+    id = serializers.CharField()
+    username = serializers.CharField()
+
+
 class ServerListSerializer(serializers.ModelSerializer):
     host = serializers.StringRelatedField()
     players_count = serializers.SerializerMethodField()
@@ -24,7 +29,7 @@ class ServerListSerializer(serializers.ModelSerializer):
 
 class ServerDetailSerializer(serializers.ModelSerializer):
     host = serializers.StringRelatedField()
-    players = serializers.StringRelatedField(many=True)
+    players = PlayerBriefSerializer(many=True)
     players_count = serializers.SerializerMethodField()
 
     class Meta:

@@ -57,6 +57,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     cursor = CursorSerializer(read_only=True)
     canvas = CanvasSerializer(read_only=True)
+    profile_drawing_url = serializers.URLField(source="profile_drawing", read_only=True)
 
     class Meta:
         model = User
@@ -69,6 +70,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "cursor",
             "canvas",
             "is_verified",
+            "profile_drawing_url",
         ]
         read_only_fields = fields
 

@@ -17,6 +17,8 @@ import { Shop } from "./pages/Shop/Shop";
 import { ShopItemDetail } from "./pages/Shop/ShopItemDetail";
 import { Inventory } from "./pages/Inventory/Inventory";
 import { Purchases } from "./pages/Purchases/Purchases";
+import { Game } from "./pages/Game/Game";
+import { GameOver } from "./pages/GameOver/GameOver";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "./store/store";
 import { setAccessToken, clearAuth } from "./store/authSlice";
@@ -91,13 +93,19 @@ function RequireAuth() {
 function App() {
   useProactiveRefresh();
   return (
-    <MobileGuard>
     <Router>
+    <MobileGuard>
       <Routes>
         {/* Страницы авторизации (без хедера) */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+
+        {/* Игровой экран и итоги — без MainLayout */}
+        <Route element={<RequireAuth />}>
+          <Route path="/game/:room_code" element={<Game />} />
+          <Route path="/game-over" element={<GameOver />} />
+        </Route>
 
         {/* Все страницы с хедером */}
         <Route element={<MainLayout />}>
@@ -112,7 +120,7 @@ function App() {
             <Route path="/games" element={<div>Games (todo)</div>} />
             <Route path="/games/create" element={<div>Create Game (todo)</div>} />
             <Route path="/games/:room_code" element={<Lobby />} />
-            <Route path="/game/:id" element={<div>Game (todo)</div>} />
+
             <Route path="/games/:id/results" element={<div>Results (todo)</div>} />
 
             <Route path="/profile" element={<Profile />} />
@@ -130,8 +138,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </Router>
-  </MobileGuard>
+    </MobileGuard>
+  </Router>
   );
 }
 

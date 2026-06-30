@@ -109,6 +109,10 @@ export const userAPI = {
   getProfileById: (userId: string) => api.get(`api/profile/${userId}/`),
   updateProfile: (data: { cursor?: string | null; canvas?: string | null }) =>
     api.patch("api/profile/update/", data),
+  saveDrawing: (image_base64: string) =>
+    api.patch("api/profile/drawing/", { image_base64 }),
+  deleteDrawing: () =>
+    api.patch("api/profile/drawing/", { delete: true }),
 };
 
 export const serversAPI = {
@@ -118,6 +122,10 @@ export const serversAPI = {
   leaveServer: (room_code: string) => api.post(`api/servers/${room_code}/leave/`),
   getServer: (room_code: string) => api.get(`api/servers/${room_code}/`),
   deleteServer: (room_code: string) => api.delete(`api/servers/${room_code}/delete/`),
+};
+
+export const gameAPI = {
+  getGame: (room_code: string) => api.get(`api/game/${room_code}/`),
 };
 
 export const marketAPI = {

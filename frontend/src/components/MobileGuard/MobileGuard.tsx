@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./MobileGuard.css";
 
 const BREAKPOINT = 900;
 
 export function MobileGuard({ children }: { children: React.ReactNode }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < BREAKPOINT);
+  const location = useLocation();
+  const isVerifyPage = location.pathname === "/verify-email";
 
   useEffect(() => {
     const handler = () => setIsMobile(window.innerWidth < BREAKPOINT);
@@ -12,7 +15,7 @@ export function MobileGuard({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("resize", handler);
   }, []);
 
-  if (!isMobile) return <>{children}</>;
+  if (!isMobile || isVerifyPage) return <>{children}</>;
 
   return (
     <div className="mobile-guard">

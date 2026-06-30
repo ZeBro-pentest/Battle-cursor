@@ -13,6 +13,8 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - CACHE_URL=redis://redis:6379/1
+      - REDIS_HOST=redis
       - ALLOWED_HOSTS=localhost,127.0.0.1,backend,.ngrok-free.app,.ngrok-free.dev
     volumes:
       - ./backend:/app
@@ -28,6 +30,8 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - CACHE_URL=redis://redis:6379/1
+      - REDIS_HOST=redis
     volumes:
       - ./backend:/app
     depends_on:
@@ -42,6 +46,8 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - CACHE_URL=redis://redis:6379/1
+      - REDIS_HOST=redis
     volumes:
       - ./backend:/app
     depends_on:

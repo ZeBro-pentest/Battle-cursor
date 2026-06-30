@@ -54,6 +54,9 @@ class ServerJoinView(APIView):
     def post(self, request, room_code):
         try:
             server = ServerService.join_server(room_code=room_code, user=request.user)
+        except ValidationError as e:
+            msg = e.messages[0] if e.messages else str(e)
+            return Response({"detail": msg}, status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(ServerDetailSerializer(server).data)

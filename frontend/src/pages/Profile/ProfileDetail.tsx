@@ -8,7 +8,7 @@ const RARITY_COLOR: Record<string, string> = {
   common:    "#666",
   rare:      "#4488ff",
   epic:      "#aa44ee",
-  mythic:    "#ff8800",
+  mythic:    "#FF0606",
   legendary: "#ffcc00",
 };
 
@@ -18,15 +18,6 @@ export function ProfileDetail() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    };
-  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -43,44 +34,62 @@ export function ProfileDetail() {
 
   return (
     <div className="profile-page">
-      <div className="profile-wrap">
+      <div className="profile-grid">
 
-        <div className="profile-top">
-          <div>
-            <p className="profile-player-label">Игрок</p>
+        {/* ── Left: info + equipment ── */}
+        <aside className="profile-col profile-col--left">
+          <p className="profile-col-label">// Игрок</p>
+          <div className="profile-info">
             <h1 className="profile-username">{profile.username}</h1>
+            <div className="profile-stats">
+              <div className="profile-stat">
+                <span className="profile-stat-value">{profile.rating}</span>
+                <span className="profile-stat-label">Рейтинг</span>
+              </div>
+              <div className="profile-stat">
+                <span className="profile-stat-value profile-stat-value--coins">{profile.coins}</span>
+                <span className="profile-stat-label">Монеты</span>
+              </div>
+            </div>
+            <p className="profile-email">{profile.email}</p>
+            <button className="profile-btn profile-btn--ghost" onClick={() => navigate(-1)}>
+              ← Назад
+            </button>
           </div>
-          <button className="profile-btn profile-btn--ghost" onClick={() => navigate(-1)} style={{ marginTop: 8 }}>
-            ← Назад
-          </button>
-        </div>
 
-        <div className="profile-rule" />
+          <p className="profile-col-label">// Снаряжение</p>
+          <EquipCard
+            type="Курсор"
+            name={profile.cursor?.name}
+            imageUrl={profile.cursor?.image_url}
+            rarity={profile.cursor?.rarity}
+          />
+          <EquipCard
+            type="Холст"
+            name={profile.canvas?.name}
+            imageUrl={profile.canvas?.image_url}
+            rarity={profile.canvas?.rarity}
+          />
+        </aside>
 
-        <div className="profile-stats">
-          <div className="profile-stat">
-            <span className="profile-stat-value">{profile.rating}</span>
-            <span className="profile-stat-label">Рейтинг</span>
-          </div>
-          <div className="profile-stat">
-            <span className="profile-stat-value">{profile.coins}</span>
-            <span className="profile-stat-label">Монеты</span>
-          </div>
-        </div>
-
-        <div className="profile-divider" style={{ marginTop: 24 }} />
-
-        <p className="equip-heading">Снаряжение</p>
-        <div className="equip-grid">
-          {!profile.cursor && !profile.canvas ? (
-            <p className="equip-empty">Снаряжение не выбрано</p>
+        {/* ── Center: drawing ── */}
+        <main className="profile-col profile-col--center">
+          {profile.profile_drawing_url ? (
+            <div className="profile-detail-drawing">
+              <p className="profile-col-label">// Рисунок игрока</p>
+              <img
+                src={profile.profile_drawing_url}
+                alt="Рисунок"
+                className="profile-detail-drawing-img"
+              />
+            </div>
           ) : (
-            <>
-              <EquipCard type="Курсор" name={profile.cursor?.name} imageUrl={profile.cursor?.image_url} rarity={profile.cursor?.rarity} />
-              <EquipCard type="Канвас" name={profile.canvas?.name} imageUrl={profile.canvas?.image_url} rarity={profile.canvas?.rarity} />
-            </>
+            <p className="profile-col-label" style={{ opacity: 0.3 }}>// Нет сохранённого рисунка</p>
           )}
-        </div>
+        </main>
+
+        {/* ── Right: empty ── */}
+        <aside className="profile-col" />
 
       </div>
     </div>
@@ -93,7 +102,7 @@ function EquipCard({ type, name, imageUrl, rarity }: {
   const color = rarity && rarity !== "null" ? (RARITY_COLOR[rarity] ?? "") : "";
 
   return (
-    <div className="equip-card" style={{ "--equip-color": color || "transparent" } as any}>
+    <div className="equip-card" style={{ "--equip-color": color || "transparent" } as React.CSSProperties}>
       <div className="equip-card-glow" />
       {imageUrl
         ? <img src={imageUrl} alt={name} className="equip-img" />
