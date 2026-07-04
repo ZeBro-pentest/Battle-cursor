@@ -26,3 +26,6 @@ dump.rbd
 
 graphify-out/
 .env.ngrok
+
+.env
+.env.production

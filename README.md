@@ -1,8 +1,10 @@
-# Battle-cursor
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=1a0000,0b0b0b&height=250&section=header&text=Battle-cursor&fontSize=60&fontColor=ff0606&animation=fadeIn&fontAlignY=38&desc=Браузерная%20PvP%20игра%20●%20Рисуй%20●%20Дебаффай%20●%20Побеждай&descAlignY=54&descAlign=50&descSize=16&descColor=ffffff" alt="Header" />
+</p>
 
 Онлайн веб-игра где игроки рисуют по заданию ИИ, мешают друг другу дебаффами и соревнуются за лучший результат.
 
-Цель — нарисовать случайный предмет лучше остальных. В конце каждого раунда ИИ оценивает рисунки, победитель получает монеты.
+Цель — нарисовать случайный предмет лучше остальных. В конце всех раундов ИИ оценивает рисунки, все игроки получают монеты (оценка × 10), победитель дополнительно получает +1 к рейтингу.
 
 > Игра только для десктопов, мобильный формат не поддерживается.
 
@@ -11,10 +13,10 @@
 ## Механика
 
 - До 8 игроков рисуют одновременно на своих холстах
-- Все видят курсоры и холсты друг друга (без рисунка)
-- За монеты можно применять дебаффы — мешать соперникам
-- Курсор содержит набор дебаффов, холст — защиту от них
-- Курсоры и холсты покупаются в магазине
+- Все видят курсоры и канвасы друг друга
+- Можно применять дебаффы — мешать соперникам
+- Курсор содержит набор дебаффов, канвас — защиту от них
+- Курсоры и канвасы покупаются в магазине
 - Количество раундов = количество игроков
 - В конце всех раундов объявляется победитель
 
@@ -31,8 +33,8 @@
 | БД | SQLite |
 | WebSocket | Django Channels + Redis, нативный WebSocket (фронт) |
 | Хранилище | Cloudinary (курсоры, холсты) |
-| ИИ | Groq (грейдинг рисунков) |
-| Почта | Gmail SMTP (Mailtrap — только для локальных тестов) |
+| ИИ | Groq (грейдинг рисунков + генерация промптов) |
+| Почта | Gmail SMTP |
 | Тесты | Playwright e2e + Allure (Newman для REST) |
 | CORS | django-cors-headers |
 
@@ -49,7 +51,7 @@
 │   │   └── 📂 images/
 │   │       ├── 📂 canvas
 │   │       ├── 📂 cursors
-│   │       └── metadata.json # данные cursors/canvas
+│   │       └── 📜 metadata.json # данные cursors/canvas
 │   ├── 📂 templates/
 │   │   └── 📂 emails/
 │   │       ├── verification.html
@@ -59,6 +61,8 @@
 │   ├── 📂 market/           # Inventory, Purchase
 │   ├── 📂 ai/               # грейдинг через Groq (Celery задачи)
 │   ├── 📂 servers/          # WebSocket consumers (Django Channels)
+│   ├── 🐳 Dockerfile
+│   ├── 🔧 Makefile
 │   ├── 🔧 .env
 │   ├── 🔧 .gitignore
 │   ├── 🔧 requirements.txt
@@ -66,23 +70,30 @@
 │
 ├── 📂 frontend
 │   ├── 📂 public/
-│   │   └── 📂 images/
-│   │       ├── 📂 canvas
-│   │       └── 📂 cursors
+│   │   ├── 📂 images/
+│   │   │   ├── 📂 canvas
+│   │   │   └── 📂 cursors
+│   │   └── 📂 sounds/
 │   ├── 📂 src/
 │   │   ├── 📂 assets/
 │   │   ├── 📂 components/
+│   │   ├── 📂 constants/
 │   │   ├── 📂 hooks/
 │   │   ├── 📂 pages/
 │   │   ├── 📂 services/     # axios, api
 │   │   ├── 📂 store/        # Redux Toolkit
-│   │   └── 📂 types/
+│   │   ├── 📂 types/
+│   │   └── 📂 utils/
+│   ├── 🐳 Dockerfile
+│   ├── 🔧 nginx.conf
+│   ├── 🔧 .env
+│   ├── 🔧 .env.production
 │   ├── 📜 package.json
 │   └── 📜 vite.config.ts
 │
 ├── 📂 Diagrams/             # визуальная документация
-│   ├── 📑 Diagrams.drawio
-│   └── 📑 README.md
+│   ├── 📑 Battle-cursor.pdf # презентация
+│   └── 📑 Diagrams.drawio
 │
 ├── 📂 tests/
 │   ├── 📂 backend
@@ -90,16 +101,42 @@
 │   │   ├── 🔧 .env.test
 │   │   └── 📂 e2e/           # Playwright тесты (auth, shop, profile)
 │   ├── 📂 postman/           # Postman коллекция
-│   │   └── 📂 collections/  
+│   │   └── 📂 collections/
 │   ├── 📑 README.md
 │   ├── 📜 package.json
 │   ├── 🔧 .gitignore
 │   └── 🔧 requirements.txt
 │
+├── 🐳 docker-compose.yml
+├── 🔧 Makefile
 ├── 🔧 .gitignore
 ├── 📑 CLAUDE.md
 └── 📑 README.md
 ```
+
+---
+
+## Дальнейшие планы
+
+### 1. Доделать дебафы (и автотесты с Playwright)
+
+### 2. Изменить шрифты (и дизайн в целом)
+
+### 3. Разновидность игр
+
+### 4. Безопасность
+
+### 5. Рейтинг изменить
+
+### 6. Добавить авторизации с аккаунтов
+
+### 7. Голосовой чат в игре
+
+### 8. Кнопку "done" под рисунком, чтобы холст больше нельзя было нечаянно изменить
+
+### 9. Дописать тесты
+
+### > Вы можете помочь мне реализовать новые фичи, написав код или предложив идеи, жду ваших пулл-реквестов :)
 
 ---
 
@@ -147,7 +184,6 @@ make docker-up
 ```bash
 docker compose exec backend python manage.py migrate
 docker compose exec backend python manage.py createsuperuser
-docker compose exec backend python manage.py init_game_data
 ```
 
 ### 6. Доступ через ngrok (для внешнего доступа)
@@ -212,15 +248,9 @@ SECRET_KEY=ваш-секретный-ключ
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 
-# Database
-DATABASE_URL=sqlite:///db.sqlite3
-
-# Redis
-REDIS_URL=redis://localhost:6379/0
-
-# Celery
-CELERY_BROKER_URL=redis://localhost:6379/0
-CELERY_RESULT_BACKEND=redis://localhost:6379/1
+# Redis (БД 0 — channel layer + Celery broker, БД 1 — cache)
+REDIS_HOST=127.0.0.1
+CACHE_URL=redis://127.0.0.1:6379/1
 
 # Cloudinary
 CLOUDINARY_CLOUD_NAME=ваш-cloud-name
@@ -233,15 +263,10 @@ EMAIL_PORT=587
 EMAIL_HOST_USER=ваш@gmail.com
 EMAIL_HOST_PASSWORD=ваш-app-password
 EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL=ваш-email@gmail.com
 
 # Groq (из console.groq.com)
 GROQ_API_KEY=ваш-groq-api-key
-
-# Frontend
-FRONTEND_URL=http://localhost:5173 или ссылка на ngrok при build
-
-# Gmail
-DEFAULT_FROM_EMAIL=ваш-email@gmail.com
 ```
 
 > Значения записываются без пробелов вокруг `=`
@@ -291,13 +316,9 @@ cd tests && npm run test:run
 git clone https://github.com/ZeBro-pentest/Battle-cursor.git
 ```
 
-> Запуск команды `python backend/manage.py init_game_data` инициализирует данные для игры
+---
 
-```bash
-python backend/manage.py init_game_data
-```
-
-### Роли в связке
+## Роли в связке
 
 ## Obsidian
 
@@ -311,4 +332,14 @@ python backend/manage.py init_game_data
 
 Граф знаний проекта. Он анализирует всё ваше хранилище и код, а затем создает легкие карты связей. Claude обращается к Graphify вместо того, чтобы сканировать тысячи строк кода вслепую.
 
-> Последнее обновление README: 26.06.2026
+---
+
+## Разработка с Claude Code
+
+Проект создан с помощью Claude Code. Использованные скиллы:
+
+- **graphify** — граф знаний кодовой базы (`graphify-out/`): автоматическая пересборка после коммитов через git hook, инкрементальные обновления, навигация по коду командами `query` / `path` / `explain` вместо слепого сканирования исходников
+- **code-review** — ревью кода: найдено и исправлено 10 критических багов (race condition в Celery-задачах `delete_game` vs `cleanup_drawings`, TOCTOU с двойным `grade_round`, запись монет вне транзакции, утечка TTL дебаффов между раундами и др.)
+- **/save и /resume** (кастомные команды из CLAUDE.md) — журналирование сессий в Obsidian-хранилище (`Obsidian/battle-cursor/logs/`) и восстановление контекста между сессиями
+
+> Последнее обновление README: 04.07.2026

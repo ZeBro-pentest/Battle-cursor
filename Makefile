@@ -21,3 +21,6 @@ docker-shell:
 
 ngrok:
 	ngrok http 80
+
+%:
+	zellij attach $@ 2>/dev/null || echo "Сессия '$@' не найдена"
