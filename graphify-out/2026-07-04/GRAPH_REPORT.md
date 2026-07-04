@@ -1,18 +1,13 @@
-# Graph Report - Battle-cursor  (2026-07-04)
+# Graph Report - .  (2026-07-04)
 
 ## Corpus Check
-- 541 files · ~496,681 words
+- 15 files · ~496,454 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 12126 nodes · 35179 edges · 425 communities (375 shown, 50 thin omitted)
+- 11764 nodes · 34817 edges · 390 communities (340 shown, 50 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 406 edges (avg confidence: 0.64)
-- Token cost: 0 input · 0 output
-
-## Graph Freshness
-- Built from commit: `715fda97`
-- Run `git rev-parse HEAD` and compare to check if the graph is stale.
-- Run `graphify update .` after code changes (no API cost).
+- Token cost: 82,955 input · 0 output
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Frontend Build Bundle|Frontend Build Bundle]]
@@ -297,50 +292,18 @@
 - [[_COMMUNITY_DB Migrations|DB Migrations]]
 - [[_COMMUNITY_DB Migrations|DB Migrations]]
 - [[_COMMUNITY_DB Migrations|DB Migrations]]
-- [[_COMMUNITY_Community 390|Community 390]]
-- [[_COMMUNITY_Community 391|Community 391]]
-- [[_COMMUNITY_Community 392|Community 392]]
-- [[_COMMUNITY_Community 393|Community 393]]
-- [[_COMMUNITY_Community 394|Community 394]]
-- [[_COMMUNITY_Community 395|Community 395]]
-- [[_COMMUNITY_Community 396|Community 396]]
-- [[_COMMUNITY_Community 397|Community 397]]
-- [[_COMMUNITY_Community 398|Community 398]]
-- [[_COMMUNITY_Community 399|Community 399]]
-- [[_COMMUNITY_Community 400|Community 400]]
-- [[_COMMUNITY_Community 401|Community 401]]
-- [[_COMMUNITY_Community 402|Community 402]]
-- [[_COMMUNITY_Community 403|Community 403]]
-- [[_COMMUNITY_Community 404|Community 404]]
-- [[_COMMUNITY_Community 405|Community 405]]
-- [[_COMMUNITY_Community 406|Community 406]]
-- [[_COMMUNITY_Community 407|Community 407]]
-- [[_COMMUNITY_Community 408|Community 408]]
-- [[_COMMUNITY_Community 409|Community 409]]
-- [[_COMMUNITY_Community 410|Community 410]]
-- [[_COMMUNITY_Community 411|Community 411]]
-- [[_COMMUNITY_Community 412|Community 412]]
-- [[_COMMUNITY_Community 413|Community 413]]
-- [[_COMMUNITY_Community 414|Community 414]]
-- [[_COMMUNITY_Community 415|Community 415]]
-- [[_COMMUNITY_Community 416|Community 416]]
-- [[_COMMUNITY_Community 417|Community 417]]
-- [[_COMMUNITY_Community 418|Community 418]]
-- [[_COMMUNITY_Community 419|Community 419]]
-- [[_COMMUNITY_Community 420|Community 420]]
-- [[_COMMUNITY_Community 421|Community 421]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `_()` - 607 edges
-2. `$()` - 590 edges
-3. `$()` - 590 edges
-4. `$()` - 590 edges
-5. `$()` - 590 edges
-6. `$()` - 590 edges
-7. `$()` - 590 edges
-8. `$()` - 590 edges
-9. `$()` - 590 edges
-10. `$()` - 580 edges
+1. `_()` - 605 edges
+2. `$()` - 588 edges
+3. `$()` - 588 edges
+4. `$()` - 588 edges
+5. `$()` - 588 edges
+6. `$()` - 588 edges
+7. `$()` - 588 edges
+8. `$()` - 588 edges
+9. `$()` - 588 edges
+10. `$()` - 578 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `game_state_sync (reconnect state payload)` --semantically_similar_to--> `kick_offline_player()`  [INFERRED] [semantically similar]
@@ -351,8 +314,8 @@
   backend/game/services.py → CLAUDE.md
 - `GameConsumer` --references--> `DEBUFFS constant (55 debuffs, 5 rarities)`  [EXTRACTED]
   backend/servers/consumers.py → Obsidian/battle-cursor/features/debuffs.md
-- `start_round()` --references--> `Redis Key Schema`  [EXTRACTED]
-  backend/ai/tasks.py → Obsidian/battle-cursor/architecture/redis.md
+- `GameConsumer` --implements--> `game_state_sync (reconnect state payload)`  [EXTRACTED]
+  backend/servers/consumers.py → Obsidian/battle-cursor/architecture/websocket.md
 
 ## Import Cycles
 - None detected.
@@ -362,83 +325,83 @@
 - **Debuff Application Flow (frontend trigger -> backend checks -> effect render)** — features_debuffs_debuff_system, servers_consumers_gameconsumer, game_debuffs_debuffs, debuffs_debuffoverlay_debuffoverlay, game_game_null_effects [EXTRACTED 1.00]
 - **Coin Economy Flow (grade_round accrual -> Redis -> game_over DB sync)** — ai_tasks_grade_round, ai_tasks_game_over, game_services_scoreservice, claude_coins_economy [EXTRACTED 1.00]
 
-## Communities (425 total, 50 thin omitted)
+## Communities (390 total, 50 thin omitted)
 
 ### Community 0 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url() (+74 more)
+Nodes (96): $(), aa(), _addCheck(), and(), applyPatches(), args(), array(), base64() (+88 more)
 
 ### Community 1 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url() (+74 more)
+Nodes (94): $(), aa(), _addCheck(), and(), applyPatches(), args(), array(), base64() (+86 more)
 
 ### Community 2 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url() (+74 more)
+Nodes (94): $(), aa(), _addCheck(), and(), applyPatches(), args(), array(), base64() (+86 more)
 
 ### Community 3 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url() (+74 more)
+Nodes (94): $(), aa(), _addCheck(), and(), applyPatches(), args(), array(), base64() (+86 more)
 
 ### Community 4 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url() (+74 more)
+Nodes (94): $(), aa(), _addCheck(), and(), applyPatches(), args(), array(), base64() (+86 more)
 
 ### Community 5 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url() (+74 more)
+Nodes (94): $(), aa(), _addCheck(), and(), applyPatches(), args(), array(), base64() (+86 more)
 
 ### Community 6 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (81): $(), _addCheck(), and(), args(), array(), base64(), base64url(), cidr() (+73 more)
+Nodes (94): $(), aa(), _addCheck(), and(), applyPatches(), args(), array(), base64() (+86 more)
 
 ### Community 7 - "Frontend Build Bundle"
 Cohesion: 0.01
-Nodes (65): _(), addPostProcessor(), Ae(), ay(), Bn(), bv(), by(), ce() (+57 more)
+Nodes (71): _(), addPostProcessor(), ay(), Bn(), bv(), by(), ce(), clearEvents() (+63 more)
 
 ### Community 8 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (82): $(), _addCheck(), and(), Ar(), args(), array(), base64(), base64url() (+74 more)
+Nodes (82): $(), _addCheck(), addOwned(), Ae(), applyPatches(), base64(), base64url(), cidr() (+74 more)
 
 ### Community 9 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (72): $(), _addCheck(), and(), args(), array(), base64(), base64url(), cidr() (+64 more)
+Nodes (74): $(), _addCheck(), and(), args(), array(), base64(), base64url(), cidr() (+66 more)
 
 ### Community 10 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (80): $(), aa(), _addCheck(), Ae(), applyPatches(), base64(), base64url(), cidr() (+72 more)
+Nodes (75): $(), aa(), _addCheck(), as(), base64(), base64url(), cidr(), Cn() (+67 more)
 
 ### Community 11 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (60): $(), a(), _addCheck(), base64(), base64url(), cidr(), constructor(), cuid() (+52 more)
+Nodes (71): $(), _addCheck(), and(), args(), array(), base64(), base64url(), bi() (+63 more)
 
 ### Community 12 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (68): $(), _addCheck(), base64(), base64url(), cidr(), Cn(), constructor(), cp() (+60 more)
+Nodes (74): $(), _addCheck(), base64(), base64url(), cidr(), Cn(), constructor(), cp() (+66 more)
 
 ### Community 13 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (74): $(), aa(), _addCheck(), base64(), base64url(), cidr(), Cn(), constructor() (+66 more)
+Nodes (72): $(), _addCheck(), applyPatches(), base64(), base64url(), cidr(), Cn(), constructor() (+64 more)
 
 ### Community 14 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (99): $(), aa(), _addCheck(), and(), args(), array(), as(), base64() (+91 more)
+Nodes (72): $(), _addCheck(), applyPatches(), base64(), base64url(), cidr(), Cn(), constructor() (+64 more)
 
 ### Community 15 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (74): $(), _addCheck(), and(), args(), array(), base64(), base64url(), cidr() (+66 more)
+Nodes (62): $(), _addCheck(), applyPatches(), base64(), base64url(), cidr(), constructor(), cuid() (+54 more)
 
 ### Community 16 - "Frontend Build Bundle"
 Cohesion: 0.02
-Nodes (64): $(), a(), _addCheck(), applyPatches(), base64(), base64url(), cidr(), constructor() (+56 more)
+Nodes (54): $(), _addCheck(), base64(), base64url(), cidr(), constructor(), cuid(), cuid2() (+46 more)
 
 ### Community 17 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (98): aa(), af(), ao(), Au(), Ba(), bc(), bi(), bo() (+90 more)
+Nodes (102): aa(), af(), ao(), Au(), Ba(), bc(), bi(), bo() (+94 more)
 
 ### Community 18 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (71): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+63 more)
+Cohesion: 0.06
+Nodes (90): accessor(), b(), Ba(), bc(), be(), bf(), bi(), bn() (+82 more)
 
 ### Community 19 - "Frontend Build Bundle"
 Cohesion: 0.07
@@ -446,199 +409,199 @@ Nodes (82): aa(), ac(), af(), ao(), bc(), bi(), bo(), ca() (+74 more)
 
 ### Community 20 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (78): aa(), ac(), ao(), bc(), bi(), bo(), ca(), cc() (+70 more)
+Nodes (81): aa(), ac(), af(), ao(), bc(), bi(), bo(), ca() (+73 more)
 
 ### Community 21 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (60): accessor(), ae(), as(), b(), bf(), bu(), c(), ce() (+52 more)
+Cohesion: 0.04
+Nodes (81): accessor(), ae(), applyPatches(), as(), b(), bf(), c(), ce() (+73 more)
 
 ### Community 22 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (71): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+63 more)
+Nodes (76): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+68 more)
 
 ### Community 23 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (71): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+63 more)
+Nodes (76): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+68 more)
 
 ### Community 24 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (71): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+63 more)
+Nodes (76): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+68 more)
 
 ### Community 25 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (71): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+63 more)
+Nodes (76): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+68 more)
 
 ### Community 26 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (71): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+63 more)
+Nodes (76): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+68 more)
 
 ### Community 27 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (67): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+59 more)
+Cohesion: 0.07
+Nodes (76): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+68 more)
 
 ### Community 28 - "Frontend Build Bundle"
 Cohesion: 0.06
 Nodes (73): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+65 more)
 
 ### Community 29 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (82): aa(), ac(), af(), ao(), bc(), bi(), bo(), ca() (+74 more)
+Cohesion: 0.08
+Nodes (74): a(), aa(), ac(), ao(), bc(), bo(), ca(), cc() (+66 more)
 
 ### Community 30 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (57): af(), an(), at(), Bt(), Cd(), deleteProperty(), df(), dt() (+49 more)
+Cohesion: 0.06
+Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
 
 ### Community 31 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (73): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+65 more)
+Nodes (71): a(), ac(), ap(), Au(), bs(), Bu(), cp(), Cu() (+63 more)
 
 ### Community 32 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (73): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+65 more)
+Nodes (70): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+62 more)
 
 ### Community 33 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (73): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+65 more)
+Nodes (70): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+62 more)
 
 ### Community 34 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (73): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+65 more)
+Nodes (70): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+62 more)
 
 ### Community 35 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (73): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+65 more)
+Nodes (70): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+62 more)
 
 ### Community 36 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (73): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+65 more)
+Nodes (70): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+62 more)
 
 ### Community 37 - "Frontend Build Bundle"
 Cohesion: 0.06
-Nodes (72): a(), ac(), ap(), Au(), bs(), Bu(), Cd(), Cu() (+64 more)
+Nodes (70): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+62 more)
 
 ### Community 38 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (71): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+63 more)
+Cohesion: 0.08
+Nodes (69): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+61 more)
 
 ### Community 39 - "Frontend Build Bundle"
-Cohesion: 0.05
-Nodes (95): accessor(), b(), Ba(), bc(), be(), bf(), bi(), bn() (+87 more)
+Cohesion: 0.07
+Nodes (69): Ba(), bc(), be(), bi(), C(), cc(), Ci(), De() (+61 more)
 
 ### Community 40 - "Frontend Build Bundle"
-Cohesion: 0.09
-Nodes (45): ac(), bu(), Ci(), componentDidCatch(), Ei(), eo(), ep(), error() (+37 more)
+Cohesion: 0.06
+Nodes (66): ac(), ap(), bu(), Ci(), componentDidCatch(), cs(), di(), dp() (+58 more)
 
 ### Community 41 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (54): accessor(), ae(), as(), b(), bf(), bu(), c(), ce() (+46 more)
+Cohesion: 0.06
+Nodes (67): a(), accessor(), ae(), applyPatches(), as(), b(), bf(), bu() (+59 more)
 
 ### Community 42 - "Frontend Build Bundle"
 Cohesion: 0.05
 Nodes (66): abort(), Ai(), al(), bl(), cf(), cl(), _d(), deepPartial() (+58 more)
 
 ### Community 43 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+Cohesion: 0.07
+Nodes (65): Ae(), af(), an(), at(), Bt(), Cd(), df(), Dl() (+57 more)
 
 ### Community 44 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+Cohesion: 0.07
+Nodes (65): Ae(), af(), an(), at(), Bt(), Cd(), df(), Dl() (+57 more)
 
 ### Community 45 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+Cohesion: 0.07
+Nodes (65): Ae(), af(), an(), at(), Bt(), Cd(), df(), Dl() (+57 more)
 
 ### Community 46 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (63): Ba(), bc(), be(), bi(), C(), cc(), ce(), Ci() (+55 more)
+Cohesion: 0.07
+Nodes (65): Ba(), bc(), be(), bi(), C(), cc(), Ci(), De() (+57 more)
 
 ### Community 47 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+Cohesion: 0.07
+Nodes (65): Ae(), af(), an(), at(), Bt(), Cd(), df(), Dl() (+57 more)
 
 ### Community 48 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+Cohesion: 0.07
+Nodes (65): Ae(), af(), an(), at(), Bt(), Cd(), df(), Dl() (+57 more)
 
 ### Community 49 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+Cohesion: 0.07
+Nodes (65): Ae(), af(), an(), at(), Bt(), Cd(), df(), Dl() (+57 more)
 
 ### Community 50 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (70): Ae(), af(), an(), at(), Bt(), createDraft(), defineProperty(), df() (+62 more)
+Nodes (65): Ae(), af(), an(), at(), Bt(), Cd(), df(), Dl() (+57 more)
 
 ### Community 51 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (66): Ba(), bc(), be(), bi(), C(), cc(), Ci(), De() (+58 more)
+Cohesion: 0.07
+Nodes (65): Ba(), bc(), be(), bi(), C(), cc(), Ci(), De() (+57 more)
 
 ### Community 52 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (52): a(), accessor(), ae(), applyPatches(), b(), bf(), c(), ce() (+44 more)
+Cohesion: 0.06
+Nodes (62): accessor(), ae(), ap(), as(), b(), bf(), bu(), c() (+54 more)
 
 ### Community 53 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (83): Ae(), af(), an(), applyPatches(), at(), Bt(), Cd(), createDraft() (+75 more)
+Cohesion: 0.07
+Nodes (61): Ae(), af(), an(), at(), Bt(), Cd(), deleteProperty(), df() (+53 more)
 
 ### Community 54 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (68): Ae(), af(), an(), applyPatches(), at(), bs(), Bt(), Cd() (+60 more)
+Cohesion: 0.08
+Nodes (59): Ae(), af(), an(), at(), Bt(), Cd(), deleteProperty(), df() (+51 more)
 
 ### Community 55 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (73): Ae(), af(), an(), at(), Bt(), Cd(), createDraft(), defineProperty() (+65 more)
+Cohesion: 0.08
+Nodes (60): af(), an(), at(), Bt(), Cd(), df(), Dl(), dt() (+52 more)
 
 ### Community 56 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (68): Ae(), af(), an(), at(), Bt(), Cd(), cp(), delete() (+60 more)
+Cohesion: 0.08
+Nodes (59): Ae(), af(), an(), at(), Bt(), Cd(), deleteProperty(), df() (+51 more)
 
 ### Community 57 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (51): ap(), ct(), Cu(), dd(), di(), dp(), dt(), Du() (+43 more)
+Cohesion: 0.06
+Nodes (58): Ai(), at(), Bt(), cp(), ct(), Cu(), dd(), delete() (+50 more)
 
 ### Community 58 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (54): ac(), ap(), Au(), Bu(), cp(), Cu(), dd(), delete() (+46 more)
+Cohesion: 0.08
+Nodes (58): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+50 more)
 
 ### Community 59 - "Frontend Build Bundle"
-Cohesion: 0.09
-Nodes (49): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+41 more)
+Cohesion: 0.08
+Nodes (58): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+50 more)
 
 ### Community 60 - "WebSocket & Debuff Core"
 Cohesion: 0.05
 Nodes (17): Redis Key Schema, AsyncWebsocketConsumer, JWTAuthMiddleware (WebSocket auth), Constants and Configuration Reference, DebuffOverlay(), Canvas Protection, Debuff System, LEGENDARY Debuffs (5s block set) (+9 more)
 
 ### Community 61 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (81): accessor(), b(), Ba(), bc(), be(), bf(), bi(), bn() (+73 more)
+Cohesion: 0.09
+Nodes (56): Ba(), bc(), be(), bi(), C(), cc(), De(), dn() (+48 more)
 
 ### Community 62 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (35): a(), concat(), di(), Ei(), endsWith(), fi(), gi(), hi() (+27 more)
+Cohesion: 0.07
+Nodes (56): accessor(), applyPatches(), b(), bf(), bn(), cancel(), ce(), componentDidCatch() (+48 more)
 
 ### Community 63 - "Users Auth & Models"
-Cohesion: 0.16
-Nodes (23): APIView, BaseTokenObtainPairView, EmailVerification, UserProfileSerializer, UserRegisterSerializer, UserUpdateSerializer, EmailService, Возвращает последний неиспользованный токен верификации для email.         Испол (+15 more)
+Cohesion: 0.11
+Nodes (29): APIView, BaseTokenObtainPairView, User, EmailVerification, UserProfileSerializer, UserRegisterSerializer, UserUpdateSerializer, EmailService (+21 more)
 
 ### Community 64 - "Frontend Build Bundle"
-Cohesion: 0.11
-Nodes (28): abort(), bl(), cf(), cl(), el(), Et(), finishDraft(), Fl() (+20 more)
+Cohesion: 0.06
+Nodes (55): abort(), al(), bl(), cf(), cl(), deepPartial(), df(), Dl() (+47 more)
 
 ### Community 65 - "Frontend Build Bundle"
-Cohesion: 0.16
-Nodes (23): ac(), Au(), Bu(), Du(), Eu(), extend(), Hu(), Iu() (+15 more)
+Cohesion: 0.08
+Nodes (55): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+47 more)
 
 ### Community 66 - "Frontend Build Bundle"
-Cohesion: 0.09
-Nodes (28): b(), bn(), Bo(), cancel(), ds(), fs(), gs(), jo() (+20 more)
+Cohesion: 0.07
+Nodes (54): accessor(), b(), bf(), bn(), cancel(), ce(), componentDidCatch(), concat() (+46 more)
 
 ### Community 67 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (50): accessor(), b(), bf(), bn(), cancel(), ce(), componentDidCatch(), concat() (+42 more)
+Nodes (54): accessor(), b(), bf(), bn(), cancel(), ce(), componentDidCatch(), concat() (+46 more)
 
 ### Community 68 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (37): and(), applyPatches(), args(), array(), at(), Bt(), create(), createDraft() (+29 more)
+Cohesion: 0.08
+Nodes (53): ad(), af(), al(), at(), Bt(), deleteProperty(), df(), Dl() (+45 more)
 
 ### Community 69 - "jQuery Vendor"
 Cohesion: 0.07
@@ -649,84 +612,84 @@ Cohesion: 0.07
 Nodes (28): $(), Ae(), B(), Be(), c(), $e(), ee(), F() (+20 more)
 
 ### Community 71 - "Frontend Build Bundle"
-Cohesion: 0.09
-Nodes (42): ad(), Au(), Ba(), ct(), Cu(), dd(), di(), Du() (+34 more)
+Cohesion: 0.07
+Nodes (52): Ai(), Au(), Ba(), bu(), ct(), Cu(), dd(), di() (+44 more)
 
 ### Community 72 - "Frontend Build Bundle"
 Cohesion: 0.10
-Nodes (43): ap(), Ci(), cp(), delete(), dp(), eo(), ep(), fi() (+35 more)
+Nodes (52): Ar(), br(), Ci(), delete(), Dr(), ed(), endsWith(), eo() (+44 more)
 
 ### Community 73 - "Frontend Build Bundle"
 Cohesion: 0.08
-Nodes (49): deprecate(), dir(), error(), exists(), expandAllGroups(), extendTranslation(), extractFromKey(), formatLanguageCode() (+41 more)
+Nodes (51): deprecate(), dir(), error(), exists(), extendTranslation(), extractFromKey(), formatLanguageCode(), forward() (+43 more)
 
 ### Community 74 - "AI Celery Game Tasks"
-Cohesion: 0.05
-Nodes (47): generate_prompts(), grade_drawing(), _groq_text_request(), Генерирует уникальные промпты для раундов через Groq.     При ошибке возвращает, Базовый текстовый запрос к Groq без изображения., Отправляет рисунок в Groq и возвращает оценку и комментарий.      Returns:, cleanup_drawings(), cleanup_game() (+39 more)
+Cohesion: 0.06
+Nodes (40): cleanup_drawings(), cleanup_game(), _cleanup_round(), _collect_drawings(), delete_game(), force_grade_round(), game_over(), grade_round() (+32 more)
 
 ### Community 75 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (57): accessor(), ae(), applyPatches(), as(), b(), bf(), c(), ce() (+49 more)
+Cohesion: 0.08
+Nodes (50): accessor(), ae(), applyPatches(), as(), b(), bf(), c(), ce() (+42 more)
 
 ### Community 76 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (62): add(), addCleanup(), __addSublanguage(), addWidget(), av(), collapseGroup(), collectExpandedUids(), createContentView() (+54 more)
+Cohesion: 0.08
+Nodes (48): add(), addCleanup(), __addSublanguage(), av(), collapseGroup(), collectExpandedUids(), delete(), ensureGroupChildren() (+40 more)
 
 ### Community 77 - "Frontend Build Bundle"
-Cohesion: 0.11
-Nodes (29): addOwned(), Cd(), dirty(), from(), G(), _getInvalidInput(), _getOrReturnCtx(), _getType() (+21 more)
+Cohesion: 0.06
+Nodes (48): addOwned(), bn(), brand(), catch(), Cd(), cn(), default(), dirty() (+40 more)
 
 ### Community 79 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (55): ap(), bu(), Ci(), cp(), delete(), dp(), eo(), ep() (+47 more)
+Cohesion: 0.09
+Nodes (47): Ar(), br(), Ci(), Dr(), endsWith(), eo(), ep(), Er() (+39 more)
 
 ### Community 80 - "Frontend Build Bundle"
 Cohesion: 0.08
-Nodes (45): a(), addText(), b(), C(), d(), de(), Ee(), Fb() (+37 more)
+Nodes (46): a(), addText(), Ae(), b(), C(), d(), Ee(), Fb() (+38 more)
 
 ### Community 81 - "Frontend Build Bundle"
-Cohesion: 0.15
-Nodes (13): F(), formatNumber(), getChartTitle(), getResource(), getResourceBundle(), hasResourceBundle(), j(), L() (+5 more)
+Cohesion: 0.06
+Nodes (45): Ab(), attachToDom(), bindTooltip(), clone(), cloneInstance(), connectedCallback(), de(), detachFromDom() (+37 more)
 
 ### Community 82 - "Frontend Build Bundle"
 Cohesion: 0.08
 Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
 
 ### Community 83 - "Debuff Effects UI"
-Cohesion: 0.07
-Nodes (23): DebuffOverlayProps, AdvertisingEffect(), AgreementEffect(), AnonimEffect(), BlockingEffect(), CaptchaEffect(), CarouselEffect(), DarknessEffect() (+15 more)
+Cohesion: 0.06
+Nodes (24): DebuffOverlayProps, AdvertisingEffect(), AgreementEffect(), AnonimEffect(), BlockingEffect(), CaptchaEffect(), CarouselEffect(), EraserEffect() (+16 more)
 
 ### Community 84 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 85 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 86 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 87 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 88 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 89 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 90 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 91 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (42): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+34 more)
+Cohesion: 0.06
+Nodes (45): abort(), al(), ao(), bl(), cancel(), cf(), cl(), _d() (+37 more)
 
 ### Community 92 - "Market Models & Admin"
 Cohesion: 0.12
@@ -734,99 +697,99 @@ Nodes (28): Inventory, InventoryAdmin, PurchaseAdmin, Inventory, ItemType, Meta,
 
 ### Community 93 - "Frontend Build Bundle"
 Cohesion: 0.09
-Nodes (40): Ai(), Au(), Ba(), ct(), Cu(), dd(), di(), dt() (+32 more)
+Nodes (44): ad(), Au(), Ba(), ct(), Cu(), dd(), di(), Du() (+36 more)
 
 ### Community 94 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (55): ad(), Au(), Ba(), bn(), brand(), catch(), Cu(), dd() (+47 more)
+Cohesion: 0.09
+Nodes (44): ad(), Au(), Ba(), cr(), ct(), Cu(), dd(), di() (+36 more)
 
 ### Community 95 - "Game Models & Admin"
 Cohesion: 0.10
 Nodes (18): Migration, GameAdmin, RoundAdmin, ScoreAdmin, Game, Meta, Round, Score (+10 more)
 
 ### Community 96 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (63): abort(), Ai(), al(), bl(), cf(), cl(), _d(), deepPartial() (+55 more)
+Cohesion: 0.07
+Nodes (42): _e(), abort(), ap(), bl(), cl(), cp(), dp(), el() (+34 more)
 
 ### Community 97 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (40): ad(), Ar(), brand(), catch(), cr(), default(), dp(), dr() (+32 more)
+Cohesion: 0.06
+Nodes (43): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+35 more)
 
 ### Community 98 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (59): a(), ac(), ap(), Au(), bs(), Bu(), Cu(), dd() (+51 more)
+Cohesion: 0.10
+Nodes (43): ac(), Au(), bs(), Bu(), Cu(), dd(), Du(), eo() (+35 more)
 
 ### Community 99 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (43): ad(), Ar(), brand(), catch(), cr(), default(), dr(), ed() (+35 more)
+Cohesion: 0.06
+Nodes (43): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+35 more)
 
 ### Community 100 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (40): Ar(), bn(), br(), brand(), catch(), cr(), createDraft(), default() (+32 more)
+Cohesion: 0.07
+Nodes (42): Ar(), bn(), br(), brand(), catch(), cn(), cr(), createDraft() (+34 more)
 
 ### Community 101 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
+Cohesion: 0.09
+Nodes (42): ca(), concat(), da(), Dc(), ea(), ec(), endsWith(), fa() (+34 more)
 
 ### Community 102 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
+Cohesion: 0.09
+Nodes (42): ca(), concat(), da(), Dc(), ea(), ec(), endsWith(), fa() (+34 more)
 
 ### Community 103 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
+Cohesion: 0.09
+Nodes (42): ca(), concat(), da(), Dc(), ea(), ec(), endsWith(), fa() (+34 more)
 
 ### Community 104 - "Frontend Build Bundle"
-Cohesion: 0.09
-Nodes (34): ad(), Ar(), brand(), catch(), cr(), default(), dr(), ed() (+26 more)
+Cohesion: 0.08
+Nodes (42): ad(), Ar(), brand(), catch(), cr(), default(), dp(), dr() (+34 more)
 
 ### Community 105 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
+Cohesion: 0.09
+Nodes (42): ca(), concat(), da(), Dc(), ea(), ec(), endsWith(), fa() (+34 more)
 
 ### Community 106 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
+Cohesion: 0.09
+Nodes (42): ca(), concat(), da(), Dc(), ea(), ec(), endsWith(), fa() (+34 more)
 
 ### Community 107 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
+Cohesion: 0.09
+Nodes (42): ca(), concat(), da(), Dc(), ea(), ec(), endsWith(), fa() (+34 more)
 
 ### Community 108 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (46): aa(), ca(), concat(), da(), Dc(), ea(), ec(), endsWith() (+38 more)
+Cohesion: 0.09
+Nodes (42): ca(), concat(), da(), Dc(), ea(), ec(), endsWith(), fa() (+34 more)
 
 ### Community 109 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (36): ad(), brand(), catch(), cp(), cr(), default(), delete(), deleteProperty() (+28 more)
+Cohesion: 0.07
+Nodes (41): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+33 more)
 
 ### Community 110 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (36): ad(), brand(), catch(), cp(), cr(), default(), delete(), deleteProperty() (+28 more)
+Cohesion: 0.07
+Nodes (41): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+33 more)
 
 ### Community 111 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (36): ad(), brand(), catch(), cp(), cr(), default(), delete(), deleteProperty() (+28 more)
+Cohesion: 0.07
+Nodes (41): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+33 more)
 
 ### Community 112 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (36): ad(), brand(), catch(), cp(), cr(), default(), delete(), deleteProperty() (+28 more)
+Cohesion: 0.07
+Nodes (41): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+33 more)
 
 ### Community 113 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (36): ad(), brand(), catch(), cp(), cr(), default(), delete(), deleteProperty() (+28 more)
+Cohesion: 0.07
+Nodes (41): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+33 more)
 
 ### Community 114 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (36): ad(), brand(), catch(), cp(), cr(), default(), delete(), deleteProperty() (+28 more)
+Cohesion: 0.07
+Nodes (41): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+33 more)
 
 ### Community 115 - "Frontend Build Bundle"
 Cohesion: 0.07
 Nodes (41): ad(), Ar(), brand(), catch(), cp(), cr(), default(), delete() (+33 more)
 
 ### Community 116 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (46): ad(), Ar(), brand(), cancel(), catch(), cr(), _d(), default() (+38 more)
+Cohesion: 0.08
+Nodes (40): ad(), Ar(), brand(), catch(), cr(), default(), dr(), ea() (+32 more)
 
 ### Community 117 - "jQuery Vendor"
 Cohesion: 0.05
@@ -838,99 +801,99 @@ Nodes (24): _arrayLikeToArray(), augment(), buildAstral(), cacheAstral(), cacheI
 
 ### Community 119 - "Frontend Build Bundle"
 Cohesion: 0.11
-Nodes (43): Ar(), br(), Ci(), cr(), Dr(), endsWith(), eo(), ep() (+35 more)
+Nodes (38): ap(), Ci(), cp(), dp(), eo(), ep(), fi(), Fp() (+30 more)
 
 ### Community 120 - "Frontend Build Bundle"
 Cohesion: 0.09
-Nodes (37): Ar(), br(), cn(), Dr(), ed(), en(), endsWith(), Er() (+29 more)
+Nodes (39): b(), bn(), cancel(), ce(), concat(), constructor(), e(), ep() (+31 more)
 
 ### Community 121 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (38): addOwned(), bn(), brand(), catch(), Cd(), default(), dirty(), from() (+30 more)
+Cohesion: 0.07
+Nodes (39): addOwned(), bn(), brand(), catch(), Cd(), _d(), default(), dirty() (+31 more)
 
 ### Community 122 - "Game Data Init Command"
 Cohesion: 0.10
 Nodes (21): AbstractUser, BaseCommand, Command, Migration, UserAdmin, CanvasAdmin, CursorAdmin, CustomUserAdmin (+13 more)
 
 ### Community 123 - "Frontend Build Bundle"
-Cohesion: 0.22
-Nodes (13): bs(), gs(), Ho(), Jo(), js(), ks(), Lo(), ms() (+5 more)
+Cohesion: 0.07
+Nodes (37): a(), and(), args(), array(), bs(), create(), exclude(), extract() (+29 more)
 
 ### Community 124 - "Frontend Build Bundle"
-Cohesion: 0.13
-Nodes (31): ca(), da(), Dc(), ec(), fa(), forEach(), gc(), hc() (+23 more)
+Cohesion: 0.10
+Nodes (37): aa(), ca(), da(), Dc(), ea(), ec(), fa(), Fc() (+29 more)
 
 ### Community 125 - "Frontend Build Bundle"
-Cohesion: 0.13
-Nodes (28): ca(), Dc(), ea(), ec(), fa(), Gr(), hc(), Ii() (+20 more)
+Cohesion: 0.10
+Nodes (37): aa(), ca(), da(), Dc(), ea(), ec(), fa(), Fc() (+29 more)
 
 ### Community 126 - "Frontend Build Bundle"
-Cohesion: 0.09
-Nodes (35): abort(), al(), ao(), bl(), cf(), cl(), _d(), Dl() (+27 more)
+Cohesion: 0.08
+Nodes (36): abort(), al(), ao(), bl(), cf(), cl(), _d(), el() (+28 more)
 
 ### Community 127 - "Select2 Vendor"
 Cohesion: 0.11
 Nodes (5): AllowClear(), CloseOnSelect(), EventRelay(), SelectOnClose(), StopPropagation()
 
 ### Community 128 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (32): abort(), al(), ao(), bl(), cf(), cl(), _d(), Dl() (+24 more)
+Cohesion: 0.09
+Nodes (35): abort(), al(), ao(), bl(), cf(), cl(), _d(), Dl() (+27 more)
 
 ### Community 129 - "Frontend Build Bundle"
-Cohesion: 0.25
-Nodes (9): eo(), kp(), np(), P(), pe(), Qa(), tp(), vp() (+1 more)
+Cohesion: 0.09
+Nodes (34): a(), ap(), Ci(), cp(), delete(), deleteProperty(), di(), Ei() (+26 more)
 
 ### Community 130 - "Frontend Build Bundle"
 Cohesion: 0.09
 Nodes (35): abort(), al(), ao(), bl(), cf(), cl(), _d(), Dl() (+27 more)
 
 ### Community 131 - "Frontend Build Bundle"
-Cohesion: 0.11
-Nodes (29): abort(), al(), ao(), bl(), cf(), cl(), el(), Fl() (+21 more)
+Cohesion: 0.09
+Nodes (35): abort(), al(), ao(), bl(), cf(), cl(), _d(), Dl() (+27 more)
 
 ### Community 132 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (34): addOwned(), bn(), brand(), catch(), Cd(), default(), dirty(), from() (+26 more)
+Cohesion: 0.09
+Nodes (34): addOwned(), Cd(), cp(), dirty(), from(), G(), _getInvalidInput(), _getOrReturnCtx() (+26 more)
 
 ### Community 133 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (23): accessor(), and(), args(), array(), bf(), componentDidCatch(), create(), exclude() (+15 more)
+Cohesion: 0.07
+Nodes (34): and(), args(), array(), as(), Bo(), create(), cs(), deepPartial() (+26 more)
 
 ### Community 134 - "Frontend Build Bundle"
-Cohesion: 0.05
-Nodes (36): `ai`, Backend, Battle-cursor — CLAUDE.md, Context Navigation (Graphify + Obsidian), Frontend, `game`, graphify, `market` (+28 more)
+Cohesion: 0.07
+Nodes (34): and(), args(), array(), as(), Bo(), create(), cs(), deepPartial() (+26 more)
 
 ### Community 135 - "Frontend Build Bundle"
 Cohesion: 0.08
-Nodes (34): bindTooltip(), bm(), constructor(), doShow(), drawChart(), drawIntoElement(), drawTestGroups(), drawTestResults() (+26 more)
+Nodes (33): ah(), bm(), clamp(), constructor(), displayable(), eh(), formatHsl(), getChartData() (+25 more)
 
 ### Community 136 - "Frontend Build Bundle"
 Cohesion: 0.08
 Nodes (33): and(), args(), array(), at(), Bt(), create(), createDraft(), delete() (+25 more)
 
 ### Community 137 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (36): ad(), brand(), catch(), cp(), cr(), default(), delete(), deleteProperty() (+28 more)
+Cohesion: 0.09
+Nodes (33): ad(), Ar(), brand(), catch(), cr(), default(), dr(), ed() (+25 more)
 
 ### Community 138 - "Select2 Vendor"
 Cohesion: 0.09
 Nodes (5): ArrayAdapter(), BaseAdapter(), InputData(), MaximumSelectionLength(), SelectAdapter()
 
 ### Community 139 - "Frontend Build Bundle"
-Cohesion: 0.11
-Nodes (31): abort(), al(), bl(), cf(), cl(), Dl(), el(), Et() (+23 more)
+Cohesion: 0.10
+Nodes (32): abort(), al(), bl(), cf(), cl(), Dl(), el(), Et() (+24 more)
 
 ### Community 140 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (37): addOwned(), Cd(), cn(), _d(), dirty(), dn(), fd(), _getInvalidInput() (+29 more)
+Cohesion: 0.10
+Nodes (32): addOwned(), Cd(), _d(), dirty(), dn(), fd(), _getInvalidInput(), _getOrReturnCtx() (+24 more)
 
 ### Community 141 - "Frontend Build Bundle"
 Cohesion: 0.07
-Nodes (35): and(), args(), array(), as(), Bo(), create(), cs(), deepPartial() (+27 more)
+Nodes (32): accessor(), and(), applyPatches(), args(), array(), bf(), Bo(), componentDidCatch() (+24 more)
 
 ### Community 142 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement(), includes() (+21 more)
+Cohesion: 0.09
+Nodes (32): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+24 more)
 
 ### Community 143 - "Frontend Dependencies"
 Cohesion: 0.06
@@ -941,88 +904,88 @@ Cohesion: 0.07
 Nodes (8): ArrayParam(), ClientHintsMetaTag(), ExpressionParam(), FetchLayer(), ImageTag(), Param(), RawParam(), TransformationParam()
 
 ### Community 145 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.09
+Nodes (31): accessor(), as(), b(), bf(), bn(), Bo(), cs(), ds() (+23 more)
 
 ### Community 146 - "Frontend Build Bundle"
-Cohesion: 0.12
-Nodes (18): Cg(), cm(), create(), dm(), _e(), fm(), ie(), Jg() (+10 more)
+Cohesion: 0.09
+Nodes (31): addWidget(), bindEvents(), create(), createContentView(), destroy(), destroyMountedChildren(), destroySplitter(), getCurrentModalContentView() (+23 more)
 
 ### Community 147 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.09
+Nodes (31): accessor(), as(), b(), bf(), bn(), Bo(), cs(), ds() (+23 more)
 
 ### Community 148 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.09
+Nodes (31): accessor(), as(), b(), bf(), bn(), Bo(), cs(), ds() (+23 more)
 
 ### Community 149 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.09
+Nodes (31): accessor(), as(), b(), bf(), bn(), Bo(), cs(), ds() (+23 more)
 
 ### Community 150 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.09
+Nodes (31): accessor(), as(), b(), bf(), bn(), Bo(), cs(), ds() (+23 more)
 
 ### Community 151 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.09
+Nodes (31): accessor(), as(), b(), bf(), bn(), Bo(), cs(), ds() (+23 more)
 
 ### Community 152 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (38): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cs() (+30 more)
+Cohesion: 0.09
+Nodes (31): accessor(), as(), b(), bf(), bn(), Bo(), cs(), ds() (+23 more)
 
 ### Community 153 - "Frontend Build Bundle"
-Cohesion: 0.17
-Nodes (13): cn(), en(), fd(), hn(), id(), mn(), nn(), on() (+5 more)
+Cohesion: 0.12
+Nodes (30): Ar(), br(), Dr(), ed(), endsWith(), Er(), extend(), fr() (+22 more)
 
 ### Community 154 - "Frontend Build Bundle"
 Cohesion: 0.12
-Nodes (33): aa(), ca(), da(), Dc(), ec(), fa(), Fc(), forEach() (+25 more)
+Nodes (30): aa(), ca(), da(), Dc(), ec(), Fc(), getUri(), io() (+22 more)
 
 ### Community 155 - "Server Models & Admin"
 Cohesion: 0.09
 Nodes (10): Migration, ServerAdmin, StatusChoices, ServerRepository, ServerService, validate_game_not_started(), validate_max_players(), validate_room_not_full() (+2 more)
 
 ### Community 156 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (51): Ab(), attachToDom(), bx(), clone(), cloneInstance(), connectedCallback(), copy(), cx() (+43 more)
+Cohesion: 0.11
+Nodes (29): bx(), copy(), cx(), dx(), eS(), ex(), fx(), gx() (+21 more)
 
 ### Community 157 - "Frontend Build Bundle"
 Cohesion: 0.09
-Nodes (37): Ar(), br(), cn(), cr(), createDraft(), Dr(), ed(), en() (+29 more)
+Nodes (29): bn(), brand(), catch(), cn(), _d(), default(), dn(), ed() (+21 more)
 
 ### Community 158 - "Frontend Build Bundle"
-Cohesion: 0.11
-Nodes (27): addOwned(), dirty(), _getInvalidInput(), _getOrReturnCtx(), _getType(), implement(), includes(), isNullable() (+19 more)
+Cohesion: 0.10
+Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
 
 ### Community 159 - "Frontend Build Bundle"
 Cohesion: 0.10
 Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
 
 ### Community 160 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (33): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), implement(), includes() (+25 more)
+Cohesion: 0.10
+Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
 
 ### Community 162 - "Select2 Vendor"
 Cohesion: 0.09
 Nodes (14): AttachContainer(), callDep(), ContainerCSS(), countResults(), DropdownCSS(), handler(), hasProp(), makeNormalize() (+6 more)
 
 ### Community 163 - "Frontend Build Bundle"
-Cohesion: 0.09
-Nodes (31): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+23 more)
+Cohesion: 0.10
+Nodes (28): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+20 more)
 
 ### Community 164 - "Frontend Build Bundle"
-Cohesion: 0.06
-Nodes (65): ca(), Ci(), concat(), da(), Dc(), ea(), ec(), Ei() (+57 more)
+Cohesion: 0.13
+Nodes (28): ca(), Dc(), ea(), ec(), forEach(), fs(), gc(), hc() (+20 more)
 
 ### Community 165 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (39): accessor(), applyPatches(), as(), b(), bf(), bn(), Bo(), cancel() (+31 more)
+Cohesion: 0.08
+Nodes (28): and(), args(), array(), Bo(), create(), deepPartial(), ds(), exclude() (+20 more)
 
 ### Community 166 - "Frontend Build Bundle"
 Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Nodes (28): dirty(), from(), _getCached(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+20 more)
 
 ### Community 167 - "Select2 Vendor"
 Cohesion: 0.08
@@ -1033,60 +996,60 @@ Cohesion: 0.10
 Nodes (12): _arrayLikeToArray(), augment(), cacheInvertedBmp(), charCode(), clipDuplicates(), copyRegex(), _createForOfIteratorHelper(), isType() (+4 more)
 
 ### Community 169 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Cohesion: 0.11
+Nodes (27): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+19 more)
 
 ### Community 170 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (36): applyFilters(), bt(), changeLanguage(), clearEvents(), Ge(), getTreeSorting(), getVisibleMarks(), getVisibleStatuses() (+28 more)
+Cohesion: 0.09
+Nodes (27): applyFilters(), bt(), changeLanguage(), Ge(), getTreeSorting(), getVisibleMarks(), getVisibleStatuses(), indexTree() (+19 more)
 
 ### Community 171 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Cohesion: 0.11
+Nodes (27): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+19 more)
 
 ### Community 172 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Cohesion: 0.11
+Nodes (27): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+19 more)
 
 ### Community 173 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Cohesion: 0.11
+Nodes (27): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+19 more)
 
 ### Community 174 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Cohesion: 0.11
+Nodes (27): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+19 more)
 
 ### Community 175 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (29): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+21 more)
+Cohesion: 0.11
+Nodes (27): addOwned(), dirty(), from(), _getInvalidInput(), _getOrReturnCtx(), _getType(), hd(), implement() (+19 more)
 
 ### Community 177 - "Session Logs (June)"
-Cohesion: 0.10
-Nodes (36): a(), concat(), di(), Ei(), endsWith(), fi(), gi(), hi() (+28 more)
+Cohesion: 0.07
+Nodes (26): 2026-06-29 — PuzzleEffect, null-duration debuffs, offline kick, CSS polish, backend/ai/tasks.py, backend/config/settings.py, backend/servers/consumers.py, backend/servers/tasks.py (создан), Chill замедляет на 70%, COMMON (15 дебаффов), EPIC (10 дебаффов) (+18 more)
 
 ### Community 178 - "Layout & Home Pages"
-Cohesion: 0.11
-Nodes (14): Footer(), FinalScore, GameOver(), GameOverState, RoundHistoryEntry, RoundScore, Lobby(), MobileGuard() (+6 more)
+Cohesion: 0.13
+Nodes (15): Footer(), Header(), Home(), Lobby(), MobileGuard(), NotFound(), refreshAccessToken(), App() (+7 more)
 
 ### Community 179 - "Frontend Build Bundle"
-Cohesion: 0.07
-Nodes (64): ad(), af(), al(), as(), at(), Bt(), _d(), deleteProperty() (+56 more)
+Cohesion: 0.12
+Nodes (25): Ai(), at(), Bt(), createDraft(), delete(), deleteProperty(), ft(), get() (+17 more)
 
 ### Community 180 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (23): and(), args(), array(), Bo(), create(), deepPartial(), ds(), exclude() (+15 more)
+Cohesion: 0.09
+Nodes (25): and(), args(), array(), Bo(), create(), deepPartial(), ds(), exclude() (+17 more)
 
 ### Community 182 - "Frontend Build Bundle"
-Cohesion: 0.10
-Nodes (21): bindEvents(), checkUrl(), destroy(), destroyMountedChildren(), destroySplitter(), getCurrentModalContentView(), getCurrentUrl(), getMountedChild() (+13 more)
+Cohesion: 0.09
+Nodes (23): checkUrl(), F(), getCurrentUrl(), getResource(), getResourceBundle(), getUrlParams(), hasResourceBundle(), isTabActive() (+15 more)
 
 ### Community 183 - "Debuff Frontend Data"
 Cohesion: 0.11
 Nodes (14): DEBUFF_MAP, DEBUFF_RARITY_COLOR, DebuffInfo, Props, PurchaseModal(), Props, RARITY_COLOR, RARITY_LABEL (+6 more)
 
 ### Community 184 - "Game Lobby & Countdown"
-Cohesion: 0.20
-Nodes (14): Countdown(), Props, STEPS, LobbyPlayer, EmptyPlayerCard(), PlayerCard(), Props, RARITY_COLOR (+6 more)
+Cohesion: 0.17
+Nodes (17): Countdown(), Props, STEPS, LobbyPlayer, EmptyPlayerCard(), PlayerCard(), Props, RARITY_COLOR (+9 more)
 
 ### Community 185 - "Debuff Visual Effects"
 Cohesion: 0.13
@@ -1105,20 +1068,20 @@ Cohesion: 0.12
 Nodes (10): Meta, PlayerBriefSerializer, ServerCreateSerializer, ServerDetailSerializer, ServerListSerializer, ServerCreateView, ServerDeleteView, ServerDetailView (+2 more)
 
 ### Community 189 - "Frontend Build Bundle"
-Cohesion: 0.22
-Nodes (13): bs(), gs(), Ho(), Jo(), js(), ks(), Lo(), ms() (+5 more)
+Cohesion: 0.13
+Nodes (20): a(), bs(), getPrototypeOf(), gs(), Ho(), Jo(), js(), ks() (+12 more)
 
 ### Community 190 - "Frontend Build Bundle"
-Cohesion: 0.08
-Nodes (29): clampToViewport(), Fd(), getDirection(), getElement(), getOverflowScore(), getPositionCoordinates(), getTooltipContent(), getViewportRect() (+21 more)
+Cohesion: 0.11
+Nodes (20): clampToViewport(), getDirection(), getElement(), getLanguage(), getOverflowScore(), getPositionCoordinates(), getViewportRect(), onAttachmentTooltipHover() (+12 more)
 
 ### Community 191 - "TS Config (app)"
 Cohesion: 0.11
 Nodes (18): compilerOptions, allowImportingTsExtensions, erasableSyntaxOnly, jsx, lib, module, moduleDetection, moduleResolution (+10 more)
 
 ### Community 194 - "Frontend Build Bundle"
-Cohesion: 0.11
-Nodes (22): ah(), Bh(), Ch(), clamp(), dh(), displayable(), fh(), formatHsl() (+14 more)
+Cohesion: 0.12
+Nodes (18): Bh(), Cg(), Ch(), cm(), dh(), dm(), fh(), fm() (+10 more)
 
 ### Community 195 - "TS Config (node)"
 Cohesion: 0.11
@@ -1137,24 +1100,24 @@ Cohesion: 0.21
 Nodes (12): addPopupIndex(), dismissAddRelatedObjectPopup(), dismissChangeRelatedObjectPopup(), dismissDeleteRelatedObjectPopup(), dismissRelatedLookupPopup(), removePopupIndex(), showAdminPopup(), showRelatedObjectLookupPopup() (+4 more)
 
 ### Community 200 - "Session Logs (Polish)"
-Cohesion: 0.06
-Nodes (33): 1. Доделать дебафы (и автотесты с Playwright), 1. Клонирование, 2. Изменить шрифты (и дизайн в целом), 2. Настройка .env, 3. Разновидность игр, 3. Установка Docker, 4. Безопасность, 4. Сборка и запуск (+25 more)
+Cohesion: 0.12
+Nodes (15): Backend — Cloudinary cleanup, Backend — Groq, Backend — profile_drawing, Backend — настройки, Backend — рейтинг, Frontend — Game.tsx, Frontend — Main.tsx, Frontend — MobileGuard (+7 more)
 
 ### Community 201 - "Community 201"
 Cohesion: 0.13
 Nodes (6): AiConfig, AppConfig, GameConfig, MarketConfig, ServersConfig, UsersConfig
 
 ### Community 202 - "Frontend Build Bundle"
-Cohesion: 0.17
-Nodes (16): addNamespaces(), addResource(), addResourceBundle(), addResources(), emit(), has(), loaded(), notifyListeners() (+8 more)
+Cohesion: 0.18
+Nodes (15): addNamespaces(), addResource(), addResourceBundle(), addResources(), emit(), Ln(), loaded(), notifyListeners() (+7 more)
 
 ### Community 203 - "Community 203"
-Cohesion: 0.11
-Nodes (15): CURSOR_HOTSPOTS, Header(), FEATURES, Main(), RARITY_COLOR, Server, api, authAPI (+7 more)
+Cohesion: 0.13
+Nodes (9): CURSOR_HOTSPOTS, FEATURES, Main(), RARITY_COLOR, Server, ProfileDetail(), RARITY_COLOR, serversAPI (+1 more)
 
 ### Community 204 - "Community 204"
-Cohesion: 0.17
-Nodes (10): Home(), Purchase, Purchases(), marketAPI, RARITY_COLOR, Shop(), Tab, AppDispatch (+2 more)
+Cohesion: 0.15
+Nodes (10): Purchase, Purchases(), api, authAPI, failedQueue, gameAPI, marketAPI, WS_BASE_URL (+2 more)
 
 ### Community 205 - "Community 205"
 Cohesion: 0.13
@@ -1169,20 +1132,20 @@ Cohesion: 0.14
 Nodes (13): description, allure-commandline, allure-playwright, dotenv, @playwright/test, report, test, test:headed (+5 more)
 
 ### Community 208 - "Frontend Build Bundle"
-Cohesion: 0.20
-Nodes (14): bs(), gs(), Ho(), Jo(), js(), ks(), Lo(), ms() (+6 more)
+Cohesion: 0.22
+Nodes (13): bs(), gs(), Ho(), Jo(), js(), ks(), Lo(), ms() (+5 more)
 
 ### Community 209 - "Community 209"
 Cohesion: 0.18
 Nodes (9): getCanvasStyle(), FinalScore, Game(), GamePhase, GamePlayer, PALETTE, RoundHistoryEntry, RoundScore (+1 more)
 
 ### Community 210 - "Community 210"
-Cohesion: 0.09
-Nodes (32): a(), Ai(), at(), Bt(), cp(), delete(), deleteProperty(), ft() (+24 more)
+Cohesion: 0.15
+Nodes (12): Backend — [[ai/config.py]], Backend — [[ai/services.py]], Backend — [[ai/tasks.py]], Backend — [[consumers.py]], Frontend — [[Game.tsx]], Frontend — [[Lobby.tsx]], Frontend — [[PasswordEffect.tsx]], Frontend — [[Tutorial.tsx]] (+4 more)
 
 ### Community 212 - "Community 212"
-Cohesion: 0.07
-Nodes (28): 1. Инкрементальное обновление графа знаний (graphify --update), 1. Ревью всех Django моделей, 2026-07-04 — Объединённый лог: ревью CLAUDE.md и README, модели/монеты, обновление графа, 2. Анализ логики монет, 2. Проверка актуальности графа, 3. Анализ использованных скиллов, 4. README.md — новый раздел, 7 исправлений в CLAUDE.md (+20 more)
+Cohesion: 0.17
+Nodes (11): Code Review — найденные и исправленные баги (10 штук), Pending / не сделано, WebSocket надёжность (Game.tsx), Высокие, Защита от гонки round_id (backend + frontend), Изменённые файлы, Критичные, Логирование (consumers.py) (+3 more)
 
 ### Community 213 - "Community 213"
 Cohesion: 0.18
@@ -1193,20 +1156,20 @@ Cohesion: 0.38
 Nodes (8): checker(), clearAcross(), hide(), reset(), show(), showClear(), showQuestion(), updateCounter()
 
 ### Community 215 - "Community 215"
-Cohesion: 0.08
-Nodes (25): 2026-06-30 — Объединённый лог: LEGENDARY дебаффы, полировка системы дебаффов, WS-фиксы + code review, Backend — [[ai/tasks.py]], Backend — [[consumers.py]], Code Review — найденные и исправленные баги (10 штук), Frontend — 4 новых дебаффа, Frontend — CSS (DebuffOverlay.css), Frontend — [[Game.tsx]], Frontend — LEGENDARY дебаффы (новые компоненты) (+17 more)
+Cohesion: 0.18
+Nodes (10): 2026-06-29 — Game mechanics polish, kick logic, null-duration debuffs, EraserEffect — визуальный оверлей без ctx, Null-duration дебаффы (puzzle и подобные), Pending, Изменённые файлы, Кик офлайн игроков, Мелкие CSS/UI правки, Очки и места на карточках игроков (Game.tsx) (+2 more)
 
 ### Community 216 - "Community 216"
-Cohesion: 0.11
-Nodes (23): ap(), cp(), ct(), dp(), getOwnPropertyDescriptor(), ht(), ip(), Kc() (+15 more)
+Cohesion: 0.18
+Nodes (10): 2026-06-29 — Game UI polish, canvas frames, inventory rarity, backend/ai/config.py, backend/ai/services.py, frontend/src/pages/Game/Game.tsx, frontend/src/pages/Inventory/Inventory.tsx, Pending, Изменённые файлы, Исправление мифической категории (+2 more)
 
 ### Community 217 - "Community 217"
-Cohesion: 0.08
-Nodes (23): Canvas, CanvasSerializer, Cursor, CursorSerializer, EmailVerification, Game, GameSerializer, Inventory (+15 more)
+Cohesion: 0.18
+Nodes (10): Frontend — 4 новых дебаффа, Frontend — CSS (DebuffOverlay.css), Frontend — kick redirect, Frontend — LEGENDARY дебаффы (9 новых компонентов), Frontend — null-компоненты в [[Game.tsx]], Frontend — zoom дебафф, Pending, Решения (+2 more)
 
 ### Community 220 - "Community 220"
-Cohesion: 0.08
-Nodes (23): 2026-06-26 — Объединённый лог: Docker setup + config polish, ngrok fix, README, backend/.dockerignore, docker-compose.yml, Docker файлы (все новые), frontend/nginx.conf, Makefile, Makefile (корень проекта), Pending (объединено) (+15 more)
+Cohesion: 0.24
+Nodes (7): generate_prompts(), grade_drawing(), _groq_text_request(), Генерирует уникальные промпты для раундов через Groq.     При ошибке возвращает, Базовый текстовый запрос к Groq без изображения., Отправляет рисунок в Groq и возвращает оценку и комментарий.      Returns:, Groq API (grading + prompt generation)
 
 ### Community 221 - "jQuery Vendor"
 Cohesion: 0.24
@@ -1217,32 +1180,32 @@ Cohesion: 0.31
 Nodes (7): C(), D(), E(), L(), M(), u(), x()
 
 ### Community 224 - "Frontend Build Bundle"
-Cohesion: 0.27
-Nodes (10): as(), cs(), js(), ls(), Mo(), os(), ss(), Su() (+2 more)
+Cohesion: 0.31
+Nodes (9): as(), cs(), js(), ls(), os(), ss(), Su(), ws() (+1 more)
 
 ### Community 225 - "Community 225"
 Cohesion: 0.25
 Nodes (4): BaseMiddleware, ASGI config for config project.  It exposes the ASGI callable as a module-level, get_user_from_token(), JWTAuthMiddleware
 
 ### Community 226 - "Community 226"
-Cohesion: 0.10
-Nodes (20): 2026-06-22 — Объединённый лог: Frontend static & Cloudinary + UI polish, api.tsx, Cloudinary upload, Django → React SPA, Header, Inventory, JWT access token, Pending (объединено) (+12 more)
+Cohesion: 0.22
+Nodes (8): Backend — ai/services.py, Backend — cleanup pipeline, Frontend — Game.css layout, Frontend — ProfileDetail.tsx, Pending, Решения, Сессия 2026-06-29 (2) — Game CSS, backend fixes, ProfileDetail, Что сделано
 
 ### Community 227 - "Community 227"
-Cohesion: 0.12
-Nodes (16): Backend, Email, Frontend, Git префиксы, Redis ключи, WebSocket, Авторизация WS, Архитектурные решения — Battle-cursor (+8 more)
+Cohesion: 0.22
+Nodes (8): Frontend — [[Game.tsx]], Frontend — [[Main.css]], Frontend — [[Main.tsx]], Frontend — MYTHIC видео дебаффы, Pending, Решения, Сессия: MYTHIC дебаффы + кик-редирект, Что сделано
 
 ### Community 228 - "Community 228"
-Cohesion: 0.13
-Nodes (14): Celery — задачи игрового цикла, `cleanup_drawings(game_id)`, `cleanup_game(game_id, room_code)` *(servers → ai)*, `delete_game(game_id)`, `delete_server_if_host_absent(room_code, room_group)` *(servers/tasks.py)*, `force_grade_round(round_id, room_group)`, `game_over(game_id, room_group)`, `grade_round(round_id, room_group)` — bind=True, max_retries=3 (+6 more)
+Cohesion: 0.22
+Nodes (8): Backend — [[ai/tasks.py]], Backend — [[consumers.py]], Frontend — [[Game.tsx]], Pending, Исследование, Решения, Сессия: полировка системы дебаффов, Что сделано
 
 ### Community 229 - "Community 229"
 Cohesion: 0.31
 Nodes (6): PALETTE, Profile(), RARITY_COLOR, colorMatch(), floodFill(), hexToRgb()
 
 ### Community 230 - "Frontend Build Bundle"
-Cohesion: 0.17
-Nodes (15): applyPatches(), constructor(), createDraft(), defineProperty(), finishDraft(), getOwnPropertyDescriptor(), Gt(), ht() (+7 more)
+Cohesion: 0.36
+Nodes (8): as(), cs(), js(), ls(), Mo(), os(), ss(), Su()
 
 ### Community 231 - "jQuery Vendor"
 Cohesion: 0.25
@@ -1253,16 +1216,16 @@ Cohesion: 0.54
 Nodes (7): e(), i(), l(), n(), r(), s(), u()
 
 ### Community 234 - "Community 234"
-Cohesion: 0.18
-Nodes (9): CURSORS, FEATURES, FormData, Login(), schema, useResendCooldown(), authSlice, AuthState (+1 more)
+Cohesion: 0.29
+Nodes (6): CURSORS, FEATURES, FormData, Login(), schema, useResendCooldown()
 
 ### Community 235 - "Community 235"
 Cohesion: 0.29
 Nodes (6): CURSORS, FEATURES, FormData, getStrength(), Register(), schema
 
 ### Community 236 - "Community 236"
-Cohesion: 0.13
-Nodes (14): COMMON (16), DebuffOverlay, EPIC (10), LEGENDARY (10) — блокировка цели 5 сек (not duration), Mirror — пассивный дебафф, MYTHIC (10) — аудио эффекты, Null-эффекты (в Game.tsx через useEffect/state), RARE (10) (+6 more)
+Cohesion: 0.29
+Nodes (5): FinalScore, GameOver(), GameOverState, RoundHistoryEntry, RoundScore
 
 ### Community 237 - "Community 237"
 Cohesion: 0.29
@@ -1292,153 +1255,25 @@ Nodes (4): cleanup_offline_waiting_players(), delete_server_if_host_absent(), _p
 Cohesion: 0.83
 Nodes (3): cycleTheme(), initTheme(), setTheme()
 
-### Community 275 - "Community 275"
-Cohesion: 0.13
-Nodes (14): 1. Создание и лобби, 2. Начало игры, 3. Раунд, 4. Оценка раунда — grade_round (Celery), 5. Конец игры — game_over (Celery), 6. После игры, Kick offline игрока, start_round (Celery) (+6 more)
-
-### Community 390 - "Community 390"
-Cohesion: 0.14
-Nodes (13): Redis — ключи и использование, Атомарные операции, БД конфигурация, Дебаффы, Игровое состояние, Итерация ключей, Ключи, Онлайн статус (+5 more)
-
-### Community 391 - "Community 391"
-Cohesion: 0.14
-Nodes (12): connect(), game_state_sync payload, handle_debuff_apply, handle_game_start, handle_round_end, receive() — обработчики событий, WebSocket — GameConsumer, Вспомогательные методы (+4 more)
-
-### Community 392 - "Community 392"
-Cohesion: 0.14
-Nodes (13): 2026-06-25 — Объединённый лог: Profile canvas / cursor orig + Playwright e2e, Backend, CustomCursor.tsx, Frontend, Pending (объединено), Playwright e2e тесты, Profile.tsx / Profile.css, VITE_API_URL (+5 more)
-
-### Community 393 - "Community 393"
-Cohesion: 0.15
-Nodes (13): Backend — Cloudinary cleanup, Backend — Groq, Backend — profile_drawing, Backend — настройки, Backend — рейтинг, Frontend — Game.tsx, Frontend — Main.tsx, Frontend — MobileGuard (+5 more)
-
-### Community 394 - "Community 394"
-Cohesion: 0.18
-Nodes (11): ap(), from(), ip(), kp(), lp(), pe(), rp(), tp() (+3 more)
-
-### Community 395 - "Community 395"
-Cohesion: 0.18
-Nodes (10): AI (backend/ai/config.py), Celery таймауты, Frontend — цвета редкости, RarityChoices (Cursor / Canvas), Redis TTL, Server status choices, WebSocket (consumers.py), Дебаффы — LEGENDARY_DEBUFFS set (+2 more)
-
-### Community 396 - "Community 396"
-Cohesion: 0.18
-Nodes (10): Backend (pytest), Frontend (Playwright), Postman + Newman + Allure, Postman — подготовка данных, Запуск, Пирамида, Связанные заметки, Структура (+2 more)
-
-### Community 397 - "Community 397"
-Cohesion: 0.20
-Nodes (6): User, Отправляет приветственное письмо после верификации., Создаёт пользователя, инвентарь и отправляет письмо верификации., Верифицирует email по токену.         Возвращает True если успешно, False если т, Обновляет cursor и canvas пользователя., Отправляет письмо с ссылкой верификации через Mailtrap.
-
-### Community 398 - "Community 398"
-Cohesion: 0.20
-Nodes (10): Backend — [[ai/config.py]], Backend — [[ai/services.py]], Backend — [[ai/tasks.py]], Backend — [[consumers.py]], Frontend — [[Game.tsx]], Frontend — [[Lobby.tsx]], Frontend — [[PasswordEffect.tsx]], Frontend — [[Tutorial.tsx]] (+2 more)
-
-### Community 399 - "Community 399"
-Cohesion: 0.20
-Nodes (9): Postman & Newman, Tests, Запуск, Окружение, Пирамида тестирования, Подготовка данных, Стек, Структура (+1 more)
-
-### Community 400 - "Community 400"
-Cohesion: 0.31
-Nodes (9): as(), cs(), js(), ls(), os(), ss(), Su(), ws() (+1 more)
-
-### Community 401 - "Community 401"
-Cohesion: 0.22
-Nodes (8): Adding a new icon, Contributing SVG Icons, Example SVG Structure, ⚠️ Important: Changing Font Awesome Version, Information about icons in this directory, License, Modifications, Usage
-
-### Community 402 - "Community 402"
-Cohesion: 0.22
-Nodes (8): 2026-06-29 — Объединённый лог: game polish, дебаффы, кик офлайн, reconnect, MYTHIC, Null-duration дебаффы — первая версия логики, Pending (объединено), Изменённые файлы (объединено), Кик офлайн игроков, Мелкие CSS/UI правки, Решения, Сессия 4 — Game mechanics polish: кик офлайн, null-duration, очки/места
-
-### Community 403 - "Community 403"
-Cohesion: 0.22
-Nodes (9): Chill замедляет на 70%, EraserEffect.tsx (переписан), frontend/src/components/debuffs/DebuffOverlay.css, frontend/src/components/debuffs/effects/PuzzleEffect.tsx (создан), Game.css, Game.tsx — уточнения null-duration, Очки и место на карточке игрока (Game.tsx), Решения (+1 more)
-
-### Community 404 - "Community 404"
-Cohesion: 0.25
-Nodes (7): Canvas, Cursor, EmailVerification, Redis кэш (users), User (AbstractUser), Модели: Users, Связанные заметки
-
-### Community 405 - "Community 405"
-Cohesion: 0.25
-Nodes (7): generate_prompts — генерация заданий, grade_drawing — оценка рисунка, Groq AI — Оценка и генерация промптов, _groq_text_request — базовый запрос, Интеграция с игровым циклом, Модель, Связанные заметки
-
-### Community 406 - "Community 406"
-Cohesion: 0.25
-Nodes (8): COMMON (15 дебаффов), EPIC (10 дебаффов), LEGENDARY (10 дебаффов — все сложные), MYTHIC (10 дебаффов — все аудио), RARE (10 дебаффов), Аудит дебаффов: реализовано и остаётся, Итог аудита, Паттерны реализации
-
-### Community 407 - "Community 407"
-Cohesion: 0.29
-Nodes (6): Game, Redis (игровое состояние), Round, Score, Модели: Game, Связанные заметки
-
-### Community 408 - "Community 408"
-Cohesion: 0.29
-Nodes (6): Inventory, Purchase, Redis кэш (market), REST эндпоинты, Модели: Market, Связанные заметки
-
-### Community 409 - "Community 409"
-Cohesion: 0.29
-Nodes (6): REST эндпоинты, Server, WebSocket, Модели: Server, Онлайн статус, Связанные заметки
-
-### Community 410 - "Community 410"
-Cohesion: 0.29
-Nodes (6): Redis кэш, Курсоры и Канвасы, Магазин (Market), Механика, Связанные заметки, Эндпоинты
-
-### Community 411 - "Community 411"
-Cohesion: 0.29
-Nodes (6): Backend, Frontend, Pending, Решения, Сессия 2026-06-24 — Лобби, авторизация, рефреш токена, Что сделано
-
-### Community 412 - "Community 412"
-Cohesion: 0.29
-Nodes (7): backend/ai — генерация промптов, frontend/src/pages/Game/Game.css, frontend/src/pages/Game/Game.tsx, Инвентарь — редкость, Исправление мифической категории, Решения, Сессия 3 — Game UI polish, canvas frames, inventory rarity
-
-### Community 413 - "Community 413"
-Cohesion: 0.33
-Nodes (5): Error details, Instructions, Page snapshot, Test info, Test source
-
-### Community 414 - "Community 414"
-Cohesion: 0.33
-Nodes (5): Error details, Instructions, Page snapshot, Test info, Test source
-
-### Community 415 - "Community 415"
-Cohesion: 0.33
-Nodes (5): Error details, Instructions, Page snapshot, Test info, Test source
-
-### Community 416 - "Community 416"
-Cohesion: 0.33
-Nodes (5): Celery задачи (`ai/tasks.py`), Игровой цикл, Очки и монеты, Связанные заметки, Схема
-
-### Community 417 - "Community 417"
-Cohesion: 0.33
-Nodes (6): Backend — ai/services.py, Backend — cleanup pipeline, Frontend — Game.css layout, Frontend — ProfileDetail.tsx, Решения, Сессия 2 — Game CSS, backend fixes, ProfileDetail
-
-### Community 418 - "Community 418"
-Cohesion: 0.40
-Nodes (4): Error details, Instructions, Test info, Test source
-
-### Community 419 - "Community 419"
-Cohesion: 0.40
-Nodes (5): Gu(), hl(), qf(), Tu(), Xf()
-
-### Community 420 - "Community 420"
-Cohesion: 0.40
-Nodes (5): Frontend — [[Game.tsx]] — кик текущего игрока, Frontend — [[Main.tsx]] — отображение ошибки кика, Frontend — MYTHIC видео дебаффы, Решения, Сессия 7 — MYTHIC дебаффы + кик-редирект
-
 ## Knowledge Gaps
-- **553 isolated node(s):** `Migration`, `Migration`, `Migration`, `Migration`, `Migration` (+548 more)
+- **277 isolated node(s):** `TypeScript / Build fixes`, `Backend — настройки`, `Backend — рейтинг`, `Backend — Groq`, `Backend — Cloudinary cleanup` (+272 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **50 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `_()` connect `Frontend Build Bundle` to `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Django Admin Static`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`?**
-  _High betweenness centrality (0.281) - this node is a cross-community bridge._
-- **Why does `h()` connect `Frontend Build Bundle` to `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `jQuery Vendor`, `jQuery Vendor`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`?**
+- **Why does `_()` connect `Frontend Build Bundle` to `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Django Admin Static`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`?**
+  _High betweenness centrality (0.297) - this node is a cross-community bridge._
+- **Why does `_e()` connect `Frontend Build Bundle` to `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`?**
+  _High betweenness centrality (0.209) - this node is a cross-community bridge._
+- **Why does `h()` connect `Frontend Build Bundle` to `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `jQuery Vendor`, `jQuery Vendor`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`?**
   _High betweenness centrality (0.206) - this node is a cross-community bridge._
-- **Why does `_e()` connect `Frontend Build Bundle` to `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Frontend Build Bundle`, `Community 210`, `Community 216`, `Frontend Build Bundle`?**
-  _High betweenness centrality (0.192) - this node is a cross-community bridge._
 - **Are the 32 inferred relationships involving `_()` (e.g. with `kf()` and `w()`) actually correct?**
   _`_()` has 32 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Базовый текстовый запрос к Groq без изображения.`, `Отправляет рисунок в Groq и возвращает оценку и комментарий.      Returns:`, `Генерирует уникальные промпты для раундов через Groq.     При ошибке возвращает` to the rest of the system?**
-  _600 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `TypeScript / Build fixes`, `Backend — настройки`, `Backend — рейтинг` to the rest of the system?**
+  _324 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Frontend Build Bundle` be split into smaller, more focused modules?**
-  _Cohesion score 0.016573556797020484 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.01597136905079857 - nodes in this community are weakly interconnected._
 - **Should `Frontend Build Bundle` be split into smaller, more focused modules?**
-  _Cohesion score 0.016573556797020484 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.016088568935427573 - nodes in this community are weakly interconnected._

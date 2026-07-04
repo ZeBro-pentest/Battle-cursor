@@ -15,7 +15,7 @@ PvP браузерная игра где до 8 игроков одноврем�
 - Redis (channel layer + cache + broker)
 - Cloudinary (медиа файлы)
 - Groq API (оценка рисунков + генерация промптов)
-- Mailtrap (email)
+- Gmail SMTP (email)
 - SQLite (постоянный выбор, переход на PostgreSQL не планируется)
 
 ### Frontend
@@ -67,7 +67,7 @@ Battle-cursor/
 urls → views → serializers → services → repositories → models
 ```
 - Кэш-логика только в слое `services`
-- Каждое приложение имеет свой `config.py` для констант
+- Большинство приложений имеют `config.py` для констант (кроме `game/` — у него `config.py` удалён)
 
 ### Приложения
 
@@ -93,7 +93,8 @@ urls → views → serializers → services → repositories → models
 - `Score.value` — FloatField (0.1–5.0), `Score.image_url` — URLField (Cloudinary)
 - Игра создаётся через WebSocket `game_start` → `ServerService.start_game()`
 - Раундов = кол-во игроков (макс 8), 60 сек на раунд
-- Дебаффы: `game/debuffs.py` — 60+ дебаффов, 5 уровней редкости (COMMON→LEGENDARY)
+- Дебаффы: `game/debuffs.py` — 55 дебаффов, 5 уровней редкости (COMMON→LEGENDARY)
+- `game/` не имеет `config.py` — константы дебаффов живут прямо в `debuffs.py`, модели в `models.py`
 - `metadata.json` — курсоры и канвасы с привязанными дебаффами/защитами
 
 #### `ai`
@@ -219,6 +220,8 @@ make celery-beat  # Celery Beat (планировщик)
 make flower       # Flower (мониторинг Celery)
 make superuser    # создать суперпользователя
 make flush-tokens # очистить истёкшие JWT токены
+make build        # сборка фронта + collectstatic
+make ngrok        # ngrok туннель на порт 8000
 ```
 
 ## Тестирование
@@ -250,38 +253,7 @@ WebSocket и игровой цикл тестируются вручную че�
 - ✅ `game` — полностью реализован
 - ✅ `ai` — полностью реализован (Groq оценка + генерация промптов + Celery игровой цикл)
 - ⏳ Frontend — в процессе
-- ⏳ Docker — после завершения бэкенда
-
-## Context Navigation (Graphify + Obsidian)
-
-### Правило 3 слоёв
-1. **Сначала** — читай `graphify-out/GRAPH_REPORT.md` для понимания структуры кода
-2. **Затем** — читай Obsidian vault (`~/vault/battle-cursor/`) для решений, архитектуры, текущего прогресса
-3. **Только потом** — читай raw-файлы, если первые два слоя не дали ответа
-
-### Когда пересобирать граф
-- После структурных изменений (новые модули, крупные рефакторы)
-- Команда: `graphify . --update` (только изменённые файлы)
-- Граф персистентен — не пересобирать каждую сессию
-
-### Запрещено
-- Не модифицировать файлы в `graphify-out/` вручную
-- Не перечитывать всю кодовую базу если граф уже содержит информацию
-
-## Session Commands
-
-### /resume
-При получении этой команды:
-1. Прочитай 3 последних лога из `~/vault/battle-cursor/logs/`
-2. Прочитай `~/vault/battle-cursor/architecture/decisions.md`
-3. Прочитай `graphify-out/GRAPH_REPORT.md`
-4. Дай summary: текущее состояние и что осталось сделать
-
-### /save
-При получении этой команды:
-1. Создай лог сессии в `~/vault/battle-cursor/logs/YYYY-MM-DD-<описание>.md`
-2. Зафиксируй: что сделано, какие решения приняты, что pending
-3. Добавь wikilinks на созданные/изменённые заметки
+- ✅ Docker — реализован (docker-compose.yml + Dockerfile для backend и frontend)
 
 ## graphify
 
@@ -320,6 +292,14 @@ Rules:
 
 ### /save
 При получении этой команды:
-1. Создай лог сессии в `Obsidian/logs/YYYY-MM-DD-<описание>.md` (относительно корня проекта Battle-cursor/)
-2. Зафиксируй: что сделано, какие решения приняты, что pending
-3. Добавь wikilinks на созданные/изменённые файлы
+1. Проверь, есть ли в `Obsidian/battle-cursor/logs/` (относительно корня проекта Battle-cursor/) файл с сегодняшней датой (`YYYY-MM-DD-*.md`):
+   ```bash
+   TODAY=$(date +%Y-%m-%d)
+   EXISTING=$(ls Obsidian/battle-cursor/logs/${TODAY}-*.md 2>/dev/null | head -1)
+   ```
+2. Если файл найден — **допиши** новую секцию `## Сессия N — <описание>` в конец существующего файла (не создавай новый). Обнови в нём объединённые секции Pending и «Изменённые файлы», если они есть.
+3. Если файла нет — создай новый `Obsidian/battle-cursor/logs/YYYY-MM-DD-<описание>.md`
+4. Зафиксируй: что сделано, какие решения приняты, что pending
+5. Добавь wikilinks на созданные/изменённые файлы
+
+Цель: один лог-файл на день, без дублей с одинаковой датой.

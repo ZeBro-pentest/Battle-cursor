@@ -711,7 +711,6 @@ export function Game() {
               roundHistoryRef.current = msg.round_history as RoundHistoryEntry[];
               setRoundHistory(roundHistoryRef.current);
             }
-            console.log("[sync] Game state restored:", { round_number, prompt, time_left });
             break;
           }
         }
@@ -759,26 +758,18 @@ export function Game() {
     if (roundEndSentRef.current) return;
     roundEndSentRef.current = true;
 
-    console.log("[timer] Timer reached 0, triggering round_end");
-
     const r = roundRef.current;
     if (r) {
       const canvas = canvasRef.current;
       const image_base64 = canvas
         ? canvas.toDataURL("image/png").split(",")[1]
         : "";
-      console.log("[round_end] Sending round_end:", {
-        round_id: r.round_id,
-        image_base64_length: image_base64.length,
-        image_url: "",
-      });
       sendWS({
         type: "round_end",
         round_id: r.round_id,
         image_base64,
         image_url: "",
       });
-      console.log("[round_end] Sent successfully");
     }
     setPhase("waiting");
   }, [timeLeft, phase, sendWS]);
@@ -841,14 +832,6 @@ export function Game() {
       return;
     }
 
-    console.log("[debuff] APPLYING:", {
-      debuffId,
-      my_id: prof.id,
-      target_id: target.user_id,
-      target_username: target.username,
-      selectedTargetIdx,
-      others: others.map((p) => ({ id: p.user_id, name: p.username })),
-    });
     sendWS({
       type: "debuff_apply",
       debuff_id: debuffId,

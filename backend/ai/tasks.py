@@ -309,7 +309,7 @@ def game_over(game_id: str, room_group: str):
 
         # Удаляем Game через 10 минут — только после коммита
         transaction.on_commit(
-            lambda: delete_game.apply_async(args=[game_id], countdown=60)
+            lambda: delete_game.apply_async(args=[game_id], countdown=120)
         )
 
     # Чистим Redis
@@ -327,7 +327,7 @@ def game_over(game_id: str, room_group: str):
         },
     )
 
-    cleanup_drawings.apply_async(args=[game_id], countdown=60)
+    cleanup_drawings.apply_async(args=[game_id], countdown=30)
 
     logger.info(
         "Game %s over. Winner: %s",

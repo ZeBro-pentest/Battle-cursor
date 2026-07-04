@@ -24,7 +24,7 @@ const FEATURES = [
   { icon: "◈", text: "До 8 игроков в одной комнате одновременно" },
   {
     icon: "⚡",
-    text: "60+ дебаффов пяти уровней редкости — от Common до Legendary",
+    text: "55 дебаффов пяти уровней редкости — от Common до Legendary",
   },
   {
     icon: "★",
@@ -79,7 +79,6 @@ export function Main() {
     setCountdown(10);
   };
 
-
   const handleCreate = async () => {
     setCreating(true);
     setCreateError("");
@@ -107,7 +106,10 @@ export function Main() {
   return (
     <div className="main-page">
       {errorMsg && (
-        <div className="main-error-notification" onClick={() => setErrorMsg(null)}>
+        <div
+          className="main-error-notification"
+          onClick={() => setErrorMsg(null)}
+        >
           {errorMsg}
         </div>
       )}
@@ -132,7 +134,11 @@ export function Main() {
               </svg>
             )}
             {avatarHasFrame && (
-              <img src={profile!.canvas!.image_url!} alt="" className="mp-avatar-frame" />
+              <img
+                src={profile!.canvas!.image_url!}
+                alt=""
+                className="mp-avatar-frame"
+              />
             )}
           </div>
 
@@ -286,49 +292,57 @@ export function Main() {
               ) : (
                 [...servers]
                   .sort((a, b) =>
-                    a.host === profile?.username ? -1 : b.host === profile?.username ? 1 : 0,
+                    a.host === profile?.username
+                      ? -1
+                      : b.host === profile?.username
+                        ? 1
+                        : 0,
                   )
                   .map((s) => {
-                  const full = s.players_count >= s.max_players;
-                  const slots = Array.from(
-                    { length: s.max_players },
-                    (_, i) => i < s.players_count,
-                  );
-                  return (
-                    <div
-                      key={s.room_code}
-                      className={`ml-server${full ? " ml-server--full" : ""}`}
-                      onClick={() => !full && navigate(`/games/${s.room_code}`)}
-                    >
-                      <div className="ml-server-top">
-                        <div className="ml-server-left">
-                          <span
-                            className={`ml-server-dot${full ? " ml-server-dot--full" : ""}`}
-                          />
-                          <span className="ml-server-code">{s.room_code}</span>
-                        </div>
-                        <div className="ml-server-top-right">
-                          <span
-                            className={`ml-server-status${full ? " ml-server-status--full" : ""}`}
-                          >
-                            {full ? "FULL" : "PLAY"}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-server-bottom">
-                        <span className="ml-server-host">@{s.host}</span>
-                        <div className="ml-server-slots">
-                          {slots.map((filled, i) => (
+                    const full = s.players_count >= s.max_players;
+                    const slots = Array.from(
+                      { length: s.max_players },
+                      (_, i) => i < s.players_count,
+                    );
+                    return (
+                      <div
+                        key={s.room_code}
+                        className={`ml-server${full ? " ml-server--full" : ""}`}
+                        onClick={() =>
+                          !full && navigate(`/games/${s.room_code}`)
+                        }
+                      >
+                        <div className="ml-server-top">
+                          <div className="ml-server-left">
                             <span
-                              key={i}
-                              className={`ml-slot${filled ? " ml-slot--filled" : ""}`}
+                              className={`ml-server-dot${full ? " ml-server-dot--full" : ""}`}
                             />
-                          ))}
+                            <span className="ml-server-code">
+                              {s.room_code}
+                            </span>
+                          </div>
+                          <div className="ml-server-top-right">
+                            <span
+                              className={`ml-server-status${full ? " ml-server-status--full" : ""}`}
+                            >
+                              {full ? "FULL" : "PLAY"}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ml-server-bottom">
+                          <span className="ml-server-host">@{s.host}</span>
+                          <div className="ml-server-slots">
+                            {slots.map((filled, i) => (
+                              <span
+                                key={i}
+                                className={`ml-slot${filled ? " ml-slot--filled" : ""}`}
+                              />
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
               )}
             </div>
           </div>

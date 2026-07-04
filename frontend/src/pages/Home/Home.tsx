@@ -8,7 +8,9 @@ import "./Home.css";
 export function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state: RootState) => !!state.auth.accessToken);
+  const isLoggedIn = useSelector(
+    (state: RootState) => !!state.auth.accessToken,
+  );
 
   const handlePlay = () => navigate(isLoggedIn ? "/main" : "/register");
 
@@ -59,7 +61,9 @@ export function Home() {
             Докажи свое превосходство в мире цифровых сражений.
           </p>
           <div className="hero-actions">
-            <button className="cta-button primary" onClick={handlePlay}>Играть сейчас</button>
+            <button className="cta-button primary" onClick={handlePlay}>
+              Играть сейчас
+            </button>
             <Link to="/tutorial" className="cta-button secondary">
               Обучение
             </Link>
@@ -71,16 +75,16 @@ export function Home() {
       <section id="stats" className="stats-bar">
         <div className="container stats-grid">
           <div className="stat-item">
-            <span className="stat-value">10K+</span>
-            <span className="stat-label">Активных игроков</span>
+            <span className="stat-value">55</span>
+            <span className="stat-label">Уникальных дебаффов</span>
           </div>
           <div className="stat-item">
-            <span className="stat-value">24/7</span>
-            <span className="stat-label">Турниры</span>
+            <span className="stat-value">5</span>
+            <span className="stat-label">Уровней редкости</span>
           </div>
           <div className="stat-item">
-            <span className="stat-value">50+</span>
-            <span className="stat-label">Уникальных скинов</span>
+            <span className="stat-value">max 8</span>
+            <span className="stat-label">Игроков в комнате</span>
           </div>
         </div>
       </section>
@@ -150,21 +154,51 @@ export function Home() {
         <div className="quote-bg-decor">
           {(() => {
             const cursorNames = [
-              "Absolute", "Arrow", "Blot", "Breach", "Chaos", 
-              "Collapse", "Dictator", "Eraser", "Hybrid", "Judge",
-              "Mutant", "Overlord", "Parasite", "Pencil", "Phantom",
-              "Quill", "Spark", "Stroke", "Stylus", "Tornado",
-              "Trap", "Vector", "Virus", "Warper", "Wraith"
+              "Absolute",
+              "Arrow",
+              "Blot",
+              "Breach",
+              "Chaos",
+              "Collapse",
+              "Dictator",
+              "Eraser",
+              "Hybrid",
+              "Judge",
+              "Mutant",
+              "Overlord",
+              "Parasite",
+              "Pencil",
+              "Phantom",
+              "Quill",
+              "Spark",
+              "Stroke",
+              "Stylus",
+              "Tornado",
+              "Trap",
+              "Vector",
+              "Virus",
+              "Warper",
+              "Wraith",
             ];
-            
-            const renderSquares = (isDup = false) => 
+
+            const renderSquares = (isDup = false) =>
               cursorNames.map((name, i) => {
-                const path = cloudinaryImages[`images/cursors/${name}_cursor.png` as keyof typeof cloudinaryImages];
-                const canvasPath = cloudinaryImages[`images/canvas/${name}_canvas.svg` as keyof typeof cloudinaryImages];
-                
+                const path =
+                  cloudinaryImages[
+                    `images/cursors/${name}_cursor.png` as keyof typeof cloudinaryImages
+                  ];
+                const canvasPath =
+                  cloudinaryImages[
+                    `images/canvas/${name}_canvas.svg` as keyof typeof cloudinaryImages
+                  ];
+
                 return (
                   <div key={isDup ? `dup-${i}` : i} className="decor-square">
-                    <img src={canvasPath} alt={`${name} canvas`} className="decor-canvas" />
+                    <img
+                      src={canvasPath}
+                      alt={`${name} canvas`}
+                      className="decor-canvas"
+                    />
                     <img src={path} alt={name} className="decor-img" />
                   </div>
                 );
